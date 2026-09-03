@@ -1,0 +1,92 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "solomon-ai-platform-sbom",
+  "documentNamespace": "https://deuerout.com/spdxdocs/solomon-ai-platform-3f9c1a2b-4d5e-4f60-8a1b-2c3d4e5f6a7b",
+  "creationInfo": {
+    "created": "2026-01-01T00:00:00Z",
+    "creators": [
+      "Organization: Deverout and Associates",
+      "Tool: generate-sbom.sh-1.0"
+    ],
+    "licenseListVersion": "3.24"
+  },
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-root",
+      "name": "solomon-ai-platform",
+      "versionInfo": "1.0.0",
+      "supplier": "Organization: Deverout and Associates",
+      "downloadLocation": "NOASSERTION",
+      "filesAnalyzed": false,
+      "licenseConcluded": "LicenseRef-SCSL-1.0",
+      "licenseDeclared": "LicenseRef-SCSL-1.0",
+      "copyrightText": "Copyright (c) Deverout and Associates. All rights reserved.",
+      "primaryPackagePurpose": "APPLICATION"
+    },
+    {
+      "SPDXID": "SPDXRef-Package-example-mit-dep",
+      "name": "example-mit-dependency",
+      "versionInfo": "2.3.1",
+      "downloadLocation": "https://registry.npmjs.org/example-mit-dependency/-/example-mit-dependency-2.3.1.tgz",
+      "filesAnalyzed": false,
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "copyrightText": "NOASSERTION",
+      "primaryPackagePurpose": "LIBRARY",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:npm/example-mit-dependency@2.3.1"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-example-apache-dep",
+      "name": "example-apache-dependency",
+      "versionInfo": "0.9.4",
+      "downloadLocation": "https://pypi.org/project/example-apache-dependency/",
+      "filesAnalyzed": false,
+      "licenseConcluded": "Apache-2.0",
+      "licenseDeclared": "Apache-2.0",
+      "copyrightText": "NOASSERTION",
+      "primaryPackagePurpose": "LIBRARY",
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceType": "purl",
+          "referenceLocator": "pkg:pypi/example-apache-dependency@0.9.4"
+        }
+      ]
+    }
+  ],
+  "hasExtractedLicensingInfos": [
+    {
+      "licenseId": "LicenseRef-SCSL-1.0",
+      "name": "Solomon Commercial Service License v1.0",
+      "extractedText": "Proprietary. Non-exclusive, network-based access license. See https://deuerout.com/solomon/license for full terms.",
+      "seeAlsos": [
+        "https://deuerout.com/solomon/license"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-DOCUMENT",
+      "relationshipType": "DESCRIBES",
+      "relatedSpdxElement": "SPDXRef-Package-root"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-example-mit-dep"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-root",
+      "relationshipType": "DEPENDS_ON",
+      "relatedSpdxElement": "SPDXRef-Package-example-apache-dep"
+    }
+  ]
+}

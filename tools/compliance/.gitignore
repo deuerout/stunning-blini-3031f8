@@ -1,0 +1,5 @@
+test-fixtures/monorepo/
+test-fixtures/uninstalled-service/
+test-fixtures/py-service/
+test-fixtures/.solomon-audit/
+**/.solomon-audit/
