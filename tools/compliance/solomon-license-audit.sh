@@ -57,7 +57,7 @@ mkdir -p "$REPORT_DIR" || { err "cannot create report dir $REPORT_DIR"; exit 2; 
 #    installed trees as if they were first-party workspace packages.
 # ---------------------------------------------------------------------------
 find "$ROOT_DIR" \
-  \( -name node_modules -o -name vendor -o -name dist -o -name build -o -name .git \) -prune -o \
+  \( -name node_modules -o -name vendor -o -name dist -o -name build -o -name .git -o -name .solomon-audit \) -prune -o \
   -name 'package.json' -print > "$WORK_LIST" 2>/dev/null
 
 JS_ROOTS_FOUND=0
@@ -145,7 +145,7 @@ is_venv_dir() {
 }
 
 find "$ROOT_DIR" \
-  \( -name node_modules -o -name vendor -o -name dist -o -name build -o -name .git \) -prune -o \
+  \( -name node_modules -o -name vendor -o -name dist -o -name build -o -name .git -o -name .solomon-audit \) -prune -o \
   \( -name 'requirements*.txt' -o -name 'pyproject.toml' -o -name 'Pipfile' \) -print > "$WORK_LIST" 2>/dev/null
 
 PY_ROOTS_FOUND=0
@@ -257,9 +257,20 @@ fi
 #     review, don't auto-clear or auto-block on it alone.
 # ---------------------------------------------------------------------------
 find "$ROOT_DIR" \
-  \( -name node_modules -o -name .git -o -iname 'venv' -o -iname '.venv' -o -iname 'env' -o -iname '.env' \) -prune -o \
+  \( -name node_modules -o -name .git -o -iname 'venv' -o -iname '.venv' -o -iname 'env' -o -iname '.env' -o -name '.solomon-audit' \) -prune -o \
   -type f \( -iname 'LICENSE*' -o -iname 'COPYING*' -o -iname 'NOTICE*' \) -print 2>/dev/null | \
 while IFS= read -r license_file; do
+  # The -iname glob above is a broad first pass (portable across GNU/BSD
+  # find without relying on -iregex, whose dialect differs between them);
+  # narrow it here to actual license-file naming conventions so something
+  # like "license-audit-report.json" (this very tool's own JSON output,
+  # which legitimately contains the string "GPL-3.0-only" as data) doesn't
+  # get swept up and misread as a vendored license file.
+  base="$(basename "$license_file" | tr '[:upper:]' '[:lower:]')"
+  case "$base" in
+    license|license.*|licence|licence.*|copying|copying.*|notice|notice.*) ;;
+    *) continue ;;
+  esac
   if grep -Eiq "$BLOCKING_PATTERN" "$license_file" 2>/dev/null; then
     matched_id="$(grep -Eio "$BLOCKING_PATTERN" "$license_file" 2>/dev/null | head -n1 | tr -d ' ')"
     printf 'vendored\t%s\t-\t-\t%s\n' "$license_file" "${matched_id:-A?GPL}" >> "$VENDORED_LIST"
