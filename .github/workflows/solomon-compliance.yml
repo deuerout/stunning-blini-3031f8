@@ -1,0 +1,154 @@
+name: Solomon compliance gate
+
+# Enforces the Pillar 2 tooling (tools/compliance/solomon-license-audit.sh,
+# generate-sbom.sh, validate_sbom.py) automatically instead of relying on
+# someone remembering to run it before merging -- closing the gap flagged
+# in the Phase 3 assessment ("compliance tooling exists but nothing
+# enforces it").
+#
+# SCOPE: this repo currently contains the Deverout and Associates marketing
+# site (zero dependencies -- no package.json at the root, nothing to scan)
+# and the Solomon compliance tooling itself under tools/compliance/, whose
+# only real dependency root is tools/compliance/webhook/. This workflow
+# gates exactly that -- it is a real, working example of the enforcement
+# pattern, not a claim that it covers the full Solomon AI Platform product
+# codebase (which doesn't live in this repo). Point the same pattern at the
+# product repo when that code exists somewhere this can reach.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {} # manual trigger, e.g. to verify the pipeline without opening a PR
+
+permissions:
+  contents: read
+
+jobs:
+  compliance-check:
+    name: License audit + SBOM validation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install webhook project dependencies (the one real JS dependency root in this repo)
+        run: npm ci --prefix tools/compliance/webhook
+
+      - name: Install SBOM validator dependencies
+        run: pip install --quiet jsonschema
+
+      - name: Install syft (full-fidelity SBOM generation; generate-sbom.sh falls back gracefully if this step is skipped)
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Run license audit
+        id: audit
+        run: ./tools/compliance/solomon-license-audit.sh .
+        # Exit code 1 = AGPL/GPL-family license found -> fails the job,
+        # blocking merge. Exit code 2 = script/environment error, also
+        # fails. See tools/compliance/solomon-license-audit.sh for the
+        # full detection logic (resolved-tree scan + vendored-copy bypass
+        # check).
+
+      - name: Upload license audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-audit-report
+          path: .solomon-audit/license-audit-report.json
+          if-no-files-found: ignore
+
+      - name: Generate SBOMs
+        # Pointed at tools/compliance/webhook specifically, not the repo
+        # root: generate-sbom.sh's no-syft fallback path only checks
+        # package.json at the exact target directory it's given (unlike
+        # the license audit script, it isn't monorepo-recursive), and
+        # that's also honestly the only real dependency root in this repo
+        # -- the marketing site itself has none.
+        run: ./tools/compliance/generate-sbom.sh tools/compliance/webhook ./sbom-output
+
+      - name: Validate SBOMs against official SPDX 2.3 / CycloneDX 1.6 schemas
+        run: |
+          python3 tools/compliance/validate_sbom.py \
+            --spdx ./sbom-output/solomon-sbom.spdx.json \
+            --cyclonedx ./sbom-output/solomon-sbom.cdx.json
+
+      - name: Upload SBOMs
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom
+          path: sbom-output/
+
+  publish-sbom:
+    name: Publish signed SBOM to solomon/sbom/latest
+    needs: compliance-check
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to commit the published SBOM back to the repo
+      id-token: write # for cosign keyless signing via GitHub OIDC -- no stored key needed
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install webhook project dependencies
+        run: npm ci --prefix tools/compliance/webhook
+
+      - name: Install syft
+        run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+
+      - name: Generate SBOMs
+        # Pointed at tools/compliance/webhook specifically, not the repo
+        # root: generate-sbom.sh's no-syft fallback path only checks
+        # package.json at the exact target directory it's given (unlike
+        # the license audit script, it isn't monorepo-recursive), and
+        # that's also honestly the only real dependency root in this repo
+        # -- the marketing site itself has none.
+        run: ./tools/compliance/generate-sbom.sh tools/compliance/webhook ./sbom-output
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Sign SBOMs (keyless, via GitHub OIDC identity)
+        run: |
+          cosign sign-blob --yes \
+            --output-signature ./sbom-output/solomon-sbom.spdx.json.sig \
+            --output-certificate ./sbom-output/solomon-sbom.spdx.json.pem \
+            ./sbom-output/solomon-sbom.spdx.json
+          cosign sign-blob --yes \
+            --output-signature ./sbom-output/solomon-sbom.cdx.json.sig \
+            --output-certificate ./sbom-output/solomon-sbom.cdx.json.pem \
+            ./sbom-output/solomon-sbom.cdx.json
+
+      - name: Publish to solomon/sbom/latest/ (served at deuerout.com/solomon/sbom/latest via Netlify)
+        run: |
+          mkdir -p solomon/sbom/latest
+          cp sbom-output/solomon-sbom.spdx.json solomon/sbom/latest/
+          cp sbom-output/solomon-sbom.spdx.json.sig solomon/sbom/latest/
+          cp sbom-output/solomon-sbom.spdx.json.pem solomon/sbom/latest/
+          cp sbom-output/solomon-sbom.cdx.json solomon/sbom/latest/
+          cp sbom-output/solomon-sbom.cdx.json.sig solomon/sbom/latest/
+          cp sbom-output/solomon-sbom.cdx.json.pem solomon/sbom/latest/
+
+          git config user.name "solomon-compliance-bot"
+          git config user.email "compliance@deuerout.com"
+          git add solomon/sbom/latest/
+          if git diff --cached --quiet; then
+            echo "SBOM unchanged, nothing to commit"
+          else
+            git commit -m "chore: publish updated Solomon SBOM [skip ci]"
+            git push
+          fi
