@@ -26,16 +26,20 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 ---
 
 ## 1. DEFINITIONS
-1.1 **"Digital Data"** means all structured, semi-structured, or unstructured digital information, databases, algorithms, metadata, API outputs, and derivative analytics developed or maintained by Licensor under this Agreement.
+1.1 **"Digital Data"** means all structured, semi-structured, or unstructured digital information, databases, algorithms, metadata, API outputs, and derivative analytics developed or maintained by Licensor under this Agreement, classified into the four tiers set out in **Exhibit A** (each, a "**Data Tier**").
 1.2 **"Royalty"** means the compensation payable by Licensee to Licensor as set forth in Section 3.
 1.3 **"License Period"** means the initial term and all subsequent renewal periods as defined in Section 4.
 1.4 **"Continuous Quote"** means the pre-agreed pricing mechanism that guarantees long-term rate stability with predefined, transparent adjustment parameters.
+1.5 **"Access Level"** means the technical means of delivery (API, dashboard, bulk download, sandbox, or audit-logged access) assigned to a Data Tier in Exhibit A, which governs how Licensee may connect to and retrieve that tier's Digital Data.
 
 ---
 
 ## 2. GRANT OF LICENSE
-2.1 Subject to the terms herein, Licensor grants Licensee a [non-exclusive / exclusive], [worldwide / territorial], royalty-bearing license to access, integrate, process, and commercially utilize the Digital Data solely for [Specify Use Case, e.g., internal analytics, client reporting, product integration].
+2.1 Subject to the terms herein, Licensor grants Licensee a [non-exclusive / exclusive], [worldwide / territorial], royalty-bearing license to access, integrate, process, and commercially utilize the Digital Data solely for [Specify Use Case, e.g., internal analytics, client reporting, product integration], with access to each Data Tier limited to the corresponding Access Level and use cases identified in Exhibit A.
 2.2 Licensee shall not sublicense, resell, or redistribute the Digital Data without prior written consent from Licensor, except as expressly permitted under an approved derivative licensing schedule.
+2.3 **Tier-Specific Restrictions:**
+  a) **Tier 3 (PII-Enhanced):** Licensee shall access and process Tier 3 data solely through audit-logged access, shall maintain a documented lawful basis for processing under GDPR/CCPA (or local equivalents) for the duration of such access, and shall not attempt to re-identify pseudonymized data subjects.
+  b) **Tier 4 (Proprietary Algorithmic):** Licensee's access to Tier 4 Digital Data is read-only and confined to the sandbox environment designated by Licensor. Licensee shall not extract, copy, reverse-engineer, retrain, or otherwise derive competing models, scoring engines, or automation logic from Tier 4 Digital Data, except where such use is expressly authorized in writing for integration with the Ultimate Automation Platform.
 
 ---
 
@@ -128,6 +132,24 @@ By: ___________________________
 Name:
 Title:
 Date:
+
+---
+
+## EXHIBIT A: DIGITAL DATA CLASSIFICATION & ACCESS LEVELS
+
+This Exhibit A is incorporated into and forms part of the Agreement. Royalty rates, caps, and audit provisions in Section 3 and Section 8 may be applied per Data Tier where the Parties agree to tier-differentiated pricing in a separate pricing schedule.
+
+| Data Tier | Description | Example Use Cases | Access Level |
+|---|---|---|---|
+| **Tier 1: Public/Aggregated** | Anonymized, non-PII datasets; market trends, benchmark indices | Client benchmarking, market research | Full API + Bulk Download |
+| **Tier 2: Enhanced Analytics** | Aggregated data with predictive modeling, segmentation logic | Automation triggers, strategic advisory | API + Dashboard Access |
+| **Tier 3: PII-Enhanced (Compliant)** | Data containing pseudonymized personal data, processed under GDPR/CCPA lawful basis | Personalized client solutions, compliance reporting | API + Audit-Logged Access |
+| **Tier 4: Proprietary Algorithmic** | Licensor's core IP: ML models, scoring engines, automation logic | Ultimate Automation Platform integration | Read-Only API + Sandbox Environment |
+
+**Notes:**
+- Licensor may add, split, or reclassify Data Tiers on 30 days' written notice; a reclassification that reduces Licensee's Access Level for a tier already in active use requires Licensee's written consent.
+- Tier 3 access requires Licensee to designate a data protection contact and to cooperate with Licensor's audit-logging and lawful-basis documentation obligations under Section 7.
+- Tier 4 access is granted strictly on the Read-Only/Sandbox basis described in Section 2.3(b); it does not include a right to production deployment of Licensor's models outside the sandbox absent a separate written authorization.
 
 ---
 
