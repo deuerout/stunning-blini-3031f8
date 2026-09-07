@@ -68,6 +68,7 @@ export function createServerFromEnv(): Express {
   const { ResendEmailProvider, SendGridEmailProvider, NullEmailProvider } = require("./emailProvider");
   const { StripeCustomerLookup } = require("./customerLookup");
   const { nodeFetchAdapter } = require("./httpFetchAdapter");
+  const { InMemoryActionLog } = require("./actionLog");
   /* eslint-enable @typescript-eslint/no-var-requires */
 
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -102,6 +103,11 @@ export function createServerFromEnv(): Express {
     customerLookup: new StripeCustomerLookup(stripeApiKey, nodeFetchAdapter),
     emailProvider,
     scheduler: new InProcessScheduler(),
+    // TODO(production): back this with the automation_action_log table
+    // (../crm-schema/solomon_automation_audit_schema.sql) so the owner's
+    // periodic review survives a restart -- InMemoryActionLog is dev-only,
+    // same caveat as InMemoryIdempotencyStore above.
+    actionLog: new InMemoryActionLog(),
   };
 
   return createApp(deps);

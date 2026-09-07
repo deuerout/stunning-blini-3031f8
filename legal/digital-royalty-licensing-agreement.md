@@ -1,16 +1,18 @@
 *Disclaimer: This is an AI-drafted template provided for informational and drafting purposes only. It is not legal advice. Qualified legal counsel should review and adapt this agreement to the applicable jurisdiction, specific business model, and regulatory requirements before execution.*
 
+Double-curly-brace placeholders (e.g. the effective date and agreement number fields below) are filled automatically by `legal/generate-agreement.js` from a deal config (see that file's header comment). Anything still in `[single brackets]` after generation needs a manual legal decision and was deliberately left for counsel/owner review.
+
 ---
 
 # DIGITAL ROYALTY & DATA LICENSING AGREEMENT
 
-**Effective Date:** May 24, 2026
-**Agreement Number:** [●]
+**Effective Date:** {{EFFECTIVE_DATE}}
+**Agreement Number:** {{AGREEMENT_NUMBER}}
 
 **BETWEEN:**
-**[Licensor Legal Name]**, a [State/Country] [Entity Type], with its principal place of business at [Address] ("**Licensor**")
+**Deverout and Associates**, {{DEVEROUT_ENTITY_TYPE}}, with its principal place of business at {{DEVEROUT_ADDRESS}} ("**Licensor**")
 **AND:**
-**Deverout and Associates**, a [State/Country] [Entity Type], with its principal place of business at [Address] ("**Licensee**")
+**{{CLIENT_NAME}}**, a {{CLIENT_JURISDICTION}} {{CLIENT_ENTITY_TYPE}}, with its principal place of business at {{CLIENT_ADDRESS}} ("**Licensee**")
 
 Collectively referred to as the "**Parties**" and individually as a "**Party**."
 
@@ -18,7 +20,7 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 
 ## RECITALS
 
-**WHEREAS**, Licensor is developing and continuously enhancing proprietary digital data assets, including datasets, analytics models, metadata frameworks, and related digital deliverables (the "**Digital Data**");
+**WHEREAS**, Licensor is developing and continuously enhancing proprietary digital data assets, including datasets, analytics models, metadata frameworks, and related digital deliverables (the "**Digital Data**"), delivered through its Solomon platform;
 **WHEREAS**, Licensee seeks a cost-effective, long-term licensing arrangement to integrate, distribute, or utilize the Digital Data in its business operations;
 **WHEREAS**, the Parties acknowledge a symbiotic, collaborative relationship wherein shared data insights, joint development efforts, and mutual market growth will drive sustained value for both entities;
 **NOW, THEREFORE**, in consideration of the mutual covenants contained herein, the Parties agree as follows:
@@ -35,7 +37,7 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 ---
 
 ## 2. GRANT OF LICENSE
-2.1 Subject to the terms herein, Licensor grants Licensee a [non-exclusive / exclusive], [worldwide / territorial], royalty-bearing license to access, integrate, process, and commercially utilize the Digital Data solely for [Specify Use Case, e.g., internal analytics, client reporting, product integration], with access to each Data Tier limited to the corresponding Access Level and use cases identified in Exhibit A.
+2.1 Subject to the terms herein, Licensor grants Licensee a {{LICENSE_EXCLUSIVITY}}, {{LICENSE_TERRITORY}}, royalty-bearing license to access, integrate, process, and commercially utilize the Digital Data solely for {{USE_CASE}}, with access to each Data Tier limited to the corresponding Access Level and use cases identified in Exhibit A.
 2.2 Licensee shall not sublicense, resell, or redistribute the Digital Data without prior written consent from Licensor, except as expressly permitted under an approved derivative licensing schedule.
 2.3 **Tier-Specific Restrictions:**
   a) **Tier 3 (PII-Enhanced):** Licensee shall access and process Tier 3 data solely through audit-logged access, shall maintain a documented lawful basis for processing under GDPR/CCPA (or local equivalents) for the duration of such access, and shall not attempt to re-identify pseudonymized data subjects.
@@ -44,19 +46,19 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 ---
 
 ## 3. ROYALTY STRUCTURE & AFFORDABLE LONG-TERM PRICING
-3.1 **Base Licensing Fee:** Licensee shall pay an annual base fee of $[●], payable in advance on each anniversary of the Effective Date.
-3.2 **Usage-Based Royalty:** In addition to the base fee, Licensee shall pay a royalty of [●]% of Gross Revenue directly attributable to products/services utilizing the Digital Data, subject to an annual cap of $[●] to ensure long-term affordability.
+3.1 **Base Licensing Fee:** Licensee shall pay an annual base fee of {{BASE_FEE}}, payable in advance on each anniversary of the Effective Date.
+3.2 **Usage-Based Royalty:** In addition to the base fee, Licensee shall pay a royalty of {{ROYALTY_PCT}}% of Gross Revenue directly attributable to products/services utilizing the Digital Data, subject to an annual cap of {{ROYALTY_CAP}} to ensure long-term affordability.
 3.3 **Continuous Quote Mechanism:**
-  a) Royalty rates and base fees shall remain fixed for an initial period of [3 / 5] years.
-  b) Upon renewal, pricing adjustments shall not exceed [CPI / X]% annually, unless both Parties agree in writing to a revised schedule reflecting expanded data scope or enhanced deliverables.
+  a) Royalty rates and base fees shall remain fixed for an initial period of {{CQ_FIXED_YEARS}} years.
+  b) Upon renewal, pricing adjustments shall not exceed {{CQ_ADJUSTMENT_CAP}}% annually, unless both Parties agree in writing to a revised schedule reflecting expanded data scope or enhanced deliverables.
   c) Licensee shall receive a pre-renewal quote at least 60 days prior to each renewal date, guaranteeing transparency and budget continuity.
-3.4 **Discount for Symbiotic Collaboration:** Licensee shall receive a [●]% preferential discount on all future Digital Data modules, custom integrations, or premium analytics tiers developed during the License Period, reflecting the Parties' collaborative partnership.
+3.4 **Discount for Symbiotic Collaboration:** Licensee shall receive a {{DISCOUNT_PCT}}% preferential discount on all future Digital Data modules, custom integrations, or premium analytics tiers developed during the License Period, reflecting the Parties' collaborative partnership.
 
 ---
 
 ## 4. TERM & RENEWAL
-4.1 This Agreement shall commence on the Effective Date and continue for an initial term of [●] years ("**Initial Term**").
-4.2 The Agreement shall automatically renew for successive [●]-year periods unless either Party provides written notice of non-renewal at least 90 days prior to expiration.
+4.1 This Agreement shall commence on the Effective Date and continue for an initial term of {{INITIAL_TERM_YEARS}} years ("**Initial Term**").
+4.2 The Agreement shall automatically renew for successive {{RENEWAL_TERM_YEARS}}-year periods unless either Party provides written notice of non-renewal at least 90 days prior to expiration.
 4.3 All renewed terms shall operate under the Continuous Quote framework unless mutually amended in writing.
 
 ---
@@ -103,8 +105,8 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 ---
 
 ## 11. GOVERNING LAW & DISPUTE RESOLUTION
-11.1 This Agreement shall be governed by the laws of [State/Country], without regard to conflict of law principles.
-11.2 Any dispute shall first be submitted to good-faith mediation. If unresolved within 30 days, it shall be settled by binding arbitration in [City, State/Country] under [Rules, e.g., AAA/ICC] rules.
+11.1 This Agreement shall be governed by the laws of {{GOVERNING_LAW}}, without regard to conflict of law principles.
+11.2 Any dispute shall first be submitted to good-faith mediation. If unresolved within 30 days, it shall be settled by binding arbitration in {{ARBITRATION_CITY}} under {{ARBITRATION_RULES}} rules.
 
 ---
 
@@ -120,14 +122,14 @@ Collectively referred to as the "**Parties**" and individually as a "**Party**."
 ## SIGNATURES
 
 **LICENSOR:**
-[Legal Name]
+**Deverout and Associates**
 By: ___________________________
 Name:
 Title:
 Date:
 
 **LICENSEE:**
-**Deverout and Associates**
+**{{CLIENT_NAME}}**
 By: ___________________________
 Name:
 Title:
@@ -154,7 +156,7 @@ This Exhibit A is incorporated into and forms part of the Agreement. Royalty rat
 ---
 
 ### Implementation Notes
-1. **Fill Placeholders:** Replace all `[●]` and bracketed fields with precise legal names, jurisdictions, rates, caps, and use-case scopes.
+1. **Fill Placeholders:** `legal/generate-agreement.js` fills every double-curly-brace token from a deal config. Remaining `[bracketed]` text is a manual legal decision, not a data field.
 2. **Regulatory Compliance:** Add data privacy addendums if the Digital Data contains PII, financial, or health-related information.
 3. **Pricing Model Alignment:** If "affordable long-term continuous quote" refers to a subscription or usage-tier model rather than traditional royalties, adjust Section 3 to reflect SaaS-style recurring billing with capped overage fees.
-4. **Legal Review:** Have counsel verify jurisdictional enforceability, audit clauses, and limitation of liability language.
+4. **Legal Review:** Have counsel verify jurisdictional enforceability, audit clauses, and limitation of liability language before countersignature.
