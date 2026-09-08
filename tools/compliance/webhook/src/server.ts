@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import rateLimit from "express-rate-limit";
 import { handleStripeWebhook, WebhookDeps } from "./webhookHandler";
+import { handleGoCardlessWebhook, GoCardlessWebhookDeps } from "./gocardlessWebhookHandler";
 
 /**
  * Builds the Express app with injected dependencies, so tests can pass in
@@ -23,7 +24,11 @@ export interface RateLimitOptions {
 // defense in depth -- rate limiting alone is not an auth boundary.
 export const DEFAULT_RATE_LIMIT: RateLimitOptions = { windowMs: 60 * 1000, max: 60 };
 
-export function createApp(deps: WebhookDeps, rateLimitOptions: RateLimitOptions = DEFAULT_RATE_LIMIT): Express {
+export function createApp(
+  deps: WebhookDeps,
+  rateLimitOptions: RateLimitOptions = DEFAULT_RATE_LIMIT,
+  goCardlessDeps?: GoCardlessWebhookDeps
+): Express {
   const app = express();
 
   // Trust one hop of proxy (typical for a platform load balancer) so
@@ -54,6 +59,24 @@ export function createApp(deps: WebhookDeps, rateLimitOptions: RateLimitOptions 
     }
   );
 
+  // Only mounted when GoCardless deps are actually supplied, so a
+  // Stripe-only deployment (or a test that only cares about Stripe) is
+  // unaffected. Same raw-body requirement as Stripe above -- GoCardless's
+  // signature also covers the exact byte sequence of the request body.
+  if (goCardlessDeps) {
+    app.post(
+      "/webhooks/gocardless",
+      webhookLimiter,
+      express.raw({ type: "application/json", limit: "1mb" }),
+      async (req: Request, res: Response) => {
+        const rawBody = req.body as Buffer;
+        const signatureHeader = req.header("Webhook-Signature");
+        const result = await handleGoCardlessWebhook(rawBody, signatureHeader, goCardlessDeps);
+        res.status(result.status).json(result.body);
+      }
+    );
+  }
+
   app.get("/healthz", (_req, res) => res.status(200).json({ ok: true }));
 
   return app;
@@ -67,6 +90,7 @@ export function createServerFromEnv(): Express {
   const { InProcessScheduler } = require("./scheduler");
   const { ResendEmailProvider, SendGridEmailProvider, NullEmailProvider } = require("./emailProvider");
   const { StripeCustomerLookup } = require("./customerLookup");
+  const { ApiGoCardlessCustomerLookup, GOCARDLESS_SANDBOX_BASE_URL, GOCARDLESS_LIVE_BASE_URL } = require("./gocardlessCustomerLookup");
   const { nodeFetchAdapter } = require("./httpFetchAdapter");
   const { InMemoryActionLog } = require("./actionLog");
   /* eslint-enable @typescript-eslint/no-var-requires */
@@ -97,20 +121,45 @@ export function createServerFromEnv(): Express {
     emailProvider = new NullEmailProvider();
   }
 
+  // Shared across both providers so a client enrolled via either one shows
+  // up in the same owner review log and doesn't get double-enrolled if a
+  // deal somehow triggers both (e.g. a manual test).
+  const actionLog = new InMemoryActionLog();
+  // TODO(production): back both idempotency stores and actionLog with
+  // durable storage (a table/Redis, and the automation_action_log table in
+  // ../crm-schema/solomon_automation_audit_schema.sql respectively) so the
+  // owner's periodic review survives a restart -- in-memory is dev-only.
+  const idempotencyStore = new InMemoryIdempotencyStore();
+
   const deps: WebhookDeps = {
     webhookSecret,
-    idempotencyStore: new InMemoryIdempotencyStore(),
+    idempotencyStore,
     customerLookup: new StripeCustomerLookup(stripeApiKey, nodeFetchAdapter),
     emailProvider,
     scheduler: new InProcessScheduler(),
-    // TODO(production): back this with the automation_action_log table
-    // (../crm-schema/solomon_automation_audit_schema.sql) so the owner's
-    // periodic review survives a restart -- InMemoryActionLog is dev-only,
-    // same caveat as InMemoryIdempotencyStore above.
-    actionLog: new InMemoryActionLog(),
+    actionLog,
   };
 
-  return createApp(deps);
+  // GoCardless is optional -- only mounted if its env vars are actually
+  // set, so a Stripe-only deployment doesn't need to configure it.
+  const goCardlessWebhookSecret = process.env.GOCARDLESS_WEBHOOK_SECRET;
+  const goCardlessAccessToken = process.env.GOCARDLESS_ACCESS_TOKEN;
+  let goCardlessDeps;
+  if (goCardlessWebhookSecret && goCardlessAccessToken) {
+    const goCardlessEnv = process.env.GOCARDLESS_ENVIRONMENT === "live" ? GOCARDLESS_LIVE_BASE_URL : GOCARDLESS_SANDBOX_BASE_URL;
+    goCardlessDeps = {
+      webhookSecret: goCardlessWebhookSecret,
+      idempotencyStore,
+      customerLookup: new ApiGoCardlessCustomerLookup(goCardlessAccessToken, goCardlessEnv, nodeFetchAdapter),
+      emailProvider,
+      scheduler: new InProcessScheduler(),
+      actionLog,
+    };
+  } else {
+    console.warn("[server] GOCARDLESS_WEBHOOK_SECRET/GOCARDLESS_ACCESS_TOKEN not set -- /webhooks/gocardless will not be mounted");
+  }
+
+  return createApp(deps, DEFAULT_RATE_LIMIT, goCardlessDeps);
 }
 
 if (require.main === module) {
