@@ -53,3 +53,6 @@ All four are in every footer, the contact page, and the homepage schema `sameAs`
 - Confirm contact email (currently deveroutandassociates@gmail.com).
 - Add a favicon.
 - Add real proof points (clients/outcomes) once approved.
+
+## 7. Personal budget app (`/budget/`)
+`budget/index.html` — **Nine-Fifty Budget**, a self-contained envelope budget for a £950/month take-home. Log spending, see a daily everyday allowance, track an emergency fund, and edit the plan. Data stays in the browser (localStorage) with copy/paste backup. Marked `noindex` and left out of the sitemap.

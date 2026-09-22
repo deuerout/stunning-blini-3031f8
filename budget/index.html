@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Nine-Fifty Budget</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#eef2ee; --surface:#ffffff; --sunk:#e3e9e4; --ink:#1b2a26; --muted:#5b6b66;
+  --line:#d3dcd6; --accent:#2f6f5e; --accent-ink:#ffffff; --accent-soft:#d6e8e1;
+  --good:#2f7d4f; --warn:#a86a12; --bad:#b23a3a; --save:#3a5f9e; --track:#dde5e0;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#111816; --surface:#18221f; --sunk:#0d1311; --ink:#e2ebe6; --muted:#98a9a2;
+    --line:#2a3833; --accent:#6fbfa6; --accent-ink:#0d1a16; --accent-soft:#1f3a32;
+    --good:#6cc48f; --warn:#e0a54a; --bad:#ec7b7b; --save:#8fb0ea; --track:#26332f;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#111816; --surface:#18221f; --sunk:#0d1311; --ink:#e2ebe6; --muted:#98a9a2;
+  --line:#2a3833; --accent:#6fbfa6; --accent-ink:#0d1a16; --accent-soft:#1f3a32;
+  --good:#6cc48f; --warn:#e0a54a; --bad:#ec7b7b; --save:#8fb0ea; --track:#26332f;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font:15px/1.5 var(--body);margin:0}
+.wrap{max-width:760px;margin:0 auto;padding-inline:16px;padding-block:24px 64px;display:grid;gap:28px}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:1.05rem;font-weight:700;letter-spacing:.01em}
+h2{font-size:1.25rem;font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.eyebrow{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-weight:600}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.danger{color:var(--bad)}
+.btn.small{padding:4px 10px;font-size:.85rem}
+.link{background:none;border:0;padding:0;color:var(--accent);font-weight:600;text-decoration:underline;text-underline-offset:3px}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand .mark{font-family:var(--display);font-weight:700;font-size:1.05rem;background:var(--accent);color:var(--accent-ink);border-radius:6px;padding:1px 7px}
+.month{display:flex;align-items:center;gap:6px}
+.month span{min-width:9.5em;text-align:center;font-weight:600}
+.month button{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--surface)}
+
+/* hero */
+.hero{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:16px}
+.hero .big{font-family:var(--display);font-size:clamp(2.6rem,9vw,3.8rem);font-weight:700;line-height:1;letter-spacing:-.02em}
+.hero .big.over{color:var(--bad)}
+.stack{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--track)}
+.stack i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--muted)}
+.legend b{color:var(--ink);font-weight:600}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.daily{background:var(--accent-soft);border-radius:var(--r);padding:12px 14px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.daily strong{font-family:var(--display);font-size:1.6rem;line-height:1}
+.banner{background:var(--sunk);border-radius:var(--r);padding:10px 14px;font-size:.9rem;display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+
+/* form */
+section{display:grid;gap:12px}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+form.log{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+form.log .full{grid-column:1/-1}
+label{display:grid;gap:4px;font-size:.8rem;color:var(--muted);font-weight:600}
+input,select,textarea{border:1px solid var(--line);border-radius:8px;background:var(--ground);padding:9px 10px;width:100%;min-width:0}
+.amt{position:relative}
+.amt::before{content:"£";position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.amt input{padding-left:24px}
+.row-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.msg{font-size:.85rem;color:var(--good)}
+.msg.err{color:var(--bad)}
+
+/* envelopes */
+.list{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.env{display:grid;grid-template-columns:1fr auto;gap:6px 14px;padding:12px 14px;border-top:1px solid var(--line)}
+.env:first-child{border-top:0}
+.env .name{font-weight:600;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.env .fig{text-align:right;font-size:.9rem}
+.env .bar{grid-column:1/-1;height:6px;border-radius:3px;background:var(--track);overflow:hidden}
+.env .bar i{display:block;height:100%;background:var(--accent)}
+.env.warn .bar i{background:var(--warn)}
+.env.over .bar i{background:var(--bad)}
+.env.save .bar i{background:var(--save)}
+.env .state{font-size:.8rem}
+.env.over .state{color:var(--bad)}
+.env.warn .state{color:var(--warn)}
+.chip{font-size:.68rem;text-transform:uppercase;letter-spacing:.07em;font-weight:600;border:1px solid var(--line);border-radius:99px;padding:1px 8px;color:var(--muted)}
+.alloc{font-size:.9rem;padding:10px 14px;background:var(--sunk);border-top:1px solid var(--line)}
+.alloc.bad{color:var(--bad)}
+.edit-row{display:grid;grid-template-columns:1.6fr .9fr 1fr auto;gap:8px;padding:10px 14px;border-top:1px solid var(--line);align-items:center}
+.edit-row:first-child{border-top:0}
+.edit-row .amt input{padding-block:7px}
+.x{border:0;background:none;color:var(--muted);font-size:1.2rem;line-height:1;padding:4px 8px;border-radius:6px}
+.x:hover{color:var(--bad);background:var(--sunk)}
+
+/* transactions */
+.tx{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.tx:first-child{border-top:0}
+.tx .d{font-size:.8rem;color:var(--muted);width:3.2em}
+.tx .n{min-width:0}
+.tx .n div:first-child{overflow-wrap:anywhere}
+.tx .n div:last-child{font-size:.8rem;color:var(--muted)}
+.tx .a{font-weight:600}
+.empty{padding:16px 14px;color:var(--muted)}
+
+/* savings */
+.fund{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.fund .bar{height:10px;border-radius:5px;background:var(--track);overflow:hidden}
+.fund .bar i{display:block;height:100%;background:var(--save)}
+.fund .inline{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.fund .inline label{width:9em}
+
+/* tips */
+.tips{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.tip{background:var(--surface);padding:14px;display:grid;gap:4px;align-content:start}
+.tip h3{margin:0;font-size:.95rem;font-family:var(--body);font-weight:600}
+.tip p{margin:0;font-size:.88rem;color:var(--muted)}
+.tip .save-amt{font-size:.78rem;font-weight:600;color:var(--good)}
+.tip a{color:var(--accent)}
+
+/* data */
+.data{display:grid;gap:10px}
+textarea{min-height:90px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.8rem}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--sunk);border-radius:8px;padding:10px 12px;font-size:.9rem}
+footer{font-size:.8rem;color:var(--muted)}
+
+@media (max-width:560px){
+  form.log{grid-template-columns:1fr 1fr}
+  .edit-row{grid-template-columns:1fr 6.5em auto;}
+  .edit-row select{grid-column:1/3}
+  .tips{grid-template-columns:1fr}
+  .hero{padding:18px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .stack i,.env .bar i,.fund .bar i{transition:width .35s ease}
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="mark">£950</span><h1>Nine-Fifty Budget</h1></div>
+    <div class="month">
+      <button type="button" id="prevMonth" aria-label="Previous month">‹</button>
+      <span id="monthLabel" aria-live="polite"></span>
+      <button type="button" id="nextMonth" aria-label="Next month">›</button>
+    </div>
+  </header>
+
+  <div class="hero" id="hero"></div>
+
+  <section aria-labelledby="logH">
+    <div class="head"><h2 id="logH">Log spending</h2><span class="muted" style="font-size:.85rem">Takes 5 seconds. Do it at the till.</span></div>
+    <form class="log" id="logForm" novalidate>
+      <label>Amount<span class="amt"><input id="fAmount" inputmode="decimal" placeholder="0.00" autocomplete="off" required></span></label>
+      <label>Envelope<select id="fEnv"></select></label>
+      <label class="full">What was it?<input id="fNote" placeholder="e.g. Aldi weekly shop" maxlength="60" autocomplete="off"></label>
+      <label>Date<input id="fDate" type="date"></label>
+      <div class="row-actions" style="align-self:end"><button class="btn primary" type="submit">Add entry</button><span class="msg" id="fMsg" role="status"></span></div>
+    </form>
+  </section>
+
+  <section aria-labelledby="envH">
+    <div class="head">
+      <h2 id="envH">Envelopes</h2>
+      <button type="button" class="btn small" id="editToggle">Edit plan</button>
+    </div>
+    <div class="list" id="envList"></div>
+  </section>
+
+  <section aria-labelledby="txH">
+    <div class="head"><h2 id="txH">This month's entries</h2><span class="muted num" id="txCount" style="font-size:.85rem"></span></div>
+    <div class="list" id="txList"></div>
+  </section>
+
+  <section aria-labelledby="fundH">
+    <div class="head"><h2 id="fundH">Emergency fund</h2></div>
+    <div class="fund" id="fund"></div>
+  </section>
+
+  <section aria-labelledby="tipH">
+    <div class="head"><h2 id="tipH">Where £950 stretches further</h2><span class="muted" style="font-size:.85rem">UK schemes worth checking</span></div>
+    <div class="tips">
+      <div class="tip"><h3>Council Tax discounts</h3><p>Living alone gets 25% off automatically if you claim it. On a low income, apply to your council's Council Tax Reduction scheme too.</p><span class="save-amt">Often £30–£60 a month</span></div>
+      <div class="tip"><h3>Help to Save</h3><p>If you get Universal Credit, save up to £50 a month and the government adds a 50% bonus after 2 and 4 years. Put your emergency fund here.</p><span class="save-amt">Up to £1,200 in bonuses</span></div>
+      <div class="tip"><h3>Broadband social tariffs</h3><p>Most big providers offer £12–£20 a month packages if you receive Universal Credit or similar benefits. Ask to switch mid-contract without a fee.</p><span class="save-amt">£10–£20 a month</span></div>
+      <div class="tip"><h3>SIM-only phone plan</h3><p>Once your handset is paid off, a SIM-only deal on a budget network costs £5–£10 a month for plenty of data.</p><span class="save-amt">£10–£25 a month</span></div>
+      <div class="tip"><h3>Check every entitlement</h3><p>Run a free benefits calculator — many people on £950 a month miss help they qualify for. Try <a href="https://www.turn2us.org.uk/" target="_blank" rel="noopener">Turn2us</a> or <a href="https://www.entitledto.co.uk/" target="_blank" rel="noopener">entitledto</a>.</p><span class="save-amt">Can be £100s a month</span></div>
+      <div class="tip"><h3>Food without the waste</h3><p>Shop Aldi or Lidl with a list, plan 3 batch-cook meals a week, and check Too Good To Go or Olio for surplus food near you.</p><span class="save-amt">£30–£50 a month</span></div>
+      <div class="tip"><h3>Energy help</h3><p>Ask your supplier about the Warm Home Discount and fuel-debt support schemes; submit meter readings monthly so you're never overbilled.</p><span class="save-amt">£150 one-off (if eligible)</span></div>
+      <div class="tip"><h3>Travel cheaper</h3><p>Weekly or monthly bus tickets beat daily fares. A Railcard pays for itself after one or two longer trips — 1/3 off rail fares.</p><span class="save-amt">£10–£30 a month</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="dataH">
+    <div class="head"><h2 id="dataH">Your data</h2></div>
+    <div class="data">
+      <p class="muted" style="margin:0;font-size:.9rem">Everything stays in this browser on this device — nothing is sent anywhere. Copy a backup now and then, and paste it back in to restore or move to another device.</p>
+      <div class="row-actions">
+        <button type="button" class="btn" id="copyBackup">Copy backup</button>
+        <button type="button" class="btn" id="showRestore">Restore from backup</button>
+        <button type="button" class="btn danger" id="askReset">Start fresh</button>
+        <span class="msg" id="dataMsg" role="status"></span>
+      </div>
+      <div id="restoreBox" hidden class="data">
+        <label>Paste your backup<textarea id="restoreText" spellcheck="false"></textarea></label>
+        <div class="row-actions"><button type="button" class="btn primary" id="doRestore">Restore</button><button type="button" class="link" id="cancelRestore">Cancel</button></div>
+      </div>
+      <textarea id="backupText" hidden readonly aria-label="Backup text"></textarea>
+      <div id="resetBox" hidden class="confirm">
+        <span>Delete every entry and reset the plan to the £950 starter?</span>
+        <button type="button" class="btn small danger" id="doReset">Delete everything</button>
+        <button type="button" class="link" id="cancelReset">Keep my data</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>Built for a £950 monthly take-home. Figures in the tips are typical ranges, not quotes — check eligibility with each scheme.</footer>
+</div>
+
+<script>
+(() => {
+  const KEY = "ninefifty.v1";
+  const gbp = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+  const money = n => gbp.format(Math.round(n * 100) / 100);
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const uid = () => Math.random().toString(36).slice(2, 10);
+  const pad = n => String(n).padStart(2, "0");
+  const today = new Date();
+  const todayISO = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+  const KINDS = { bill: "Bill", everyday: "Everyday", save: "Savings" };
+
+  function starterPlan() {
+    return [
+      { id: "housing", name: "Rent / housing", budget: 400, kind: "bill" },
+      { id: "ctax", name: "Council tax", budget: 40, kind: "bill" },
+      { id: "energy", name: "Energy & water", budget: 60, kind: "bill" },
+      { id: "phone", name: "Phone & internet", budget: 20, kind: "bill" },
+      { id: "food", name: "Food & groceries", budget: 160, kind: "everyday" },
+      { id: "transport", name: "Transport", budget: 60, kind: "everyday" },
+      { id: "personal", name: "Toiletries & household", budget: 30, kind: "everyday" },
+      { id: "fun", name: "Social & treats", budget: 50, kind: "everyday" },
+      { id: "buffer", name: "Buffer (the unexpected)", budget: 50, kind: "everyday" },
+      { id: "savings", name: "Emergency fund", budget: 80, kind: "save" }
+    ];
+  }
+  function exampleTx() {
+    const ym = todayISO.slice(0, 7);
+    const d = n => `${ym}-${pad(Math.min(n, today.getDate()))}`;
+    return [
+      ["housing", 400, "Rent", 1], ["savings", 80, "Pay day transfer", 1], ["ctax", 40, "Council tax", 1],
+      ["phone", 20, "SIM-only + broadband", 2], ["food", 38.6, "Aldi weekly shop", 2], ["transport", 15, "Weekly bus ticket", 3],
+      ["energy", 60, "Energy direct debit", 5], ["food", 34.15, "Lidl weekly shop", 9], ["fun", 12.5, "Coffee with a friend", 11],
+      ["personal", 8.4, "Toiletries", 12], ["food", 41.2, "Weekly shop", 16]
+    ].map(([env, amount, note, day]) => ({ id: uid(), env, amount, note, date: d(day), example: true }));
+  }
+  function fresh(withExamples) {
+    return { income: 950, envelopes: starterPlan(), tx: withExamples ? exampleTx() : [], fundTarget: 950, fundStart: 0 };
+  }
+
+  let state;
+  try { state = JSON.parse(localStorage.getItem(KEY)); } catch (e) { state = null; }
+  if (!valid(state)) state = fresh(true);
+  function valid(s) { return s && typeof s === "object" && Array.isArray(s.envelopes) && Array.isArray(s.tx) && typeof s.income === "number"; }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  let view = { y: today.getFullYear(), m: today.getMonth() };
+  let editing = false;
+  const ymKey = () => `${view.y}-${pad(view.m + 1)}`;
+  const isCurrent = () => view.y === today.getFullYear() && view.m === today.getMonth();
+  const envById = id => state.envelopes.find(e => e.id === id);
+
+  function monthTx() { return state.tx.filter(t => t.date.slice(0, 7) === ymKey()); }
+  function spentBy(list) {
+    const m = {};
+    list.forEach(t => { m[t.env] = (m[t.env] || 0) + t.amount; });
+    return m;
+  }
+
+  function render() {
+    $("monthLabel").textContent = new Date(view.y, view.m, 1).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
+    const txs = monthTx();
+    const by = spentBy(txs);
+    let spent = 0, saved = 0;
+    txs.forEach(t => { const e = envById(t.env); if (e && e.kind === "save") saved += t.amount; else spent += t.amount; });
+    const left = state.income - spent - saved;
+    renderHero(txs, by, spent, saved, left);
+    renderEnvelopes(by);
+    renderTx(txs);
+    renderFund();
+    renderEnvSelect();
+  }
+
+  function renderHero(txs, by, spent, saved, left) {
+    const inc = Math.max(state.income, spent + saved, 1);
+    const w = v => `${Math.max(0, v) / inc * 100}%`;
+    const daysInMonth = new Date(view.y, view.m + 1, 0).getDate();
+    const daysLeft = daysInMonth - today.getDate() + 1;
+    let dailyHtml = "";
+    if (isCurrent()) {
+      const flexLeft = state.envelopes.filter(e => e.kind === "everyday").reduce((s, e) => s + Math.max(0, e.budget - (by[e.id] || 0)), 0);
+      dailyHtml = `<div class="daily"><strong class="num">${money(flexLeft / daysLeft)}</strong><span>a day for everyday spending over the next <b>${daysLeft}</b> day${daysLeft === 1 ? "" : "s"} — ${money(flexLeft)} left across food, transport, household, social and buffer.</span></div>`;
+    } else {
+      const past = new Date(view.y, view.m + 1, 0) < today;
+      dailyHtml = past
+        ? `<div class="daily"><span>${left >= 0 ? `Month closed <b>${money(left)}</b> under budget. Move it to your emergency fund.` : `Month closed <b>${money(-left)}</b> over. Look at the red envelopes below for next month.`}</span></div>`
+        : `<div class="daily"><span>A future month — log planned bills here as they're scheduled.</span></div>`;
+    }
+    const hasExamples = state.tx.some(t => t.example);
+    $("hero").innerHTML = `
+      ${hasExamples ? `<div class="banner"><span>Showing <b>example entries</b> so you can see how it works.</span><button type="button" class="btn small" id="clearExamples">Clear examples</button></div>` : ""}
+      <div class="eyebrow">Left this month</div>
+      <div class="big num ${left < 0 ? "over" : ""}">${money(left)}</div>
+      <div class="stack" role="img" aria-label="Spent ${money(spent)}, saved ${money(saved)}, left ${money(Math.max(0, left))} of ${money(state.income)}">
+        <i style="width:${w(spent)};background:var(--accent)"></i><i style="width:${w(saved)};background:var(--save)"></i>
+      </div>
+      <div class="legend num">
+        <span><i class="dot" style="background:var(--accent)"></i>Spent <b>${money(spent)}</b></span>
+        <span><i class="dot" style="background:var(--save)"></i>Saved <b>${money(saved)}</b></span>
+        <span><i class="dot" style="background:var(--track)"></i>Income <b>${money(state.income)}</b></span>
+      </div>
+      ${dailyHtml}`;
+    const ce = $("clearExamples");
+    if (ce) ce.onclick = () => { state.tx = state.tx.filter(t => !t.example); save(); render(); };
+  }
+
+  function renderEnvelopes(by) {
+    const planned = state.envelopes.reduce((s, e) => s + (e.budget || 0), 0);
+    const un = state.income - planned;
+    const allocHtml = `<div class="alloc num ${un < 0 ? "bad" : ""}">${
+      un === 0 ? `Every pound has a job: ${money(planned)} planned of ${money(state.income)}.`
+      : un > 0 ? `${money(un)} not yet given a job — add it to your emergency fund or buffer.`
+      : `Planned ${money(-un)} more than you earn. Trim an everyday envelope.`}</div>`;
+    const list = $("envList");
+    $("editToggle").textContent = editing ? "Done" : "Edit plan";
+    if (editing) {
+      list.innerHTML = `
+        <div class="edit-row" style="grid-template-columns:1fr 9em"><label for="incomeIn" style="font-size:.9rem;color:var(--ink)">Monthly take-home income</label><span class="amt"><input id="incomeIn" inputmode="decimal" value="${state.income}"></span></div>
+        ${state.envelopes.map(e => `
+        <div class="edit-row" data-id="${esc(e.id)}">
+          <input aria-label="Envelope name" data-f="name" id="n-${esc(e.id)}" value="${esc(e.name)}" maxlength="40">
+          <span class="amt"><input aria-label="Monthly budget for ${esc(e.name)}" data-f="budget" id="b-${esc(e.id)}" inputmode="decimal" value="${e.budget}"></span>
+          <select aria-label="Type" data-f="kind" id="k-${esc(e.id)}">${Object.entries(KINDS).map(([k, v]) => `<option value="${k}" ${k === e.kind ? "selected" : ""}>${v}</option>`).join("")}</select>
+          <button type="button" class="x" data-del="${esc(e.id)}" aria-label="Remove ${esc(e.name)}">×</button>
+        </div>`).join("")}
+        <div class="edit-row" style="grid-template-columns:1fr"><button type="button" class="btn small" id="addEnv" style="justify-self:start">+ Add envelope</button></div>
+        ${allocHtml}`;
+      $("incomeIn").onchange = ev => { const v = parseMoney(ev.target.value); if (v != null) { state.income = v; save(); render(); } };
+      list.querySelectorAll(".edit-row[data-id]").forEach(row => {
+        const e = envById(row.dataset.id);
+        row.querySelectorAll("[data-f]").forEach(inp => inp.onchange = () => {
+          const f = inp.dataset.f;
+          if (f === "budget") { const v = parseMoney(inp.value); if (v == null) return; e.budget = v; }
+          else if (f === "name") e.name = inp.value.trim() || e.name;
+          else e.kind = inp.value;
+          save(); render();
+        });
+      });
+      list.querySelectorAll("[data-del]").forEach(b => b.onclick = () => {
+        state.envelopes = state.envelopes.filter(e => e.id !== b.dataset.del); save(); render();
+      });
+      $("addEnv").onclick = () => {
+        const id = uid(); state.envelopes.push({ id, name: "New envelope", budget: 0, kind: "everyday" }); save(); render();
+        const n = $("n-" + id); if (n) { n.focus(); n.select(); }
+      };
+      return;
+    }
+    list.innerHTML = state.envelopes.map(e => {
+      const s = by[e.id] || 0, b = e.budget || 0;
+      const pct = b ? Math.min(100, s / b * 100) : (s ? 100 : 0);
+      let cls = "", stateTxt;
+      if (e.kind === "save") { cls = "save"; stateTxt = s >= b ? "Saved this month ✓" : `${money(b - s)} still to save`; }
+      else if (e.kind === "bill") { cls = s > b ? "over" : ""; stateTxt = s === 0 ? "Not paid yet" : s > b ? `${money(s - b)} more than planned` : s === b ? "Paid ✓" : `Paid ${money(s)}`; }
+      else { cls = s > b ? "over" : pct >= 85 ? "warn" : ""; stateTxt = s > b ? `${money(s - b)} over` : `${money(b - s)} left`; }
+      return `<div class="env ${cls}">
+        <div class="name">${esc(e.name)} <span class="chip">${KINDS[e.kind] || "Everyday"}</span></div>
+        <div class="fig num">${money(s)} <span class="muted">of ${money(b)}</span></div>
+        <div class="bar"><i style="width:${pct}%"></i></div>
+        <div class="state num" style="grid-column:1/-1">${stateTxt}</div>
+      </div>`;
+    }).join("") + allocHtml;
+  }
+
+  function renderTx(txs) {
+    const sorted = [...txs].sort((a, b) => b.date.localeCompare(a.date));
+    $("txCount").textContent = sorted.length ? `${sorted.length} entr${sorted.length === 1 ? "y" : "ies"}` : "";
+    $("txList").innerHTML = sorted.length ? sorted.map(t => {
+      const e = envById(t.env);
+      const dt = new Date(t.date + "T00:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+      return `<div class="tx"><span class="d num">${dt}</span>
+        <div class="n"><div>${esc(t.note || (e ? e.name : "Entry"))}${t.example ? ' <span class="chip">Example</span>' : ""}</div><div>${esc(e ? e.name : "Removed envelope")}</div></div>
+        <span class="a num">${money(t.amount)}</span>
+        <button type="button" class="x" data-tx="${esc(t.id)}" aria-label="Delete entry">×</button></div>`;
+    }).join("") : `<div class="empty">Nothing logged for this month yet.</div>`;
+    $("txList").querySelectorAll("[data-tx]").forEach(b => b.onclick = () => {
+      state.tx = state.tx.filter(t => t.id !== b.dataset.tx); save(); render();
+    });
+  }
+
+  function renderFund() {
+    const saveIds = new Set(state.envelopes.filter(e => e.kind === "save").map(e => e.id));
+    const saved = (state.fundStart || 0) + state.tx.filter(t => saveIds.has(t.env)).reduce((s, t) => s + t.amount, 0);
+    const target = state.fundTarget || 0;
+    const monthly = state.envelopes.filter(e => e.kind === "save").reduce((s, e) => s + e.budget, 0);
+    const pct = target ? Math.min(100, saved / target * 100) : 0;
+    const remaining = Math.max(0, target - saved);
+    const months = monthly > 0 ? Math.ceil(remaining / monthly) : null;
+    let eta = "";
+    if (remaining === 0 && target) eta = "Target reached. Keep it for emergencies only, and consider raising it to three months of essentials.";
+    else if (months) { const d = new Date(today.getFullYear(), today.getMonth() + months, 1); eta = `At ${money(monthly)} a month you'll get there in about <b>${months} month${months === 1 ? "" : "s"}</b> — around ${d.toLocaleDateString("en-GB", { month: "long", year: "numeric" })}.`; }
+    else eta = "Give a savings envelope a monthly amount to see when you'll reach your target.";
+    $("fund").innerHTML = `
+      <div class="head"><div><div class="eyebrow">Saved so far</div><div class="num" style="font-family:var(--display);font-size:1.8rem;font-weight:700">${money(saved)}</div></div>
+      <div class="num muted" style="text-align:right">Target ${money(target)}<br>${Math.round(pct)}%</div></div>
+      <div class="bar" role="img" aria-label="${Math.round(pct)}% of target"><i style="width:${pct}%"></i></div>
+      <p style="margin:0;font-size:.92rem">${eta}</p>
+      <div class="inline">
+        <label>Target<span class="amt"><input id="fundTarget" inputmode="decimal" value="${target}"></span></label>
+        <label>Already saved before<span class="amt"><input id="fundStart" inputmode="decimal" value="${state.fundStart || 0}"></span></label>
+      </div>`;
+    $("fundTarget").onchange = ev => { const v = parseMoney(ev.target.value); if (v != null) { state.fundTarget = v; save(); render(); } };
+    $("fundStart").onchange = ev => { const v = parseMoney(ev.target.value); if (v != null) { state.fundStart = v; save(); render(); } };
+  }
+
+  function renderEnvSelect() {
+    const sel = $("fEnv"), cur = sel.value;
+    sel.innerHTML = state.envelopes.map(e => `<option value="${esc(e.id)}">${esc(e.name)}</option>`).join("");
+    if (cur && envById(cur)) sel.value = cur; else if (envById("food")) sel.value = "food";
+  }
+
+  function parseMoney(v) {
+    const n = parseFloat(String(v).replace(/[£,\s]/g, ""));
+    return isFinite(n) && n >= 0 ? Math.round(n * 100) / 100 : null;
+  }
+
+  // Log form
+  $("fDate").value = todayISO;
+  $("logForm").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const amt = parseMoney($("fAmount").value), msg = $("fMsg");
+    if (!amt) { msg.className = "msg err"; msg.textContent = "Enter an amount, like 4.50"; $("fAmount").focus(); return; }
+    const date = $("fDate").value || todayISO;
+    state.tx.push({ id: uid(), env: $("fEnv").value, amount: amt, note: $("fNote").value.trim(), date });
+    save();
+    const [y, m] = date.split("-").map(Number); view = { y, m: m - 1 };
+    render();
+    msg.className = "msg"; msg.textContent = `Added ${money(amt)}`;
+    $("fAmount").value = ""; $("fNote").value = ""; $("fAmount").focus();
+    setTimeout(() => { msg.textContent = ""; }, 2500);
+  });
+
+  $("prevMonth").onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } render(); };
+  $("nextMonth").onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } render(); };
+  $("editToggle").onclick = () => { editing = !editing; render(); };
+
+  // Data
+  const dataMsg = t => { $("dataMsg").textContent = t; setTimeout(() => { $("dataMsg").textContent = ""; }, 3000); };
+  $("copyBackup").onclick = () => {
+    const text = JSON.stringify(state);
+    const box = $("backupText");
+    const fallback = () => { box.hidden = false; box.value = text; box.focus(); box.select(); dataMsg("Select all and copy the text below."); };
+    try {
+      navigator.clipboard.writeText(text).then(() => { box.hidden = true; dataMsg("Backup copied. Paste it into a note or email to yourself."); }, fallback);
+    } catch (e) { fallback(); }
+  };
+  $("showRestore").onclick = () => { $("restoreBox").hidden = false; $("restoreText").focus(); };
+  $("cancelRestore").onclick = () => { $("restoreBox").hidden = true; };
+  $("doRestore").onclick = () => {
+    let s; try { s = JSON.parse($("restoreText").value); } catch (e) { s = null; }
+    if (!valid(s)) { dataMsg("That doesn't look like a Nine-Fifty backup. Paste the whole text you copied."); return; }
+    state = s; save(); $("restoreBox").hidden = true; $("restoreText").value = ""; render(); dataMsg("Backup restored.");
+  };
+  $("askReset").onclick = () => { $("resetBox").hidden = false; };
+  $("cancelReset").onclick = () => { $("resetBox").hidden = true; };
+  $("doReset").onclick = () => { state = fresh(false); save(); $("resetBox").hidden = true; editing = false; render(); dataMsg("Reset to the £950 starter plan."); };
+
+  render();
+})();
+</script>
+</body>
+</html>
