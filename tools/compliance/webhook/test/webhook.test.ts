@@ -6,22 +6,27 @@ import { WebhookDeps } from "../src/webhookHandler";
 import { InMemoryIdempotencyStore } from "../src/idempotencyStore";
 import { NullEmailProvider } from "../src/emailProvider";
 import { StaticCustomerLookup } from "../src/customerLookup";
+import { InMemoryActionLog } from "../src/actionLog";
 import { signStripePayload, subscriptionActiveEvent, FakeScheduler, postWebhook } from "./testHelpers";
 
 const SECRET = "whsec_test_secret_do_not_use_in_prod";
 
-function buildDeps(overrides: Partial<WebhookDeps> = {}): { deps: WebhookDeps; provider: NullEmailProvider; scheduler: FakeScheduler } {
+function buildDeps(
+  overrides: Partial<WebhookDeps> = {}
+): { deps: WebhookDeps; provider: NullEmailProvider; scheduler: FakeScheduler; actionLog: InMemoryActionLog } {
   const provider = new NullEmailProvider();
   const scheduler = new FakeScheduler();
+  const actionLog = new InMemoryActionLog();
   const deps: WebhookDeps = {
     webhookSecret: SECRET,
     idempotencyStore: new InMemoryIdempotencyStore(),
     customerLookup: new StaticCustomerLookup({ cus_123: "customer@acme.example" }),
     emailProvider: provider,
     scheduler,
+    actionLog,
     ...overrides,
   };
-  return { deps, provider, scheduler };
+  return { deps, provider, scheduler, actionLog };
 }
 
 test("valid subscription-activation webhook enrolls the customer and returns 200", async () => {
@@ -37,7 +42,22 @@ test("valid subscription-activation webhook enrolls the customer and returns 200
   assert.deepEqual(res.body, { received: true });
   assert.equal(provider.sent.length, 1, "Day 0 email should have been sent");
   assert.equal(provider.sent[0].to, "customer@acme.example");
-  assert.equal(scheduler.scheduled.length, 4, "days 3/7/14/30 should be scheduled");
+  assert.equal(scheduler.scheduled.length, 6, "onboarding days 3/7/14/30 (4) + first quarterly royalty reminder + first renewal quote (2) should be scheduled");
+});
+
+test("valid subscription-activation webhook also enrolls the customer into the licensing-agreement lifecycle comms", async () => {
+  const { deps, provider, actionLog } = buildDeps();
+  const app = createApp(deps);
+
+  const body = subscriptionActiveEvent({ eventId: "evt_lifecycle", subscriptionId: "sub_lifecycle", customerId: "cus_123" });
+  const signature = signStripePayload(body, SECRET);
+
+  await postWebhook(app, body, signature);
+
+  // Onboarding Day 0 already sent; no lifecycle email fires synchronously --
+  // both quarterly reminder and renewal quote are scheduled for the future.
+  assert.equal(provider.sent.length, 1);
+  assert.equal(actionLog.actions.length, 0, "nothing lifecycle-related has fired yet, so nothing should be logged yet");
 });
 
 test("invalid signature is rejected with 400 and no email is sent", async () => {
