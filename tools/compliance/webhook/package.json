@@ -2,7 +2,7 @@
   "name": "solomon-billing-webhook",
   "version": "1.0.0",
   "private": true,
-  "description": "Stripe subscription-activation webhook that enrolls customers into the Solomon 5-part onboarding email sequence (Days 0, 3, 7, 14, 30).",
+  "description": "Stripe and GoCardless billing webhooks that enroll customers into the Solomon 5-part onboarding email sequence (Days 0, 3, 7, 14, 30) and the licensing agreement's quarterly royalty-report and renewal-quote comms.",
   "type": "commonjs",
   "main": "dist/server.js",
   "scripts": {

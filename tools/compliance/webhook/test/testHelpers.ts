@@ -59,3 +59,38 @@ export function subscriptionActiveEvent(opts: {
     },
   });
 }
+
+/** POSTs a GoCardless webhook body -- same raw-body Content-Type gotcha as postWebhook() above. */
+export function postGoCardlessWebhook(app: Express, body: string, signatureHeader: string) {
+  return request(app)
+    .post("/webhooks/gocardless")
+    .set("Webhook-Signature", signatureHeader)
+    .set("Content-Type", "application/json")
+    .send(body);
+}
+
+/** HMAC-SHA256 hex of the raw body -- GoCardless's documented scheme, independently of gocardlessSignature.ts. */
+export function signGoCardlessPayload(rawBody: string, secret: string): string {
+  return crypto.createHmac("sha256", secret).update(rawBody).digest("hex");
+}
+
+export function mandateEventBatch(
+  events: Array<{
+    eventId: string;
+    action?: string;
+    resourceType?: string;
+    mandateId?: string;
+    customerId?: string;
+  }>
+): string {
+  return JSON.stringify({
+    events: events.map((e) => ({
+      id: e.eventId,
+      resource_type: e.resourceType ?? "mandates",
+      action: e.action ?? "active",
+      links: { mandate: e.mandateId ?? "MD001", customer: e.customerId ?? "CU001" },
+      created_at: new Date().toISOString(),
+    })),
+    meta: { webhook_id: "WH001" },
+  });
+}

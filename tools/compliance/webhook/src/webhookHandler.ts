@@ -23,6 +23,8 @@ import { CustomerLookup } from "./customerLookup";
 import { EmailProvider } from "./emailProvider";
 import { Scheduler } from "./scheduler";
 import { enrollSequence } from "./emailSequence";
+import { ActionLog } from "./actionLog";
+import { enrollLicenseLifecycle, DEFAULT_LICENSE_TERMS, LicenseTerms } from "./clientLifecycle";
 
 export interface WebhookDeps {
   webhookSecret: string;
@@ -30,6 +32,9 @@ export interface WebhookDeps {
   customerLookup: CustomerLookup;
   emailProvider: EmailProvider;
   scheduler: Scheduler;
+  actionLog: ActionLog;
+  /** Negotiated Section 4 term lengths for this subscription's licensing agreement; defaults to DEFAULT_LICENSE_TERMS (standard 1-year self-serve terms) when omitted. */
+  licenseTerms?: LicenseTerms;
   now?: () => Date;
 }
 
@@ -133,6 +138,22 @@ export async function handleStripeWebhook(
 
   await deps.idempotencyStore.markSubscriptionEnrolled(subscriptionId);
   await deps.idempotencyStore.markEventProcessed(event.id);
+
+  // Licensing-agreement lifecycle comms (quarterly report reminders, renewal
+  // quotes) are enrolled alongside onboarding but are not on the critical
+  // path for this response: a failure here must not cause Stripe to retry
+  // the whole webhook and re-send the Day-0 onboarding email, which has
+  // already gone out successfully above.
+  try {
+    enrollLicenseLifecycle(
+      { email, customerId, subscriptionId },
+      (deps.now ?? (() => new Date()))(),
+      deps.licenseTerms ?? DEFAULT_LICENSE_TERMS,
+      { provider: deps.emailProvider, scheduler: deps.scheduler, actionLog: deps.actionLog, now: deps.now }
+    );
+  } catch (err) {
+    console.error(`[webhook] license lifecycle enrollment failed for subscription ${subscriptionId}:`, err);
+  }
 
   return { status: 200, body: { received: true } };
 }
