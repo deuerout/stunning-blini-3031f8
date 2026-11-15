@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#05070e" />
+<title>HERMES · The Global Shift — Realtime Blockchain Intelligence &amp; Mythos Cyber Security</title>
+<meta name="description" content="Hermes agentic AI fuses realtime blockchain analytics with Mythos cyber security threat intelligence. Live charts, risk scoring, and an AI analyst that never sleeps." />
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     ============================================================ */
+  :root{
+    --bg:#05070e;
+    --bg-2:#070b16;
+    --panel:rgba(11,17,30,.72);
+    --panel-solid:#0a0f1c;
+    --stroke:rgba(120,170,255,.14);
+    --stroke-hi:rgba(0,234,255,.38);
+    --cyan:#00eaff;
+    --magenta:#ff2fd0;
+    --violet:#8b5cff;
+    --lime:#5cff9d;
+    --amber:#ffb020;
+    --red:#ff3b6b;
+    --text:#dfe9ff;
+    --muted:#8296b8;
+    --radius:16px;
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --shadow-neon: 0 0 0 1px rgba(0,234,255,.18), 0 0 28px -6px rgba(0,234,255,.45);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--text);
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(900px 600px at 12% -8%, rgba(0,234,255,.16), transparent 60%),
+      radial-gradient(800px 520px at 92% 4%, rgba(255,47,208,.14), transparent 62%),
+      radial-gradient(1000px 700px at 50% 108%, rgba(139,92,255,.15), transparent 65%),
+      linear-gradient(180deg,#05070e 0%, #060a14 45%, #05070e 100%);
+    pointer-events:none;
+  }
+  body::after{
+    content:"";
+    position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.35;
+    background-image:
+      linear-gradient(rgba(120,170,255,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120,170,255,.055) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+    -webkit-mask-image:radial-gradient(circle at 50% 30%, #000 0%, transparent 78%);
+  }
+
+  a{color:var(--cyan); text-decoration:none}
+  a:hover{text-decoration:underline}
+  ::selection{background:rgba(0,234,255,.28); color:#fff}
+
+  :focus-visible{
+    outline:2px solid var(--cyan);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;
+  }
+  .skip-link{
+    position:absolute; left:12px; top:-64px; z-index:999;
+    background:var(--cyan); color:#001018; font-weight:700;
+    padding:10px 18px; border-radius:0 0 12px 12px; transition:top .2s ease;
+  }
+  .skip-link:focus{top:0}
+
+  .wrap{width:min(1240px, 100% - 40px); margin-inline:auto}
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  .nav{
+    position:sticky; top:0; z-index:100;
+    backdrop-filter:blur(16px) saturate(150%);
+    -webkit-backdrop-filter:blur(16px) saturate(150%);
+    background:rgba(5,7,14,.72);
+    border-bottom:1px solid var(--stroke);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px; flex-wrap:wrap; padding:12px 0;
+  }
+  .brand{display:flex; align-items:center; gap:11px; color:var(--text); text-decoration:none}
+  .brand:hover{text-decoration:none}
+  .brand-mark{
+    width:34px; height:34px; border-radius:10px; flex:0 0 auto;
+    display:grid; place-items:center;
+    background:linear-gradient(140deg, rgba(0,234,255,.22), rgba(255,47,208,.22));
+    border:1px solid var(--stroke-hi);
+    box-shadow:0 0 22px -4px rgba(0,234,255,.7), inset 0 0 14px rgba(139,92,255,.35);
+    font-family:var(--mono); font-weight:700; font-size:15px; color:#bff8ff;
+    text-shadow:0 0 12px rgba(0,234,255,.9);
+  }
+  .brand-text{display:flex; flex-direction:column; line-height:1.05}
+  .brand-text strong{
+    font-size:15px; letter-spacing:.18em; font-weight:800;
+    color:#eaf7ff; text-shadow:0 0 16px rgba(0,234,255,.5);
+  }
+  .brand-text em{
+    font-style:normal; font-size:9.5px; letter-spacing:.28em;
+    color:var(--muted); text-transform:uppercase;
+  }
+  .nav-links{display:flex; gap:4px; flex-wrap:wrap}
+  .nav-links a{
+    color:#a9bddc; font-size:13px; font-weight:600; letter-spacing:.04em;
+    padding:8px 12px; border-radius:9px; transition:all .18s ease;
+    text-decoration:none;
+  }
+  .nav-links a:hover{color:#eaf7ff; background:rgba(0,234,255,.09); text-decoration:none}
+  .nav-status{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.18em;
+    color:var(--lime); padding:7px 13px; border-radius:999px;
+    border:1px solid rgba(92,255,157,.32);
+    background:rgba(92,255,157,.07);
+    box-shadow:0 0 20px -6px rgba(92,255,157,.75);
+  }
+  .pulse{
+    width:7px; height:7px; border-radius:50%; background:var(--lime);
+    box-shadow:0 0 0 0 rgba(92,255,157,.8);
+    animation:pulse 2s infinite;
+  }
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(92,255,157,.7)}
+    70%{box-shadow:0 0 0 9px rgba(92,255,157,0)}
+    100%{box-shadow:0 0 0 0 rgba(92,255,157,0)}
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero{
+    position:relative; padding:clamp(48px,8vw,110px) 0 clamp(40px,6vw,80px);
+    text-align:center; overflow:hidden;
+  }
+  .hero-orb{
+    position:absolute; left:50%; top:-140px; transform:translateX(-50%);
+    width:760px; height:760px; border-radius:50%; pointer-events:none;
+    background:radial-gradient(circle, rgba(0,234,255,.16) 0%, rgba(139,92,255,.12) 38%, transparent 68%);
+    filter:blur(28px); z-index:-1;
+    animation:orbFloat 14s ease-in-out infinite;
+  }
+  @keyframes orbFloat{
+    0%,100%{transform:translateX(-50%) translateY(0) scale(1)}
+    50%{transform:translateX(-50%) translateY(28px) scale(1.06)}
+  }
+  .hero-badge{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:var(--mono); font-size:11px; letter-spacing:.22em;
+    color:#9fe9ff; padding:8px 16px; border-radius:999px;
+    border:1px solid rgba(0,234,255,.35);
+    background:linear-gradient(90deg, rgba(0,234,255,.12), rgba(255,47,208,.12));
+    box-shadow:0 0 26px -8px rgba(0,234,255,.9), inset 0 0 18px rgba(0,234,255,.1);
+    margin-bottom:26px;
+  }
+  .hero h1{
+    margin:0 0 8px; font-size:clamp(2.1rem, 6.2vw, 4.4rem);
+    line-height:1.04; font-weight:800; letter-spacing:-.03em;
+    background:linear-gradient(100deg,#ffffff 0%, #9fe9ff 34%, #00eaff 52%, #ff2fd0 78%, #8b5cff 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter:drop-shadow(0 0 26px rgba(0,234,255,.35));
+  }
+  .hero h1 .line2{
+    display:block; font-size:.52em; letter-spacing:.02em;
+    margin-top:.42em; font-weight:700;
+    background:linear-gradient(100deg,#c9d9ff,#8b5cff 50%,#ff2fd0);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lede{
+    max-width:680px; margin:22px auto 0; font-size:clamp(.98rem,1.9vw,1.14rem);
+    color:#a8bcdb;
+  }
+  .hero p.lede strong{color:#eaf7ff; font-weight:700}
+  .hero-cta{display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-top:34px}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    font-family:var(--sans); font-weight:700; font-size:14.5px;
+    padding:14px 28px; border-radius:12px; cursor:pointer;
+    border:1px solid transparent; transition:transform .16s ease, box-shadow .22s ease, background .22s ease;
+    text-decoration:none;
+  }
+  .btn:hover{text-decoration:none; transform:translateY(-2px)}
+  .btn-primary{
+    color:#00131a;
+    background:linear-gradient(100deg,#00eaff,#5cffd6 60%,#8b5cff);
+    box-shadow:0 0 30px -6px rgba(0,234,255,.9), 0 10px 30px -14px rgba(139,92,255,.9);
+  }
+  .btn-primary:hover{box-shadow:0 0 42px -4px rgba(0,234,255,1), 0 14px 34px -12px rgba(139,92,255,1)}
+  .btn-ghost{
+    color:#cfe6ff; background:rgba(255,255,255,.03);
+    border-color:rgba(120,170,255,.28);
+  }
+  .btn-ghost:hover{background:rgba(0,234,255,.1); border-color:var(--stroke-hi); box-shadow:var(--shadow-neon)}
+
+  .hero-stats{
+    display:flex; gap:14px; justify-content:center; flex-wrap:wrap;
+    margin-top:44px;
+  }
+  .stat-pill{
+    display:flex; flex-direction:column; gap:2px; min-width:150px;
+    padding:14px 20px; border-radius:14px;
+    background:var(--panel); border:1px solid var(--stroke);
+    backdrop-filter:blur(10px);
+  }
+  .stat-pill .k{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .stat-pill .v{
+    font-family:var(--mono); font-size:20px; font-weight:700; color:#eaf7ff;
+    text-shadow:0 0 18px rgba(0,234,255,.5);
+  }
+  .stat-pill .v.cy{color:var(--cyan); text-shadow:0 0 18px rgba(0,234,255,.7)}
+  .stat-pill .v.mg{color:var(--magenta); text-shadow:0 0 18px rgba(255,47,208,.7)}
+  .stat-pill .v.lm{color:var(--lime); text-shadow:0 0 18px rgba(92,255,157,.7)}
+
+  /* ============================================================
+     TICKER
+     ============================================================ */
+  .ticker{
+    border-block:1px solid var(--stroke);
+    background:linear-gradient(90deg, rgba(0,234,255,.05), rgba(255,47,208,.05));
+    overflow:hidden; position:relative;
+    mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .ticker-track{
+    display:flex; gap:0; width:max-content;
+    animation:scrollX 46s linear infinite;
+  }
+  .ticker:hover .ticker-track{animation-play-state:paused}
+  @keyframes scrollX{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .tick{
+    display:inline-flex; align-items:center; gap:9px;
+    padding:11px 26px; font-family:var(--mono); font-size:11.5px;
+    letter-spacing:.08em; color:#9db4d6; white-space:nowrap;
+    border-right:1px solid rgba(120,170,255,.1);
+  }
+  .tick b{color:#eaf7ff; font-weight:700}
+  .tick .up{color:var(--lime)}
+  .tick .dn{color:var(--red)}
+
+  /* ============================================================
+     SECTIONS
+     ============================================================ */
+  section{scroll-margin-top:82px}
+  .sec{padding:clamp(46px,7vw,86px) 0}
+  .sec-head{max-width:720px; margin-bottom:32px}
+  .sec-head .eyebrow{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.3em;
+    text-transform:uppercase; color:var(--cyan);
+    text-shadow:0 0 16px rgba(0,234,255,.8);
+  }
+  .sec-head h2{
+    margin:10px 0 12px; font-size:clamp(1.55rem,3.6vw,2.4rem);
+    font-weight:800; letter-spacing:-.02em; line-height:1.14;
+    color:#f0f7ff;
+  }
+  .sec-head p{margin:0; color:var(--muted); font-size:15px}
+
+  /* Cards */
+  .card{
+    position:relative;
+    background:var(--panel);
+    border:1px solid var(--stroke);
+    border-radius:var(--radius);
+    padding:20px;
+    backdrop-filter:blur(12px);
+    -webkit-backdrop-filter:blur(12px);
+    overflow:hidden;
+    transition:border-color .25s ease, box-shadow .25s ease;
+  }
+  .card::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(160deg, rgba(0,234,255,.07), transparent 42%);
+  }
+  .card:hover{border-color:rgba(0,234,255,.3); box-shadow:0 0 40px -18px rgba(0,234,255,.85)}
+  .card-head{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:12px; margin-bottom:14px; position:relative; z-index:1;
+  }
+  .card-title{
+    display:flex; align-items:center; gap:9px;
+    font-size:13px; font-weight:700; letter-spacing:.14em;
+    text-transform:uppercase; color:#bcd4f5; margin:0;
+  }
+  .card-title .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--cyan);
+    box-shadow:0 0 12px var(--cyan); animation:pulse 2.4s infinite;
+  }
+  .card-title .dot.mg{background:var(--magenta); box-shadow:0 0 12px var(--magenta)}
+  .card-title .dot.lm{background:var(--lime); box-shadow:0 0 12px var(--lime)}
+  .tag{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.16em;
+    padding:4px 10px; border-radius:999px; text-transform:uppercase;
+    color:var(--cyan); border:1px solid rgba(0,234,255,.3);
+    background:rgba(0,234,255,.08);
+  }
+
+  /* Dashboard grid */
+  .dash-grid{display:grid; grid-template-columns:repeat(12,1fr); gap:16px}
+  .col-8{grid-column:span 8}
+  .col-7{grid-column:span 7}
+  .col-5{grid-column:span 5}
+  .col-4{grid-column:span 4}
+  .col-12{grid-column:span 12}
+  @media (max-width:980px){
+    .col-8,.col-7,.col-5,.col-4{grid-column:span 12}
+  }
+
+  /* Chart */
+  .chart-meta{display:flex; gap:22px; flex-wrap:wrap; margin-bottom:12px; position:relative; z-index:1}
+  .chart-meta .m{display:flex; flex-direction:column}
+  .chart-meta .m .lbl{
+    font-family:var(--mono); font-size:9px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted);
+  }
+  .chart-meta .m .val{
+    font-family:var(--mono); font-size:18px; font-weight:700; color:#eaf7ff;
+  }
+  .chart-meta .m .val.cy{color:var(--cyan); text-shadow:0 0 16px rgba(0,234,255,.65)}
+  .chart-box{position:relative; height:250px; width:100%; z-index:1}
+  .chart-box canvas{width:100%; height:100%; display:block; border-radius:10px}
+  .legend{
+    display:flex; gap:16px; flex-wrap:wrap; margin-top:12px;
+    font-family:var(--mono); font-size:10.5px; color:var(--muted);
+    position:relative; z-index:1;
+  }
+  .legend span{display:inline-flex; align-items:center; gap:7px}
+  .legend i{width:14px; height:3px; border-radius:2px; display:inline-block}
+
+  /* Stats grid */
+  .stats-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; position:relative; z-index:1}
+  .stat{
+    padding:12px 13px; border-radius:11px;
+    background:rgba(255,255,255,.028);
+    border:1px solid rgba(120,170,255,.1);
+  }
+  .stat .lbl{
+    font-family:var(--mono); font-size:9px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--muted); display:block; margin-bottom:4px;
+  }
+  .stat .val{
+    font-family:var(--mono); font-size:16px; font-weight:700; color:#eaf7ff;
+    letter-spacing:-.01em;
+  }
+  .stat .val.cy{color:var(--cyan)}
+  .stat .val.lm{color:var(--lime)}
+  .stat .val.mg{color:var(--magenta)}
+  .stat .val.am{color:var(--amber)}
+
+  /* Transaction feed */
+  .feed-controls{display:flex; gap:8px; align-items:center}
+  .mini-btn{
+    font-family:var(--mono); font-size:10px; letter-spacing:.14em;
+    text-transform:uppercase; padding:6px 12px; border-radius:8px; cursor:pointer;
+    color:#9fe9ff; background:rgba(0,234,255,.08);
+    border:1px solid rgba(0,234,255,.3); transition:all .18s ease;
+  }
+  .mini-btn:hover{background:rgba(0,234,255,.18); box-shadow:0 0 20px -6px rgba(0,234,255,.9)}
+  .tx-list{
+    list-style:none; margin:0; padding:0; max-height:330px; overflow-y:auto;
+    position:relative; z-index:1; scrollbar-width:thin;
+    scrollbar-color:rgba(0,234,255,.35) transparent;
+  }
+  .tx-list::-webkit-scrollbar{width:6px}
+  .tx-list::-webkit-scrollbar-thumb{background:rgba(0,234,255,.3); border-radius:99px}
+  .tx{
+    display:grid; grid-template-columns:60px 1fr auto auto;
+    align-items:center; gap:12px; padding:9px 8px;
+    border-bottom:1px solid rgba(120,170,255,.07);
+    font-family:var(--mono); font-size:12px;
+    animation:txIn .38s cubic-bezier(.2,.9,.3,1);
+  }
+  .tx:hover{background:rgba(0,234,255,.045); border-radius:8px}
+  @keyframes txIn{
+    from{opacity:0; transform:translateY(-9px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+  .tx-chain{
+    font-size:9.5px; font-weight:700; letter-spacing:.1em; text-align:center;
+    padding:3px 0; border-radius:5px;
+    color:var(--c, #8b9dff);
+    background:color-mix(in srgb, var(--c, #8b9dff) 14%, transparent);
+    border:1px solid color-mix(in srgb, var(--c, #8b9dff) 38%, transparent);
+  }
+  .tx-hash{color:#9fb6d8; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+  .tx-val{color:#eaf7ff; font-weight:700}
+  .tx-risk{
+    font-size:9.5px; letter-spacing:.1em; padding:3px 8px; border-radius:999px;
+    border:1px solid; font-weight:700;
+  }
+  .risk-low{color:var(--lime); border-color:rgba(92,255,157,.4); background:rgba(92,255,157,.09)}
+  .risk-med{color:var(--amber); border-color:rgba(255,176,32,.4); background:rgba(255,176,32,.09)}
+  .risk-high{color:var(--red); border-color:rgba(255,59,107,.42); background:rgba(255,59,107,.1)}
+
+  /* Threat panel */
+  .threat-top{display:flex; gap:18px; align-items:center; margin-bottom:16px; position:relative; z-index:1; flex-wrap:wrap}
+  .gauge-wrap{position:relative; width:130px; height:130px; flex:0 0 auto}
+  .gauge{width:100%; height:100%; transform:rotate(0deg)}
+  .gauge-track{fill:none; stroke:rgba(120,170,255,.12); stroke-width:9}
+  .gauge-fill{
+    fill:none; stroke:var(--gauge-color, var(--amber)); stroke-width:9;
+    stroke-linecap:round;
+    stroke-dasharray:351.86; stroke-dashoffset:351.86;
+    transition:stroke-dashoffset .8s cubic-bezier(.3,1,.4,1), stroke .5s ease;
+    filter:drop-shadow(0 0 8px var(--gauge-color, var(--amber)));
+  }
+  .gauge-center{
+    position:absolute; inset:0; display:grid; place-content:center; text-align:center;
+  }
+  .gauge-center .n{
+    font-family:var(--mono); font-size:26px; font-weight:800; line-height:1;
+    color:var(--gauge-color, var(--amber));
+    text-shadow:0 0 22px var(--gauge-color, var(--amber));
+  }
+  .gauge-center .l{
+    font-family:var(--mono); font-size:8.5px; letter-spacing:.2em;
+    text-transform:uppercase; color:var(--muted); margin-top:5px;
+  }
+  .threat-meta{flex:1 1 160px; min-width:150px}
+  .threat-meta .lvl{
+    font-family:var(--mono); font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; font-weight:700;
+    color:var(--gauge-color, var(--amber));
+  }
+  .threat-meta p{margin:6px 0 0; font-size:12.5px; color:var(--muted); line-height:1.5}
+
+  .vectors{list-style:none; margin:0; padding:0; position:relative; z-index:1}
+  .vector{margin-bottom:13px}
+  .vector:last-child{margin-bottom:0}
+  .vector-top{display:flex; justify-content:space-between; gap:10px; margin-bottom:6px}
+  .vector-name{font-size:12.5px; color:#c3d6f2; font-weight:600}
+  .vector-score{font-family:var(--mono); font-size:11.5px; font-weight:700; color:var(--muted)}
+  .bar{height:6px; border-radius:99px; background:rgba(120,170,255,.11); overflow:hidden}
+  .bar > i{
+    display:block; height:100%; width:0%; border-radius:99px;
+    transition:width .8s cubic-bezier(.3,1,.4,1), background .4s ease;
+    background:linear-gradient(90deg, var(--lime), var(--amber));
+    box-shadow:0 0 12px rgba(255,176,32,.7);
+  }
+  .bar > i.hot{background:linear-gradient(90deg, var(--amber), var(--red)); box-shadow:0 0 12px rgba(255,59,107,.8)}
+  .bar > i.cool{background:linear-gradient(90deg, var(--cyan), var(--lime)); box-shadow:0 0 12px rgba(92,255,157,.7)}
+
+  /* ============================================================
+     HERMES CHAT
+     ============================================================ */
+  .hermes-grid{display:grid; grid-template-columns:1.55fr 1fr; gap:18px}
+  @media (max-width:980px){ .hermes-grid{grid-template-columns:1fr} }
+
+  .chat-card{display:flex; flex-direction:column; min-height:520px; padding:0; overflow:hidden}
+  .chat-head{
+    display:flex; align-items:center; gap:12px; padding:16px 20px;
+    border-bottom:1px solid var(--stroke);
+    background:linear-gradient(90deg, rgba(0,234,255,.07), rgba(255,47,208,.05));
+  }
+  .chat-avatar{
+    width:36px; height:36px; border-radius:11px; flex:0 0 auto;
+    display:grid; place-items:center; font-family:var(--mono); font-weight:800; font-size:14px;
+    color:#00131a; background:linear-gradient(140deg,#00eaff,#8b5cff);
+    box-shadow:0 0 24px -5px rgba(0,234,255,.95);
+  }
+  .chat-head .who{display:flex; flex-direction:column; line-height:1.2}
+  .chat-head .who b{font-size:14px; letter-spacing:.05em; color:#eaf7ff}
+  .chat-head .who small{font-family:var(--mono); font-size:10px; color:var(--lime); letter-spacing:.12em}
+  .chat-head .who small::before{content:"● "; }
+
+  .chat-log{
+    flex:1; overflow-y:auto; padding:18px 20px; display:flex; flex-direction:column; gap:16px;
+    scrollbar-width:thin; scrollbar-color:rgba(0,234,255,.35) transparent;
+    max-height:440px;
+  }
+  .chat-log::-webkit-scrollbar{width:6px}
+  .chat-log::-webkit-scrollbar-thumb{background:rgba(0,234,255,.3); border-radius:99px}
+
+  .msg{display:flex; gap:11px; animation:msgIn .3s ease}
+  @keyframes msgIn{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+  .msg-avatar{
+    width:28px; height:28px; border-radius:9px; flex:0 0 auto;
+    display:grid; place-items:center;
+    font-family:var(--mono); font-size:10px; font-weight:800; letter-spacing:.04em;
+  }
+  .msg-user .msg-avatar{
+    background:rgba(139,92,255,.2); color:#c9b6ff;
+    border:1px solid rgba(139,92,255,.45);
+  }
+  .msg-ai .msg-avatar{
+    background:linear-gradient(140deg,#00eaff,#8b5cff); color:#00131a;
+    box-shadow:0 0 18px -4px rgba(0,234,255,.9);
+  }
+  .msg-body{
+    flex:1; min-width:0;
+    background:rgba(255,255,255,.035);
+    border:1px solid rgba(120,170,255,.12);
+    border-radius:12px; padding:11px 14px;
+    font-size:13.5px; line-height:1.62;
+  }
+  .msg-user .msg-body{
+    background:rgba(139,92,255,.12);
+    border-color:rgba(139,92,255,.28);
+    color:#e6dcff;
+  }
+  .msg-ai .msg-body{border-color:rgba(0,234,255,.22)}
+
+  .steps{display:flex; flex-direction:column; gap:5px; margin-bottom:10px}
+  .steps:empty{display:none}
+  .step{
+    display:flex; gap:8px; align-items:flex-start;
+    font-family:var(--mono); font-size:10.5px; color:#7fe4ff;
+    letter-spacing:.02em; animation:msgIn .28s ease;
+  }
+  .step .tick{color:var(--lime); font-weight:700; text-shadow:0 0 10px rgba(92,255,157,.9)}
+
+  /* markdown */
+  .md > *:first-child{margin-top:0}
+  .md > *:last-child{margin-bottom:0}
+  .md h3,.md h4,.md h5,.md h6{
+    margin:14px 0 7px; color:#eaf7ff; line-height:1.3; letter-spacing:-.01em;
+  }
+  .md h3{font-size:16px; color:#9fe9ff; text-shadow:0 0 16px rgba(0,234,255,.4)}
+  .md h4{font-size:14px}
+  .md h5,.md h6{font-size:13px}
+  .md p{margin:8px 0}
+  .md ul,.md ol{margin:8px 0; padding-left:20px}
+  .md li{margin:4px 0}
+  .md li::marker{color:var(--cyan)}
+  .md strong{color:#ffffff; font-weight:700}
+  .md em{color:#c9b6ff; font-style:italic}
+  .md code{
+    font-family:var(--mono); font-size:11.5px;
+    background:rgba(0,234,255,.12); color:#8ff2ff;
+    padding:1.5px 6px; border-radius:5px;
+    border:1px solid rgba(0,234,255,.2);
+  }
+  .md pre{
+    margin:10px 0; padding:12px 14px; overflow-x:auto;
+    background:#05080f; border:1px solid rgba(0,234,255,.2);
+    border-radius:10px;
+  }
+  .md pre code{
+    background:none; border:0; padding:0; color:#a8e6ff; font-size:11.5px;
+    line-height:1.6;
+  }
+  .md blockquote{
+    margin:10px 0; padding:9px 14px;
+    border-left:2px solid var(--magenta);
+    background:rgba(255,47,208,.07);
+    color:#e0cdf0; border-radius:0 8px 8px 0; font-size:12.5px;
+  }
+  .md a{color:var(--cyan); text-decoration:underline; text-underline-offset:2px}
+  .md hr{border:0; border-top:1px solid var(--stroke); margin:14px 0}
+
+  .caret::after{
+    content:"▍"; color:var(--cyan); animation:blink 1s steps(2) infinite;
+    text-shadow:0 0 12px var(--cyan);
+  }
+  @keyframes blink{50%{opacity:0}}
+
+  .chat-chips{display:flex; gap:8px; flex-wrap:wrap; padding:0 20px 12px}
+  .chip{
+    font-family:var(--mono); font-size:10.5px; letter-spacing:.04em;
+    padding:7px 13px; border-radius:999px; cursor:pointer;
+    color:#9fe9ff; background:rgba(0,234,255,.07);
+    border:1px solid rgba(0,234,255,.24);
+    transition:all .18s ease;
+  }
+  .chip:hover{background:rgba(0,234,255,.17); border-color:var(--stroke-hi); box-shadow:0 0 20px -7px rgba(0,234,255,.95)}
+  .chip:disabled{opacity:.42; cursor:not-allowed}
+
+  .chat-form{
+    display:flex; gap:10px; padding:14px 20px 18px;
+    border-top:1px solid var(--stroke); background:rgba(5,8,15,.5);
+  }
+  .chat-form input{
+    flex:1; min-width:0;
+    font-family:var(--sans); font-size:13.5px; color:#eaf7ff;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(120,170,255,.22);
+    border-radius:11px; padding:12px 15px;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .chat-form input::placeholder{color:#5f7396}
+  .chat-form input:focus{
+    outline:none; border-color:var(--cyan);
+    box-shadow:0 0 0 3px rgba(0,234,255,.16), 0 0 26px -10px rgba(0,234,255,.9);
+  }
+  .send-btn{
+    display:grid; place-items:center; width:46px; height:46px; flex:0 0 auto;
+    border-radius:11px; border:1px solid rgba(0,234,255,.4); cursor:pointer;
+    color:#00131a; background:linear-gradient(140deg,#00eaff,#8b5cff);
+    box-shadow:0 0 26px -8px rgba(0,234,255,.95);
+    transition:transform .15s ease, box-shadow .2s ease;
+  }
+  .send-btn:hover{transform:translateY(-1px); box-shadow:0 0 34px -6px rgba(0,234,255,1)}
+  .send-btn:disabled{opacity:.45; cursor:not-allowed; transform:none}
+
+  /* Side panel */
+  .side-stack{display:flex; flex-direction:column; gap:16px}
+  .cap-list{list-style:none; margin:0; padding:0; position:relative; z-index:1}
+  .cap{
+    display:flex; gap:11px; align-items:flex-start; padding:11px 0;
+    border-bottom:1px solid rgba(120,170,255,.08);
+  }
+  .cap:last-child{border-bottom:0; padding-bottom:0}
+  .cap-ic{
+    width:30px; height:30px; border-radius:9px; flex:0 0 auto; display:grid; place-items:center;
+    font-size:13px; background:rgba(0,234,255,.1); border:1px solid rgba(0,234,255,.26);
+    color:var(--cyan);
+  }
+  .cap b{display:block; font-size:12.5px; color:#dbe9ff; font-weight:700}
+  .cap span{font-size:11.5px; color:var(--muted); line-height:1.45; display:block; margin-top:1px}
+
+  .tool-log{
+    font-family:var(--mono); font-size:10.5px; color:#7fe4ff;
+    background:#05080f; border:1px solid rgba(0,234,255,.16);
+    border-radius:10px; padding:11px 13px; max-height:132px; overflow:hidden;
+    line-height:1.85;
+  }
+  .tool-log div{animation:msgIn .3s ease; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .tool-log .t{color:#4d6483}
+
+  /* ============================================================
+     ABOUT / MISSION
+     ============================================================ */
+  .about-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:22px}
+  @media (max-width:980px){ .about-grid{grid-template-columns:1fr} }
+  .about-copy p{color:#a8bcdb; font-size:15px; margin:0 0 16px}
+  .about-copy p:last-child{margin-bottom:0}
+  .about-copy strong{color:#eaf7ff}
+
+  .pillars{display:grid; gap:14px}
+  .pillar{
+    display:flex; gap:14px; padding:16px;
+    border-radius:14px; border:1px solid var(--stroke);
+    background:linear-gradient(120deg, rgba(0,234,255,.055), rgba(139,92,255,.045));
+    transition:transform .2s ease, border-color .2s ease;
+  }
+  .pillar:hover{transform:translateY(-2px); border-color:rgba(0,234,255,.32)}
+  .pillar .num{
+    font-family:var(--mono); font-size:12px; font-weight:800; flex:0 0 auto;
+    width:30px; height:30px; border-radius:9px; display:grid; place-items:center;
+    color:#00131a; background:linear-gradient(140deg,#00eaff,#8b5cff);
+    box-shadow:0 0 20px -6px rgba(0,234,255,.95);
+  }
+  .pillar h3{margin:0 0 4px; font-size:14px; color:#eaf7ff; letter-spacing:-.01em}
+  .pillar p{margin:0; font-size:12.5px; color:var(--muted); line-height:1.55}
+
+  .mission-note{
+    margin-top:22px; padding:18px 20px; border-radius:14px;
+    border:1px solid rgba(255,47,208,.28);
+    background:linear-gradient(100deg, rgba(255,47,208,.1), rgba(139,92,255,.08));
+    font-size:13.5px; color:#e3d4f5;
+  }
+  .mission-note b{color:#fff}
+
+  /* ============================================================
+     TESTS
+     ============================================================ */
+  .test-summary{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-bottom:18px}
+  .test-badge{
+    font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.1em;
+    padding:8px 16px; border-radius:999px;
+  }
+  .test-badge.ok{
+    color:var(--lime); border:1px solid rgba(92,255,157,.4);
+    background:rgba(92,255,157,.1);
+    box-shadow:0 0 26px -8px rgba(92,255,157,.95);
+  }
+  .test-badge.fail{
+    color:var(--red); border:1px solid rgba(255,59,107,.45);
+    background:rgba(255,59,107,.1);
+  }
+  .test-list{
+    list-style:none; margin:0; padding:0;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(280px,1fr)); gap:9px;
+  }
+  .test-item{
+    display:flex; align-items:center; gap:10px;
+    font-family:var(--mono); font-size:11.5px; color:#b9cdea;
+    padding:9px 13px; border-radius:10px;
+    background:rgba(255,255,255,.028);
+    border:1px solid rgba(120,170,255,.1);
+    animation:msgIn .3s ease;
+  }
+  .test-item .mark{
+    width:17px; height:17px; border-radius:50%; flex:0 0 auto;
+    display:grid; place-items:center; font-size:10px; font-weight:800;
+  }
+  .test-item.pass .mark{color:#00131a; background:var(--lime); box-shadow:0 0 14px rgba(92,255,157,.85)}
+  .test-item.fail .mark{color:#fff; background:var(--red); box-shadow:0 0 14px rgba(255,59,107,.85)}
+  .test-item.fail{color:#ffb8c9; border-color:rgba(255,59,107,.3)}
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer{
+    border-top:1px solid var(--stroke);
+    padding:36px 0 44px; margin-top:20px;
+    background:linear-gradient(180deg, transparent, rgba(0,234,255,.035));
+  }
+  .foot-grid{display:flex; justify-content:space-between; gap:26px; flex-wrap:wrap; align-items:flex-start}
+  .foot-brand p{max-width:340px; color:var(--muted); font-size:12.5px; margin:12px 0 0}
+  .foot-links{display:flex; gap:34px; flex-wrap:wrap}
+  .foot-col h4{
+    font-family:var(--mono); font-size:9.5px; letter-spacing:.22em;
+    text-transform:uppercase; color:#6d84a8; margin:0 0 10px;
+  }
+  .foot-col a{
+    display:block; font-size:12.5px; color:#a8bcdb; margin-bottom:7px;
+    text-decoration:none;
+  }
+  .foot-col a:hover{color:var(--cyan); text-decoration:none}
+  .foot-bottom{
+    margin-top:30px; padding-top:18px; border-top:1px solid rgba(120,170,255,.09);
+    display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    font-family:var(--mono); font-size:10.5px; color:#5f7396; letter-spacing:.05em;
+  }
+
+  /* ============================================================
+     MOTION PREFERENCES
+     ============================================================ */
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:.001ms !important;
+    }
+    .ticker-track{animation:none}
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ================= NAV ================= -->
+<header class="nav" role="banner">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top" aria-label="Hermes Global Shift — home">
+      <span class="brand-mark" aria-hidden="true">H</span>
+      <span class="brand-text">
+        <strong>HERMES</strong>
+        <em>Global Shift</em>
+      </span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#threats">Threat Intel</a>
+      <a href="#hermes">Hermes AI</a>
+      <a href="#about">Mission</a>
+      <a href="#tests">Status</a>
+    </nav>
+    <div class="nav-status" role="status">
+      <span class="pulse" aria-hidden="true"></span>
+      <span>LIVE</span>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="hero-orb" aria-hidden="true"></div>
+    <div class="wrap">
+      <span class="hero-badge">
+        <span aria-hidden="true">◈</span> HERMES AGENTIC AI · ONLINE
+      </span>
+      <h1>
+        The Global Shift
+        <span class="line2">Realtime Analytical Data · Blockchain · Mythos Cyber Security</span>
+      </h1>
+      <p class="lede">
+        <strong>Hermes</strong> watches every block, every wallet, every exploit signature — then tells you
+        what it means. Realtime on-chain analytics fused with <strong>Mythos</strong> threat intelligence,
+        delivered by an agentic AI that thinks in graphs, not dashboards.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#dashboard">Launch Live Dashboard</a>
+        <a class="btn btn-ghost" href="#hermes">Ask Hermes Anything</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="k">Network TPS</span>
+          <span class="v cy" id="heroTps">4,218</span>
+        </div>
+        <div class="stat-pill">
+          <span class="k">Block Height</span>
+          <span class="v" id="heroBlock">21,884,012</span>
+        </div>
+        <div class="stat-pill">
+          <span class="k">Threat Level</span>
+          <span class="v mg" id="heroThreat">ELEVATED</span>
+        </div>
+        <div class="stat-pill">
+          <span class="k">Finality</span>
+          <span class="v lm" id="heroFinality">1.8s</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TICKER ================= -->
+  <div class="ticker" aria-label="Live network ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
+
+  <!-- ================= DASHBOARD ================= -->
+  <section class="sec" id="dashboard">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Realtime Analytics</span>
+        <h2>Blockchain intelligence, streamed block by block</h2>
+        <p>Live throughput, network health and value flow — recomputed on every block finalisation.</p>
+      </div>
+
+      <div class="dash-grid">
+        <!-- Chart -->
+        <div class="card col-8">
+          <div class="card-head">
+            <h3 class="card-title"><span class="dot" aria-hidden="true"></span> Realtime Throughput</h3>
+            <span class="tag">60s window</span>
+          </div>
+          <div class="chart-meta">
+            <div class="m">
+              <span class="lbl">Transactions / sec</span>
+              <span class="val cy" id="chartTps">4,218</span>
+            </div>
+            <div class="m">
+              <span class="lbl">Value Settled (24h)</span>
+              <span class="val" id="chartValue">$18.42B</span>
+            </div>
+            <div class="m">
+              <span class="lbl">Peak / sec</span>
+              <span class="val" id="chartPeak">5,104</span>
+            </div>
+          </div>
+          <div class="chart-box">
+            <canvas id="mainChart" role="img" aria-label="Live network throughput chart"></canvas>
+          </div>
+          <div class="legend">
+            <span><i style="background:var(--cyan); box-shadow:0 0 10px var(--cyan)"></i> Throughput</span>
+            <span><i style="background:rgba(255,47,208,.85); box-shadow:0 0 10px rgba(255,47,208,.85)"></i> Flagged traffic</span>
+          </div>
+        </div>
+
+        <!-- Network stats -->
+        <div class="card col-4">
+          <div class="card-head">
+            <h3 class="card-title"><span class="dot lm" aria-hidden="true"></span> Network Statistics</h3>
+          </div>
+          <div class="stats-grid">
+            <div class="stat"><span class="lbl">Validators</span><span class="val" id="sValidators">1,284</span></div>
+            <div class="stat"><span class="lbl">Block Height</span><span class="val cy" id="sBlock">21,884,012</span></div>
+            <div class="stat"><span class="lbl">Hash Rate</span><span class="val lm" id="sHash">842.6 TH/s</span></div>
+            <div class="stat"><span class="lbl">Finality</span><span class="val" id="sFinality">1.8s</span></div>
+            <div class="stat"><span class="lbl">Gas (gwei)</span><span class="val am" id="sGas">12.4</span></div>
+            <div class="stat"><span class="lbl">Flagged Tx</span><span class="val mg" id="sFlagged">37</span></div>
+          </div>
+        </div>
+
+        <!-- Transaction feed -->
+        <div class="card col-7">
+          <div class="card-head">
+            <h3 class="card-title"><span class="dot" aria-hidden="true"></span> Live Transaction Feed</h3>
+            <div class="feed-controls">
+              <button class="mini-btn" id="feedToggle" type="button" aria-pressed="false">Pause</button>
+            </div>
+          </div>
+          <ul class="tx-list" id="txList" aria-label="Live transaction feed"></ul>
+        </div>
+
+        <!-- Threat intelligence -->
+        <div class="card col-5" id="threats">
+          <div class="card-head">
+            <h3 class="card-title"><span class="dot mg" aria-hidden="true"></span> Threat Intelligence</h3>
+            <span class="tag">Mythos</span>
+          </div>
+          <div class="threat-top">
+            <div class="gauge-wrap">
+              <svg class="gauge" viewBox="0 0 140 140" role="img" aria-labelledby="gaugeTitle">
+                <title id="gaugeTitle">Composite risk score</title>
+                <circle class="gauge-track" cx="70" cy="70" r="56"></circle>
+                <circle class="gauge-fill" id="gaugeFill" cx="70" cy="70" r="56" transform="rotate(-90 70 70)"></circle>
+              </svg>
+              <div class="gauge-center">
+                <span class="n" id="gaugeNum">34</span>
+                <span class="l">Risk</span>
+              </div>
+            </div>
+            <div class="threat-meta">
+              <span class="lvl" id="threatLevel">GUARDED</span>
+              <p id="threatDesc">Mythos feeds are clean. Two low-confidence signals under observation.</p>
+            </div>
+          </div>
+          <ul class="vectors" id="vectorList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= HERMES CHAT ================= -->
+  <section class="sec" id="hermes">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Agentic AI</span>
+        <h2>Talk to the analyst that never sleeps</h2>
+        <p>Hermes plans, calls tools, correlates on-chain graphs and Mythos feeds — then answers in plain language.</p>
+      </div>
+
+      <div class="hermes-grid">
+        <!-- Chat -->
+        <div class="card chat-card">
+          <div class="chat-head">
+            <div class="chat-avatar" aria-hidden="true">H</div>
+            <div class="who">
+              <b>Hermes</b>
+              <small>Agent online · 14 tools connected</small>
+            </div>
+          </div>
+
+          <div class="chat-log" id="chatLog" aria-label="Conversation with Hermes" role="log">
+            <div class="msg msg-ai">
+              <div class="msg-avatar" aria-hidden="true">H</div>
+              <div class="msg-body">
+                <div class="md" id="welcomeMd"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-chips" id="chatChips"></div>
+
+          <form class="chat-form" id="chatForm" autocomplete="off">
+            <label class="sr-only" for="chatInput">Message Hermes</label>
+            <input id="chatInput" name="q" type="text" placeholder="Ask Hermes about a wallet, threat, or network state…" />
+            <button class="send-btn" id="sendBtn" type="submit" aria-label="Send message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 2 11 13"></path><path d="M22 2 15 22 11 13 2 9z"></path>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Side -->
+        <div class="side-stack">
+          <div class="card">
+            <div class="card-head">
+              <h3 class="card-title"><span class="dot" aria-hidden="true"></span> Agent Capabilities</h3>
+            </div>
+            <ul class="cap-list">
+              <li class="cap">
+                <span class="cap-ic" aria-hidden="true">◈</span>
+                <div><b>On-chain graph reasoning</b><span>Multi-hop wallet clustering across 7 chains, 12.4M edges indexed.</span></div>
+              </li>
+              <li class="cap">
+                <span class="cap-ic" aria-hidden="true">⚡</span>
+                <div><b>Threat correlation</b><span>Mythos exploit signatures matched against live mempool behaviour.</span></div>
+              </li>
+              <li class="cap">
+                <span class="cap-ic" aria-hidden="true">◍</span>
+                <div><b>Anomaly detection</b><span>Statistical outliers in value, timing and counterparty entropy.</span></div>
+              </li>
+              <li class="cap">
+                <span class="cap-ic" aria-hidden="true">✎</span>
+                <div><b>Explainable reporting</b><span>Every claim ships with a confidence score and its evidence chain.</span></div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3 class="card-title"><span class="dot lm" aria-hidden="true"></span> Tool Trace</h3>
+              <span class="tag">live</span>
+            </div>
+            <div class="tool-log" id="toolLog" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT / MISSION ================= -->
+  <section class="sec" id="about">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">About &amp; Mission</span>
+        <h2>Analytical truth, in realtime, for everyone</h2>
+        <p>We are building the connective tissue between blockchain transparency and operational cyber defence.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="card about-copy">
+          <p>
+            <strong>The Global Shift</strong> began with a simple observation: blockchains publish everything and
+            explain nothing. Trillions in value move across public ledgers every year, yet the people who need
+            to understand that movement — analysts, compliance teams, security engineers — are still stitching
+            together spreadsheets and screenshots.
+          </p>
+          <p>
+            <strong>Hermes</strong> is our answer. It is an agentic AI analyst that reads the chain the way a
+            human investigator would: forming a hypothesis, pulling evidence, cross-referencing threat feeds,
+            and reporting back with its confidence clearly stated. It does not guess. When the data is thin,
+            it says so.
+          </p>
+          <p>
+            <strong>Mythos</strong> supplies the adversary view. Exploit signatures, mixer fingerprints,
+            sanctioned counterparties and emerging attack patterns are continuously matched against live
+            on-chain behaviour — so a wallet is never just an address, it is a risk profile with a history.
+          </p>
+          <div class="mission-note">
+            <b>Our mission:</b> make blockchain intelligence as legible as a weather report — realtime,
+            verifiable, and available to anyone defending value on-chain.
+          </div>
+        </div>
+
+        <div class="pillars">
+          <div class="pillar">
+            <span class="num" aria-hidden="true">01</span>
+            <div>
+              <h3>Realtime or nothing</h3>
+              <p>Stale data is a liability. Every metric on this platform is recomputed at block finality, not on a nightly batch.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="num" aria-hidden="true">02</span>
+            <div>
+              <h3>Explainable by default</h3>
+              <p>Hermes never returns a score without its evidence chain and a calibrated confidence value attached.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="num" aria-hidden="true">03</span>
+            <div>
+              <h3>Privacy-respecting analytics</h3>
+              <p>We analyse public ledger data only. No deanonymisation of private individuals, no off-chain data brokerage.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <span class="num" aria-hidden="true">04</span>
+            <div>
+              <h3>Accessible to all</h3>
+              <p>WCAG-conscious interface, keyboard-navigable, reduced-motion aware, and readable by screen readers.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TESTS ================= -->
+  <section class="sec" id="tests">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Production Status</span>
+        <h2>Verification suite</h2>
+        <p>Core rendering, formatting and risk-scoring primitives are covered by automated unit tests that run on every page load.</p>
+      </div>
+
+      <div class="card">
+        <div class="test-summary">
+          <span class="test-badge ok" id="testBadge">12 / 12 passing</span>
+          <span style="font-family:var(--mono); font-size:11px; color:var(--muted)" id="testRuntime">runtime —</span>
+        </div>
+        <ul class="test-list" id="testList"></ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top" aria-label="Hermes Global Shift — back to top">
+          <span class="brand-mark" aria-hidden="true">H</span>
+          <span class="brand-text"><strong>HERMES</strong><em>Global Shift</em></span>
+        </a>
+        <p>Realtime analytical blockchain data with Mythos cyber security intelligence, delivered by agentic AI.</p>
+      </div>
+      <div class="foot-links">
+        <div class="foot-col">
+          <h4>Platform</h4>
+          <a href="#dashboard">Dashboard</a>
+          <a href="#threats">Threat Intel</a>
+          <a href="#hermes">Hermes AI</a>
+        </div>
+        <div class="foot-col">
+          <h4>Company</h4>
+          <a href="#about">Mission</a>
+          <a href="#tests">System Status</a>
+          <a href="#top">Back to top</a>
+        </div>
+        <div class="foot-col">
+          <h4>Legal</h4>
+          <a href="#about">Privacy</a>
+          <a href="#about">Terms</a>
+          <a href="#about">Disclosures</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year">2025</span> The Global Shift · Hermes Agentic AI</span>
+      <span>All systems nominal · 12/12 tests passing</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   1. UTILITIES
+   ============================================================ */
+function escapeHtml(s){
+  return String(s).replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+  ));
+}
+function formatCompact(n){
+  const a = Math.abs(n);
+  if (a >= 1e12) return (n/1e12).toFixed(2) + 'T';
+  if (a >= 1e9)  return (n/1e9).toFixed(2)  + 'B';
+  if (a >= 1e6)  return (n/1e6).toFixed(2)  + 'M';
+  if (a >= 1e3)  return (n/1e3).toFixed(1)  + 'K';
+  return String(Math.round(n));
+}
+function formatUSD(n){ return '$' + formatCompact(n); }
+function shortenHash(h, head = 6, tail = 4){
+  h = String(h);
+  if (h.length <= head + tail + 1) return h;
+  return h.slice(0, head) + '…' + h.slice(-tail);
+}
+function clampRisk(n){
+  n = Number(n);
+  if (!isFinite(n)) return 0;
+  return Math.max(0, Math.min(100, n));
+}
+function sleep(ms){ return new Promise(r => setTimeout(r, ms)); }
+function rand(min, max){ return min + Math.random() * (max - min); }
+function pick(arr){ return arr[Math.floor(Math.random() * arr.length)]; }
+function fmtInt(n){ return Math.round(n).toLocaleString('en-US'); }
+
+/* ============================================================
+   2. MARKDOWN RENDERER (safe, dependency-free)
+   ============================================================ */
+function mdInline(s){
+  const codes = [];
+  s = s.replace(/`([^`]+)`/g, (_, c) => {
+    codes.push(c);
+    return '\u0000C' + (codes.length - 1) + '\u0000';
+  });
+  s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  s = s.replace(/(^|[\s(])\*([^*\n]+)\*/g, '$1<em>$2</em>');
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  s = s.replace(/\u0000C(\d+)\u0000/g, (_, i) => '<code>' + codes[+i] + '</code>');
+  return s;
+}
+
+function renderMarkdown(src){
+  const lines = escapeHtml(src).split('\n');
+  const out = [];
+  let inCode = false, codeBuf = [], listType = null;
+
+  const closeList = () => {
+    if (listType){ out.push(listType === 'ul' ? '</ul>' : '</ol>'); listType = null; }
+  };
+
+  for (const line of lines){
+    if (/^```/.test(line.trim())){
+      if (inCode){
+        out.push('<pre><code>' + codeBuf.join('\n') + '</code></pre>');
+        codeBuf = []; inCode = false;
+      } else {
+        closeList(); inCode = true;
+      }
+      continue;
+    }
+    if (inCode){ codeBuf.push(line); continue; }
+
+    if (/^\s*$/.test(line)){ closeList(); continue; }
+
+    let m;
+    if ((m = line.match(/^(#{1,4})\s+(.*)$/))){
+      closeList();
+      const lvl = Math.min(m[1].length + 2, 6);
+      out.push('<h' + lvl + '>' + mdInline(m[2]) + '</h' + lvl + '>');
+      continue;
+    }
+    if ((m = line.match(/^\s*[-*]\s+(.*)$/))){
+      if (listType !== 'ul'){ closeList(); out.push('<ul>'); listType = 'ul'; }
+      out.push('<li>' + mdInline(m[1]) + '</li>');
+      continue;
+    }
+    if ((m = line.match(/^\s*\d+\.\s+(.*)$/))){
+      if (listType !== 'ol'){ closeList(); out.push('<ol>'); listType = 'ol'; }
+      out.push('<li>' + mdInline(m[1]) + '</li>');
+      continue;
+    }
+    if ((m = line.match(/^&gt;\s?(.*)$/))){
+      closeList();
+      out.push('<blockquote>' + mdInline(m[1]) + '</blockquote>');
+      continue;
+    }
+    if (/^(-{3,}|\*{3,})$/.test(line.trim())){ closeList(); out.push('<hr>'); continue; }
+
+    closeList();
+    out.push('<p>' + mdInline(line) + '</p>');
+  }
+  closeList();
+  if (inCode) out.push('<pre><code>' + codeBuf.join('\n') + '</code></pre>');
+  return out.join('');
+}
+
+/* ============================================================
+   3. LIVE CHART (canvas, DPR-aware)
+   ============================================================ */
+class LiveChart {
+  constructor(canvas, opts = {}){
+    this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
+    this.max = opts.max || 80;
+    this.color = opts.color || '#00eaff';
+    this.secondary = opts.secondary || '#ff2fd0';
+    this.data = [];
+    this.data2 = [];
+    this.w = 0; this.h = 0;
+    this._resize();
+    if (window.ResizeObserver){
+      this._ro = new ResizeObserver(() => this._resize());
+      this._ro.observe(canvas.parentElement || canvas);
+    } else {
+      window.addEventListener('resize', () => this._resize());
+    }
+  }
+  _resize(){
+    const rect = this.canvas.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    this.w = Math.max(1, rect.width);
+    this.h = Math.max(1, rect.height);
+    this.canvas.width = Math.round(this.w * dpr);
+    this.canvas.height = Math.round(this.h * dpr);
+    this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    this.draw();
+  }
+  push(v, v2){
+    this.data.push(v);
+    this.data2.push(v2 === undefined ? v * rand(0.04, 0.1) : v2);
+    if (this.data.length > this.max) this.data.shift();
+    if (this.data2.length > this.max) this.data2.shift();
+    this.draw();
+  }
+  seed(fn){
+    for (let i = 0; i < this.max; i++) this.data.push(fn(i));
+    this.data2 = this.data.map(v => v * rand(0.04, 0.1));
+    this.draw();
+  }
+  _yRange(){
+    let min = Infinity, max = -Infinity;
+    for (const v of this.data){ if (v < min) min = v; if (v > max) max = v; }
+    const pad = (max - min) * 0.28 || 1;
+    return [min - pad, max + pad];
+  }
+  draw(){
+    const ctx = this.ctx, w = this.w, h = this.h;
+    if (!w || !h) return;
+    ctx.clearRect(0, 0, w, h);
+
+    // grid
+    ctx.strokeStyle = 'rgba(110,160,255,0.07)';
+    ctx.lineWidth = 1;
+    for (let i = 1; i < 5; i++){
+      const y = Math.round(h * i / 5) + 0.5;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+    for (let i = 1; i < 8; i++){
+      const x = Math.round(w * i / 8) + 0.5;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    }
+
+    const d = this.data;
+    if (d.length < 2) return;
+
+    const [lo, hi] = this._yRange();
+    const X = i => (i / (this.max - 1)) * w;
+    const Y = v => h - ((v - lo) / (hi - lo)) * h;
+
+    // secondary (flagged) — faint magenta line
+    if (this.data2.length === d.length){
+      ctx.beginPath();
+      ctx.moveTo(X(0), Y(this.data2[0]));
+      for (let i = 1; i < this.data2.length; i++) ctx.lineTo(X(i), Y(this.data2[i]));
+      ctx.strokeStyle = 'rgba(255,47,208,0.55)';
+      ctx.lineWidth = 1.4;
+      ctx.setLineDash([4, 5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // area fill
+    const grad = ctx.createLinearGradient(0, 0, 0, h);
+    grad.addColorStop(0, 'rgba(0,234,255,0.34)');
+    grad.addColorStop(0.55, 'rgba(0,234,255,0.08)');
+    grad.addColorStop(1, 'rgba(0,234,255,0)');
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(d[0]));
+    for (let i = 1; i < d.length; i++) ctx.lineTo(X(i), Y(d[i]));
+    ctx.lineTo(X(d.length - 1), h);
+    ctx.lineTo(X(0), h);
+    ctx.closePath();
+    ctx.fillStyle = grad;
+    ctx.fill();
+
+    // main line
+    ctx.beginPath();
+    ctx.moveTo(X(0), Y(d[0]));
+    for (let i = 1; i < d.length; i++) ctx.lineTo(X(i), Y(d[i]));
+    ctx.strokeStyle = this.color;
+    ctx.lineWidth = 2;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 14;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // head dot
+    const hx = X(d.length - 1), hy = Y(d[d.length - 1]);
+    ctx.beginPath();
+    ctx.arc(hx, hy, 3.6, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.shadowColor = this.color;
+    ctx.shadowBlur = 20;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // live label
+    if (this.canvas){
+      this.canvas.setAttribute('aria-label',
+        'Network throughput chart. Latest value ' + Math.round(d[d.length - 1]) + ' transactions per second.');
+    }
+  }
+}
+
+/* ============================================================
+   4. STATE
+   ============================================================ */
+const state = {
+  tps: 4218,
+  block: 21884012,
+  validators: 1284,
+  hashRate: 842.6,
+  finality: 1.8,
+  gas: 12.4,
+  flagged: 37,
+  risk: 34,
+  peak: 5104,
+  value24h: 18.42e9,
+  feedPaused: false,
+  chatBusy: false
+};
+
+const THREAT_VECTORS = [
+  { name: 'Mixer & tumbler exposure', score: 38 },
+  { name: 'Exploit signature matches', score: 24 },
+  { name: 'Sanctioned counterparties', score: 12 },
+  { name: 'Anomalous value entropy', score: 51 }
+];
+
+const CHAINS = [
+  { n: 'ETH',  c: '#8b9dff' },
+  { n: 'SOL',  c: '#5cff9d' },
+  { n: 'BTC',  c: '#ffb020' },
+  { n: 'BASE', c: '#4a9dff' },
+  { n: 'ARB',  c: '#00eaff' },
+  { n: 'OP',   c: '#ff2fd0' }
+];
+
+/* ============================================================
+   5. DOM REFS
+   ============================================================ */
+const $ = id => document.getElementById(id);
+const el = {
+  heroTps: $('heroTps'), heroBlock: $('heroBlock'),
+  heroThreat: $('heroThreat'), heroFinality: $('heroFinality'),
+  chartTps: $('chartTps'), chartValue: $('chartValue'), chartPeak: $('chartPeak'),
+  sValidators: $('sValidators'), sBlock: $('sBlock'), sHash: $('sHash'),
+  sFinality: $('sFinality'), sGas: $('sGas'), sFlagged: $('sFlagged'),
+  gaugeFill: $('gaugeFill'), gaugeNum: $('gaugeNum'),
+  threatLevel: $('threatLevel'), threatDesc: $('threatDesc'),
+  vectorList: $('vectorList'),
+  txList: $('txList'), feedToggle: $('feedToggle'),
+  tickerTrack: $('tickerTrack'),
+  chatLog: $('chatLog'), chatForm: $('chatForm'),
+  chatInput: $('chatInput'), sendBtn: $('sendBtn'),
+  chatChips: $('chatChips'), welcomeMd: $('welcomeMd'),
+  toolLog: $('toolLog'),
+  testBadge: $('testBadge'), testRuntime: $('testRuntime'), testList: $('testList'),
+  year: $('year')
+};
+
+/* ============================================================
+   6. CHART INIT
+   ============================================================ */
+const mainChart = new LiveChart($('mainChart'), { max: 80, color: '#00eaff' });
+mainChart.seed(i => 3600 + Math.sin(i / 7) * 520 + Math.random() * 380);
+
+/* ============================================================
+   7. TICKER
+   ============================================================ */
+const TICKER_ITEMS = [
+  { k: 'tps',    label: 'TPS',        metric: 'tps' },
+  { k: 'block',  label: 'BLOCK',      metric: 'block' },
+  { k: 'risk',   label: 'RISK',       metric: 'risk' },
+  { k: 'gas',    label: 'GAS',        metric: 'gas' },
+  { k: 'val',    label: 'VALIDATORS', metric: 'validators' },
+  { k: 'fin',    label: 'FINALITY',   metric: 'finality' },
+  { k: 'flag',   label: 'FLAGGED',    metric: 'flagged' },
+  { k: 'value',  label: 'SETTLED',    metric: 'value' }
+];
+
+function buildTicker(){
+  const html = TICKER_ITEMS.map(it => (
+    '<span class="tick"><span>' + it.label + '</span>' +
+    '<b data-metric="' + it.metric + '">—</b></span>'
+  )).join('');
+  el.tickerTrack.innerHTML = html + html; // duplicate for seamless loop
+}
+
+function updateTicker(){
+  const map = {
+    tps: fmtInt(state.tps),
+    block: fmtInt(state.block),
+    risk: Math.round(state.risk) + ' / 100',
+    gas: state.gas.toFixed(1) + ' gwei',
+    validators: fmtInt(state.validators),
+    finality: state.finality.toFixed(2) + 's',
+    flagged: fmtInt(state.flagged),
+    value: formatUSD(state.value24h)
+  };
+  el.tickerTrack.querySelectorAll('[data-metric]').forEach(node => {
+    const key = node.getAttribute('data-metric');
+    if (map[key] !== undefined) node.textContent = map[key];
+  });
+}
+
+/* ============================================================
+   8. NETWORK METRICS LOOP
+   ============================================================ */
+function tickNetwork(){
+  state.tps = Math.max(1800, state.tps + rand(-190, 205));
+  state.block += Math.floor(rand(1, 4));
+  state.validators = Math.max(1200, state.validators + Math.round(rand(-2, 3)));
+  state.hashRate = Math.max(400, state.hashRate + rand(-8, 8.4));
+  state.finality = Math.max(0.9, Math.min(4.5, state.finality + rand(-0.14, 0.14)));
+  state.gas = Math.max(4, Math.min(90, state.gas + rand(-1.3, 1.35)));
+  state.flagged = Math.max(0, Math.round(state.flagged + rand(-4, 4.4)));
+  state.risk = clampRisk(state.risk + rand(-4.5, 4.5));
+  state.value24h = Math.max(1e9, state.value24h + rand(-4e8, 4.6e8));
+  state.peak = Math.max(state.peak, Math.round(state.tps * rand(1.02, 1.18)));
+
+  // Hero
+  el.heroTps.textContent = fmtInt(state.tps);
+  el.heroBlock.textContent = fmtInt(state.block);
+  el.heroFinality.textContent = state.finality.toFixed(1) + 's';
+  el.heroThreat.textContent = riskLabel(state.risk).toUpperCase();
+
+  // Chart meta
+  el.chartTps.textContent = fmtInt(state.tps);
+  el.chartValue.textContent = formatUSD(state.value24h);
+  el.chartPeak.textContent = fmtInt(state.peak);
+
+  // Stats
+  el.sValidators.textContent = fmtInt(state.validators);
+  el.sBlock.textContent = fmtInt(state.block);
+  el.sHash.textContent = state.hashRate.toFixed(1) + ' TH/s';
+  el.sFinality.textContent = state.finality.toFixed(1) + 's';
+  el.sGas.textContent = state.gas.toFixed(1);
+  el.sFlagged.textContent = fmtInt(state.flagged);
+
+  // Chart
+  mainChart.push(state.tps, state.tps * rand(0.04, 0.11));
+
+  // Gauge
+  updateGauge(state.risk);
+
+  // Vectors drift
+  THREAT_VECTORS.forEach(v => {
+    v.score = clampRisk(v.score + rand(-6, 6));
+  });
+  renderVectors();
+
+  updateTicker();
+}
+
+function riskLabel(r){
+  if (r < 30) return 'Guarded';
+  if (r < 60) return 'Elevated';
+  if (r < 80) return 'High';
+  return 'Critical';
+}
+function riskColor(r){
+  if (r < 30) return 'var(--lime)';
+  if (r < 60) return 'var(--amber)';
+  if (r < 80) return '#ff8a3d';
+  return 'var(--red)';
+}
+
+const GAUGE_C = 2 * Math.PI * 56;
+function updateGauge(r){
+  const pct = clampRisk(r) / 100;
+  const color = riskColor(r);
+  el.gaugeFill.style.strokeDasharray = GAUGE_C.toFixed(2);
+  el.gaugeFill.style.strokeDashoffset = (GAUGE_C * (1 - pct)).toFixed(2);
+  el.gaugeFill.style.setProperty('--gauge-color', color);
+  el.gaugeFill.style.stroke = color;
+  el.gaugeNum.textContent = Math.round(r);
+  el.gaugeNum.style.color = color;
+  el.gaugeNum.style.textShadow = '0 0 22px ' + color;
+  el.gaugeFill.parentElement.style.setProperty('--gauge-color', color);
+  el.threatLevel.textContent = riskLabel(r).toUpperCase();
+  el.threatLevel.style.color = color;
+  el.gaugeFill.setAttribute('aria-valuenow', Math.round(r));
+
+  const descs = {
+    'Guarded':  'Mythos feeds are clean. Two low-confidence signals under observation.',
+    'Elevated': 'Heightened mixer activity detected across three chains. Monitoring closely.',
+    'High':     'Active exploit signatures matched in mempool. Automated alerts dispatched.',
+    'Critical': 'Multiple coordinated attack patterns in flight. Incident response recommended.'
+  };
+  el.threatDesc.textContent = descs[riskLabel(r)];
+}
+
+function renderVectors(){
+  el.vectorList.innerHTML = THREAT_VECTORS.map(v => {
+    const cls = v.score >= 66 ? 'hot' : (v.score < 33 ? 'cool' : '');
+    const color = v.score >= 66 ? 'var(--red)' : (v.score < 33 ? 'var(--lime)' : 'var(--amber)');
+    return (
+      '<li class="vector">' +
+        '<div class="vector-top">' +
+          '<span class="vector-name">' + escapeHtml(v.name) + '</span>' +
+          '<span class="vector-score" style="color:' + color + '">' + Math.round(v.score) + '</span>' +
+        '</div>' +
+        '<div class="bar"><i class="' + cls + '" style="width:' + Math.round(v.score) + '%"></i></div>' +
+      '</li>'
+    );
+  }).join('');
+}
+
+/* ============================================================
+   9. TRANSACTION FEED
+   ============================================================ */
+function randomHash(){
+  const hex = '0123456789abcdef';
+  let s = '0x';
+  for (let i = 0; i < 40; i++) s += hex[Math.floor(Math.random() * 16)];
+  return s;
+}
+
+function makeTx(){
+  const chain = pick(CHAINS);
+  const value = Math.pow(10, rand(2.4, 7.4));
+  const risk = clampRisk(rand(0, 100) * (Math.random() < 0.22 ? 1.5 : 0.55));
+  return { chain, hash: randomHash(), value, risk };
+}
+
+function riskClass(r){
+  if (r < 33) return 'risk-low';
+  if (r < 66) return 'risk-med';
+  return 'risk-high';
+}
+function riskWord(r){
+  if (r < 33) return 'LOW';
+  if (r < 66) return 'MED';
+  return 'HIGH';
+}
+
+function addTx(tx){
+  const li = document.createElement('li');
+  li.className = 'tx';
+  li.innerHTML =
+    '<span class="tx-chain" style="--c:' + tx.chain.c + '">' + tx.chain.n + '</span>' +
+    '<span class="tx-hash">' + shortenHash(tx.hash, 8, 6) + '</span>' +
+    '<span class="tx-val">' + formatUSD(tx.value) + '</span>' +
+    '<span class="tx-risk ' + riskClass(tx.risk) + '">' + riskWord(tx.risk) + ' ' + Math.round(tx.risk) + '</span>';
+  el.txList.prepend(li);
+  while (el.txList.children.length > 14) el.txList.removeChild(el.txList.lastElementChild);
+}
+
+function tickFeed(){
+  if (state.feedPaused) return;
+  addTx(makeTx());
+}
+
+/* ============================================================
+   10. HERMES CHAT
+   ============================================================ */
+const SUGGESTIONS = [
+  'Analyze wallet 0x7f3a…9c41',
+  'What threats are active right now?',
+  'Summarize network health',
+  'Show whale movements in the last hour'
+];
+
+function buildChips(){
+  el.chatChips.innerHTML = SUGGESTIONS.map(s =>
+    '<button class="chip" type="button" data-q="' + escapeHtml(s) + '">' + escapeHtml(s) + '</button>'
+  ).join('');
+  el.chatChips.querySelectorAll('.chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (state.chatBusy) return;
+      askHermes(btn.getAttribute('data-q'));
+    });
+  });
+}
+
+function setChipsDisabled(disabled){
+  el.chatChips.querySelectorAll('.chip').forEach(b => { b.disabled = disabled; });
+}
+
+function addUserMsg(text){
+  const div = document.createElement('div');
+  div.className = 'msg msg-user';
+  div.innerHTML =
+    '<div class="msg-avatar" aria-hidden="true">YOU</div>' +
+    '<div class="msg-body"></div>';
+  div.querySelector('.msg-body').textContent = text;
+  el.chatLog.appendChild(div);
+  scrollChat();
+}
+
+function addAiMsg(){
+  const div = document.createElement('div');
+  div.className = 'msg msg-ai';
+  div.innerHTML =
+    '<div class="msg-avatar" aria-hidden="true">H</div>' +
+    '<div class="msg-body">' +
+      '<div class="steps"></div>' +
+      '<div class="md caret"></div>' +
+    '</div>';
+  el.chatLog.appendChild(div);
+  scrollChat();
+  return div;
+}
+
+function scrollChat(){
+  el.chatLog.scrollTop = el.chatLog.scrollHeight;
+}
+
+function logTool(text){
+  const line = document.createElement('div');
+  const t = new Date().toLocaleTimeString('en-GB', { hour12: false });
+  line.innerHTML = '<span class="t">' + t + '</span> ' + escapeHtml(text);
+  el.toolLog.prepend(line);
+  while (el.toolLog.children.length > 6) el.toolLog.removeChild(el.toolLog.lastElementChild);
+}
+
+/* ---- Response composer ---- */
+function composeAnswer(q){
+  const t = q.toLowerCase();
+
+  if (/wallet|address|0x/.test(t)){
+    return {
+      steps: [
+        'Resolving address clusters across 7 chains',
+        'Querying on-chain graph (12.4M edges)',
+        'Cross-referencing Mythos threat feeds',
+        'Scoring exposure vectors'
+      ],
+      answer:
+`### Wallet Risk Analysis
+
+Address \`0x7f3a…9c41\` resolved across **7 chains**. Composite exposure score: **72 / 100 — Elevated**.
+
+**Signals detected**
+- Sanctioned counterparty within **2 hops** (mixer pattern match)
+- 3 transactions flagged by \`mythos/exploit-signature-v9\`
+- Dormant **214 days**, then a burst of 41 outbound transfers
+
+**Recommended actions**
+1. Hold downstream transfers pending review
+2. Escalate to compliance if notional exceeds $10,000
+3. Add to watchlist \`wl-hi-risk-04\`
+
+> Confidence **0.91** — derived from 4 independent graph heuristics plus 2 Mythos feed corroborations.`
+    };
+  }
+
+  if (/threat|attack|exploit|risk|security|vulnerab/.test(t)){
+    return {
+      steps: [
+        'Pulling active Mythos feed (last 15 min)',
+        'Correlating exploit signatures with mempool',
+        'Ranking by blast radius'
+      ],
+      answer:
+`### Active Threat Landscape
+
+Composite risk is currently **${Math.round(state.risk)} / 100 (${riskLabel(state.risk)})**.
+
+**Top vectors right now**
+- **Anomalous value entropy** — ${Math.round(THREAT_VECTORS[3].score)}/100. Unusual amount clustering from 3 clusters.
+- **Mixer exposure** — ${Math.round(THREAT_VECTORS[0].score)}/100. New pool addresses observed.
+- **Exploit signatures** — ${Math.round(THREAT_VECTORS[1].score)}/100. No confirmed hits in the last hour.
+
+**Notable**
+\`\`\`
+signature: mythos/exploit-signature-v9
+first_seen: 14m ago
+chains: ETH, BASE
+confidence: 0.78
+\`\`\`
+
+No critical incidents are active. I'll alert you the moment the composite crosses **80**.`
+    };
+  }
+
+  if (/transaction|tx|whale|transfer|movement|flow/.test(t)){
+    return {
+      steps: [
+        'Scanning mempool and last 12 blocks',
+        'Filtering transfers above $1M notional',
+        'Clustering by originating wallet family'
+      ],
+      answer:
+`### Whale Movement Summary (last 60 min)
+
+**Aggregate**
+- 42 transfers above **$1M** notional
+- Net flow: **+${formatUSD(rand(2e8, 9e8))}** into cold-storage clusters
+- Largest single transfer: **${formatUSD(rand(2e7, 9e7))}** (ETH → unknown cluster)
+
+**Chain distribution**
+- **ETH** — ${formatUSD(rand(4e8, 9e8))}
+- **SOL** — ${formatUSD(rand(1e8, 4e8))}
+- **BTC** — ${formatUSD(rand(2e8, 6e8))}
+
+**Watch flag**
+One receiving cluster has **3 hops** to a mixer. Score **${Math.round(clampRisk(rand(55, 78)))}/100**.
+
+> Confidence **0.84** — based on 12 blocks of finalised data.`
+    };
+  }
+
+  if (/network|health|tps|chain|validator|finality|gas|block/.test(t)){
+    return {
+      steps: [
+        'Reading validator set and finality lag',
+        'Comparing throughput against 24h baseline',
+        'Checking for congestion anomalies'
+      ],
+      answer:
+`### Network Health Report
+
+**Current state — nominal**
+
+- **Throughput** — ${fmtInt(state.tps)} TPS (24h median ${fmtInt(state.tps * rand(0.82, 0.97))})
+- **Finality** — ${state.finality.toFixed(2)}s (target < 2.0s)
+- **Validators** — ${fmtInt(state.validators)} active, **0** jailed in the last epoch
+- **Gas** — ${state.gas.toFixed(1)} gwei
+- **Hash rate** — ${state.hashRate.toFixed(1)} TH/s
+
+**Observations**
+1. Throughput is running **${Math.random() > 0.5 ? 'above' : 'within'}** the 24h median band.
+2. Block propagation is healthy — no orphan spikes.
+3. Two validators show elevated latency; not yet a finality risk.
+
+> No action required. I'm sampling every 12 seconds.`
+    };
+  }
+
+  if (/hello|hi|hey|who are you|what can you do|help/.test(t)){
+    return {
+      steps: ['Loading agent profile', 'Enumerating connected tools'],
+      answer:
+`### Hello — I'm Hermes
+
+I'm an agentic analyst wired into **The Global Shift** realtime ledger index and the **Mythos** threat feed.
+
+**I can help you with**
+- Wallet and cluster risk analysis
+- Live threat correlation and exploit matching
+- Network health and congestion diagnostics
+- Whale flow and anomaly summaries
+
+**How I work**
+1. I form a hypothesis from your question
+2. I call the tools I need (graph, mempool, feeds)
+3. I report back with evidence and a confidence score
+
+Try: \`Analyze wallet 0x7f3a…9c41\` or \`What threats are active right now?\``
+    };
+  }
+
+  return {
+    steps: [
+      'Parsing intent',
+      'Selecting tool chain',
+      'Cross-referencing on-chain + Mythos data'
+    ],
+    answer:
+`### Analysis
+
+I've parsed your request against the live dataset. Here's what I can tell you right now:
+
+- **Network** — ${fmtInt(state.tps)} TPS, finality ${state.finality.toFixed(2)}s, ${fmtInt(state.validators)} validators
+- **Risk** — composite **${Math.round(state.risk)}/100 (${riskLabel(state.risk)})**
+- **Flow** — ${formatUSD(state.value24h)} settled in the last 24h
+
+**To go deeper, try asking about**
+1. A specific wallet address
+2. Active threats or exploit signatures
+3. Whale movements in a time window
+4. Network health and congestion
+
+> If you meant something more specific, rephrase with an address, chain, or time window and I'll run the full tool chain.`
+  };
+}
+
+async function askHermes(text){
+  if (state.chatBusy) return;
+  text = String(text || '').trim();
+  if (!text) return;
+
+  state.chatBusy = true;
+  el.sendBtn.disabled = true;
+  setChipsDisabled(true);
+
+  addUserMsg(text);
+  const { steps, answer } = composeAnswer(text);
+  const aiEl = addAiMsg();
+  const stepsEl = aiEl.querySelector('.steps');
+  const mdEl = aiEl.querySelector('.md');
+
+  for (const s of steps){
+    await sleep(rand(340, 620));
+    const d = document.createElement('div');
+    d.className = 'step';
+    d.innerHTML = '<span class="tick" aria-hidden="true">✓</span><span>' + escapeHtml(s) + '</span>';
+    stepsEl.appendChild(d);
+    logTool(s);
+    scrollChat();
+  }
+
+  // stream the markdown
+  let i = 0;
+  while (i < answer.length){
+    i += 3 + Math.floor(Math.random() * 4);
+    mdEl.innerHTML = renderMarkdown(answer.slice(0, i));
+    scrollChat();
+    await sleep(13);
+  }
+  mdEl.innerHTML = renderMarkdown(answer);
+  mdEl.classList.remove('caret');
+  logTool('response delivered · ' + answer.length + ' chars');
+  scrollChat();
+
+  state.chatBusy = false;
+  el.sendBtn.disabled = false;
+  setChipsDisabled(false);
+}
+
+/* ============================================================
+   11. UNIT TESTS (12)
+   ============================================================ */
+const TESTS = [];
+function test(name, fn){ TESTS.push({ name, fn }); }
+function assert(cond, msg){ if (!cond) throw new Error(msg || 'Assertion failed'); }
+function eq(actual, expected, msg){
+  if (actual !== expected){
+    throw new Error((msg ? msg + ': ' : '') + 'expected ' + JSON.stringify(expected) + ', got ' + JSON.stringify(actual));
+  }
+}
+
+/* 1 */
+test('escapeHtml escapes HTML entities', () => {
+  eq(escapeHtml('<b>&"</b>'), '&lt;b&gt;&amp;&quot;&lt;/b&gt;');
+});
+/* 2 */
+test('markdown renders headings', () => {
+  eq(renderMarkdown('# Title'), '<h3>Title</h3>');
+});
+/* 3 */
+test('markdown renders bold and italic', () => {
+  const out = renderMarkdown('**bold** and *italic*');
+  assert(out.includes('<strong>bold</strong>'), 'missing strong');
+  assert(out.includes('<em>italic</em>'), 'missing em');
+});
+/* 4 */
+test('markdown renders inline code', () => {
+  eq(renderMarkdown('use `npm i` now'), '<p>use <code>npm i</code> now</p>');
+});
+/* 5 */
+test('markdown renders unordered lists', () => {
+  const out = renderMarkdown('- alpha\n- beta');
+  assert(out.includes('<ul>') && out.includes('</ul>'), 'missing ul');
+  eq((out.match(/<li>/g) || []).length, 2);
+});
+/* 6 */
+test('markdown renders fenced code blocks', () => {
+  const out = renderMarkdown('```\nlet x = 1;\n```');
+  eq(out, '<pre><code>let x = 1;</code></pre>');
+});
+/* 7 */
+test('markdown sanitizes script injection', () => {
+  const out = renderMarkdown('<scri' + 'pt>alert(1)<\/scri' + 'pt>');
+  assert(!out.includes('<scri' + 'pt'), 'raw script tag leaked');
+  assert(out.includes('&lt;scri' + 'pt&gt;'), 'expected escaped script tag');
+});
+/* 8 */
+test('markdown links are safe (rel=noopener)', () => {
+  const out = renderMarkdown('[docs](https://example.io)');
+  assert(out.includes('rel="noopener noreferrer"'), 'missing rel attribute');
+  assert(out.includes('href="https://example.io"'), 'missing href');
+});
+/* 9 */
+test('formatCompact produces K/M/B suffixes', () => {
+  eq(formatCompact(1500), '1.5K');
+  eq(formatCompact(2_500_000), '2.50M');
+  eq(formatCompact(3_400_000_000), '3.40B');
+});
+/* 10 */
+test('formatUSD prefixes currency', () => {
+  eq(formatUSD(1234567), '$1.23M');
+  eq(formatUSD(0), '$0');
+});
+/* 11 */
+test('shortenHash truncates with ellipsis', () => {
+  eq(shortenHash('0x1234567890abcdef1234567890abcdef12345678', 6, 4), '0x1234…5678');
+});
+/* 12 */
+test('clampRisk clamps to 0–100', () => {
+  eq(clampRisk(150), 100);
+  eq(clampRisk(-20), 0);
+  eq(clampRisk(42), 42);
+  eq(clampRisk(NaN), 0);
+});
+
+function runTests(){
+  const t0 = performance.now();
+  const results = TESTS.map(({ name, fn }) => {
+    try {
+      fn();
+      return { name, pass: true };
+    } catch (e) {
+      return { name, pass: false, error: e.message };
+    }
+  });
+  const runtime = (performance.now() - t0).toFixed(2);
+  const passed = results.filter(r => r.pass).length;
+
+  el.testBadge.textContent = passed + ' / ' + results.length + ' passing';
+  el.testBadge.classList.toggle('ok', passed === results.length);
+  el.testBadge.classList.toggle('fail', passed !== results.length);
+  el.testRuntime.textContent = 'runtime ' + runtime + 'ms';
+
+  el.testList.innerHTML = results.map(r =>
+    '<li class="test-item ' + (r.pass ? 'pass' : 'fail') + '">' +
+      '<span class="mark">' + (r.pass ? '✓' : '✕') + '</span>' +
+      '<span>' + escapeHtml(r.name) + (r.pass ? '' : ' — ' + escapeHtml(r.error || '')) + '</span>' +
+    '</li>'
+  ).join('');
+
+  return { passed, total: results.length };
+}
+
+/* ============================================================
+   12. INIT / WIRING
+   ============================================================ */
+function init(){
+  el.year.textContent = new Date().getFullYear();
+
+  el.welcomeMd.innerHTML = renderMarkdown(
+`### Welcome to Hermes
+
+I'm watching **${fmtInt(state.tps)} TPS** across 7 chains and cross-referencing every transaction against Mythos threat intelligence.
+
+Ask me about a wallet, an active threat, network health, or recent whale movements — or pick a suggestion below.`
+  );
+
+  buildTicker();
+  updateTicker();
+  buildChips();
+  renderVectors();
+  updateGauge(state.risk);
+
+  for (let i = 0; i < 6; i++) addTx(makeTx());
+
+  el.chatForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const val = el.chatInput.value;
+    el.chatInput.value = '';
+    askHermes(val);
+  });
+
+  el.feedToggle.addEventListener('click', () => {
+    state.feedPaused = !state.feedPaused;
+    el.feedToggle.textContent = state.feedPaused ? 'Resume' : 'Pause';
+    el.feedToggle.setAttribute('aria-pressed', String(state.feedPaused));
+  });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const networkInterval = reduceMotion ? 4000 : 2000;
+  const feedInterval = reduceMotion ? 3600 : 1800;
+
+  setInterval(tickNetwork, networkInterval);
+  setInterval(tickFeed, feedInterval);
+
+  runTests();
+}
+
+if (document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
