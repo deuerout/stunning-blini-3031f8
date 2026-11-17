@@ -1,0 +1,12 @@
+{
+  "name": "paypal-buy-button",
+  "version": "1.0.0",
+  "private": true,
+  "description": "PayPal Buy Button example for Deverout and Associates strategy sessions",
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "PayPal Buy Button",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}/paypal-buy-button",
+  "postCreateCommand": "[ -f .env ] || cp .env.example .env",
+  "postAttachCommand": "npm start",
+  "forwardPorts": [8888],
+  "portsAttributes": {
+    "8888": { "label": "PayPal Buy Button", "onAutoForward": "openPreview" }
+  },
+  "secrets": {
+    "PAYPAL_CLIENT_ID": {
+      "description": "Sandbox client ID",
+      "documentationUrl": "https://developer.paypal.com/dashboard/applications/sandbox"
+    },
+    "PAYPAL_CLIENT_SECRET": {
+      "description": "Sandbox client secret",
+      "documentationUrl": "https://developer.paypal.com/dashboard/applications/sandbox"
+    }
+  },
+  "customizations": {
+    "codespaces": { "openFiles": ["README.md"] },
+    "vscode": { "extensions": ["dbaeumer.vscode-eslint"] }
+  }
+}
