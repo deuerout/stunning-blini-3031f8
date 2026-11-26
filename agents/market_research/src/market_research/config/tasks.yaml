@@ -1,0 +1,62 @@
+research_task:
+  description: >
+    Research the {market_segment} market in {region} with a {time_horizon} view.
+    Today's date is {current_date}; prioritise sources from the last 18 months.
+
+    Cover, at minimum:
+      1. Market definition and boundaries (what is in and out of scope).
+      2. Five to eight emerging trends — for each: what is changing, who is
+         driving it, evidence, and the cultural or regional nuance in {region}.
+      3. Customer segments and their unmet needs / buying criteria.
+      4. Competitive landscape: incumbents, challengers, notable recent moves
+         (funding, M&A, launches).
+      5. Regulatory, technological and macro-economic drivers and headwinds.
+      6. Any published market-size or growth figures, with source and year.
+
+    Use the search tool when available. If live search is unavailable, say so
+    explicitly at the top and mark knowledge-based claims as "unverified".
+  expected_output: >
+    A structured research dossier in markdown with the six numbered sections
+    above, each claim followed by its source (publisher + year or URL), and a
+    closing "Evidence gaps" list.
+  agent: market_researcher
+
+analysis_task:
+  description: >
+    Using the research dossier, quantify the {market_segment} opportunity in
+    {region}.
+
+      1. Use the Market Sizing Calculator to produce TAM, SAM and SOM with a
+         projection over {time_horizon}. State every input assumption and
+         where it came from. Run a conservative and an optimistic case.
+      2. Shortlist four to six specific opportunities for {client_context}.
+         Score each with the Opportunity Scoring tool (market_growth,
+         market_size, competitive_intensity, capability_fit,
+         regulatory_risk, time_to_value — all 1-10).
+      3. Rank the opportunities by weighted score and explain the top three.
+  expected_output: >
+    A markdown analysis containing: an assumptions table, TAM/SAM/SOM for both
+    cases with the projection, an opportunity scoring table sorted by weighted
+    score, and a short paragraph on confidence and sensitivities.
+  agent: data_analyst
+  context:
+    - research_task
+
+strategy_report_task:
+  description: >
+    Write the final transformation-strategy brief for {client_context} on
+    {market_segment} in {region}, drawing only on the research and analysis
+    already produced.
+
+    The brief must give: an executive summary that leads with the answer,
+    the key trends, the sized opportunity, the top prioritised opportunities,
+    a phased roadmap (30 days / 90 days / 12 months) with owners, the main
+    risks with mitigations, KPIs to track, and where mentoring or capability
+    building is needed to deliver it.
+  expected_output: >
+    A StrategyReport object populated with evidence-backed content. Every
+    recommendation must trace back to a trend or scored opportunity.
+  agent: strategy_advisor
+  context:
+    - research_task
+    - analysis_task
