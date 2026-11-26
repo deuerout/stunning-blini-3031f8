@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Supply Ready Jamaica — Deverout and Associates</title>
+<meta name="description" content="Free readiness check for Jamaican MSMEs: find government and tourism supply opportunities, learn what buyers require, and plan contract cash flow.">
+<link rel="canonical" href="https://deuerout.com/supply-ready-jamaica.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Deverout and Associates">
+<meta property="og:title" content="Supply Ready Jamaica">
+<meta property="og:description" content="Free readiness check for Jamaican MSMEs: find government and tourism supply opportunities, learn what buyers require, and plan contract cash flow.">
+<meta property="og:url" content="https://deuerout.com/supply-ready-jamaica.html">
+<meta property="og:image" content="https://deuerout.com/og-cover.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@DeveroutGraham">
+<meta name="twitter:title" content="Supply Ready Jamaica">
+<meta name="twitter:description" content="Stop leaving contracts on the table.">
+<meta name="twitter:image" content="https://deuerout.com/og-cover.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: ink masthead with the problem stated, then a sticky tab bar over four working tools on parchment. */
+:root{
+  --bg:#f5efe3; --surface:#fbf7ef; --surface-2:#efe7d6;
+  --ink:#0d1a2b; --muted:#5d6b7d; --line:rgba(13,26,43,.14);
+  --brass:#9c7740; --brass-bright:#caa264;
+  --band:#0d1a2b; --band-text:#ece4d4; --band-muted:#a9b1bd;
+  --good:#1f7a4d; --good-bg:rgba(31,122,77,.11);
+  --warn:#a8650c; --warn-bg:rgba(168,101,12,.12);
+  --bad:#a33a2c; --bad-bg:rgba(163,58,44,.11);
+  --display:"EB Garamond",Georgia,"Times New Roman",serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1724; --surface:#142133; --surface-2:#1b2b42;
+  --ink:#ece4d4; --muted:#a3adba; --line:rgba(236,228,212,.14);
+  --brass:#d2ad70; --brass-bright:#e0bd80;
+  --band:#08111c; --band-text:#ece4d4; --band-muted:#a3adba;
+  --good:#5cc08b; --good-bg:rgba(92,192,139,.14);
+  --warn:#e2a54c; --warn-bg:rgba(226,165,76,.14);
+  --bad:#e88373; --bad-bg:rgba(232,131,115,.14);
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1724; --surface:#142133; --surface-2:#1b2b42;
+  --ink:#ece4d4; --muted:#a3adba; --line:rgba(236,228,212,.14);
+  --brass:#d2ad70; --brass-bright:#e0bd80;
+  --band:#08111c; --band-text:#ece4d4; --band-muted:#a3adba;
+  --good:#5cc08b; --good-bg:rgba(92,192,139,.14);
+  --warn:#e2a54c; --warn-bg:rgba(226,165,76,.14);
+  --bad:#e88373; --bad-bg:rgba(232,131,115,.14);
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.6;margin:0}
+h1,h2,h3{font-family:var(--display);font-weight:500;line-height:1.1;letter-spacing:-.01em;text-wrap:balance;margin:0}
+p{margin:0}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brass-bright);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--brass)}
+.tab-nums{font-variant-numeric:tabular-nums}
+
+/* masthead */
+.hero{background:var(--band);color:var(--band-text);margin-top:calc(-1 * env(safe-area-inset-top,0px));padding-top:calc(env(safe-area-inset-top,0px) + 2.6rem);padding-bottom:2.4rem}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:2.5rem;align-items:end}
+.hero .eyebrow{color:var(--brass-bright)}
+.hero h1{font-size:clamp(2.3rem,5.4vw,4rem);margin:.6rem 0 1rem;color:var(--band-text)}
+.hero h1 em{color:var(--brass-bright)}
+.hero .lede{color:var(--band-muted);max-width:56ch;font-weight:300;font-size:1.05rem}
+.quote{border-left:1px solid var(--brass-bright);padding-left:1.2rem}
+.quote p{font-family:var(--display);font-style:italic;font-size:1.32rem;line-height:1.35;color:var(--band-text)}
+.quote cite{display:block;margin-top:.8rem;font-style:normal;font-size:.8rem;color:var(--band-muted);letter-spacing:.02em}
+.gaps{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.gaps span{font-size:.78rem;border:1px solid rgba(202,162,100,.4);color:var(--band-text);padding:.3rem .7rem;border-radius:999px}
+
+/* tabs */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:.25rem;overflow-x:auto;scrollbar-width:none}
+.tabs a{flex:0 0 auto;padding:1rem .9rem .85rem;font-size:.9rem;font-weight:500;color:var(--muted);text-decoration:none;border-bottom:2px solid transparent}
+.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--brass)}
+.tabs a:hover{color:var(--ink)}
+main{padding-block:2.2rem 3rem}
+.view-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:1rem;margin-bottom:1.6rem}
+.view-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem)}
+.view-head p{color:var(--muted);max-width:60ch;margin-top:.4rem}
+.btn{display:inline-flex;align-items:center;gap:.5rem;border:1px solid var(--line);background:var(--surface);padding:.55rem 1rem;border-radius:3px;font-size:.88rem;font-weight:500;cursor:pointer;text-decoration:none;color:var(--ink)}
+.btn:hover{border-color:var(--brass)}
+.btn-primary{background:var(--brass);border-color:var(--brass);color:#0d1a2b;font-weight:600}
+.btn-primary:hover{background:var(--brass-bright)}
+
+/* assessment */
+.assess{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:2rem;align-items:start}
+.pillar{margin-bottom:1.8rem}
+.pillar h3{font-size:1.35rem;margin-bottom:.2rem}
+.pillar .why{color:var(--muted);font-size:.9rem;margin-bottom:.8rem}
+.q{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1rem;align-items:center;padding:.85rem 0;border-top:1px solid var(--line)}
+.q p{font-size:.95rem}
+.q small{display:block;color:var(--muted);font-size:.8rem;margin-top:.15rem}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:3px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;padding:.4rem .7rem;font-size:.8rem;cursor:pointer;color:var(--muted)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"][data-v="2"]{background:var(--good-bg);color:var(--good);font-weight:600}
+.seg button[aria-pressed="true"][data-v="1"]{background:var(--warn-bg);color:var(--warn);font-weight:600}
+.seg button[aria-pressed="true"][data-v="0"]{background:var(--bad-bg);color:var(--bad);font-weight:600}
+.panel{position:sticky;top:calc(env(safe-area-inset-top,0px) + 4.2rem);background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1.4rem}
+.note{font-size:.8rem;color:var(--muted);background:var(--surface-2);padding:.55rem .8rem;border-radius:3px;margin-bottom:1rem;display:flex;justify-content:space-between;gap:.6rem;align-items:center;flex-wrap:wrap}
+.note button{border:0;background:none;color:var(--brass);font-weight:600;cursor:pointer;padding:0;font-size:.8rem}
+.tracks{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.2rem}
+.track .lbl{font-size:.76rem;color:var(--muted);letter-spacing:.04em}
+.track .big{font-family:var(--display);font-size:2.6rem;line-height:1;margin:.25rem 0 .35rem}
+.bar{height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--brass);transition:width .4s ease}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:.15rem .55rem;border-radius:999px;margin-top:.5rem}
+.pill.good{background:var(--good-bg);color:var(--good)}.pill.warn{background:var(--warn-bg);color:var(--warn)}.pill.bad{background:var(--bad-bg);color:var(--bad)}
+.pillars-mini{display:grid;gap:.5rem;margin-bottom:1.2rem}
+.pillars-mini div{display:grid;grid-template-columns:9.5rem minmax(0,1fr) 2.6rem;gap:.6rem;align-items:center;font-size:.8rem}
+.pillars-mini b{font-weight:500;text-align:right}
+.plan h4{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin:0 0 .6rem}
+.plan ol{margin:0;padding-left:1.2rem;display:grid;gap:.6rem}
+.plan li{font-size:.88rem}
+.plan li span{display:block;color:var(--muted);font-size:.78rem}
+.plan .done{font-size:.9rem;color:var(--good)}
+
+/* opportunities */
+.filters{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem}
+.filters select,.filters input{background:var(--surface);border:1px solid var(--line);border-radius:3px;padding:.5rem .7rem;font-size:.88rem;min-width:0}
+.filters input{flex:1 1 220px}
+.banner{font-size:.85rem;border:1px dashed var(--brass);color:var(--ink);padding:.7rem 1rem;border-radius:3px;margin-bottom:1.2rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:1rem}
+.opp{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1.2rem;display:flex;flex-direction:column;gap:.7rem;min-width:0}
+.opp .top{display:flex;justify-content:space-between;gap:.6rem;align-items:start}
+.tag{font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:.2rem .5rem;border-radius:2px;white-space:nowrap}
+.tag.gov{background:var(--surface-2);color:var(--ink)}
+.tag.tour{background:var(--brass);color:#0d1a2b}
+.opp h3{font-size:1.25rem}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:.2rem .8rem;font-size:.82rem}
+.meta dt{color:var(--muted)}.meta dd{margin:0}
+.reqs{list-style:none;margin:0;padding:0;display:grid;gap:.3rem;font-size:.83rem}
+.reqs li{display:flex;gap:.5rem;align-items:baseline}
+.reqs li::before{content:"";flex:0 0 8px;height:8px;border-radius:50%;background:var(--line);transform:translateY(1px)}
+.reqs li.ok::before{background:var(--good)}.reqs li.part::before{background:var(--warn)}.reqs li.gap::before{background:var(--bad)}
+.match{margin-top:auto;font-size:.8rem;color:var(--muted);border-top:1px solid var(--line);padding-top:.6rem}
+.match b{color:var(--ink)}
+.empty{color:var(--muted);padding:2rem 0}
+
+/* guides */
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.path h3{font-size:1.5rem;margin-bottom:.3rem}
+.path>p{color:var(--muted);font-size:.9rem;margin-bottom:1rem}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:2.2rem minmax(0,1fr);gap:.4rem;padding:.8rem 0;border-top:1px solid var(--line)}
+.steps li::before{content:counter(s);font-family:var(--display);font-style:italic;font-size:1.25rem;color:var(--brass);line-height:1.2}
+.steps b{display:block;font-weight:600;font-size:.95rem}
+.steps span{color:var(--muted);font-size:.86rem}
+.cycle{margin-top:2.4rem}
+.cycle h3{font-size:1.5rem;margin-bottom:.3rem}
+.cycle>p{color:var(--muted);font-size:.9rem;margin-bottom:1rem}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.86rem}
+th,td{text-align:left;padding:.7rem .9rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+.support{margin-top:2.4rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:1rem}
+.support div{border-top:2px solid var(--brass);padding-top:.7rem}
+.support b{display:block;font-size:.95rem}
+.support span{font-size:.84rem;color:var(--muted)}
+
+/* cash */
+.cash{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:2rem;align-items:start}
+.form{display:grid;gap:1rem;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1.3rem}
+.field label{display:flex;justify-content:space-between;font-size:.85rem;font-weight:500;margin-bottom:.35rem}
+.field label output{color:var(--brass);font-variant-numeric:tabular-nums}
+.field input[type=number],.field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:.55rem .7rem}
+.field input[type=range]{width:100%;accent-color:var(--brass)}
+.field small{color:var(--muted);font-size:.76rem}
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-bottom:1.4rem}
+.kpi .lbl{font-size:.76rem;color:var(--muted)}
+.kpi .big{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:.76rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:1rem}
+.chart svg{display:block;width:100%;height:auto}
+.verdict{margin-top:1.2rem;padding:1rem 1.1rem;border-radius:4px;font-size:.92rem}
+.verdict.good{background:var(--good-bg)}.verdict.warn{background:var(--warn-bg)}.verdict.bad{background:var(--bad-bg)}
+.verdict b{display:block;margin-bottom:.2rem}
+
+/* lead capture */
+[hidden]{display:none!important}
+.brandbar{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1.6rem;font-size:.8rem;color:var(--band-muted)}
+.brandbar a{font-family:var(--display);font-size:1.15rem;color:var(--band-text);text-decoration:none;font-weight:600}
+.brandbar a b{color:var(--brass-bright);font-weight:600}
+.more{font-size:.82rem;color:var(--muted);margin-top:.7rem}
+.lead{margin-top:1.3rem;border-top:1px solid var(--line);padding-top:1.2rem}
+.lead h4{font-family:var(--display);font-size:1.25rem;font-weight:500;margin:0 0 .3rem;letter-spacing:0;text-transform:none;color:var(--ink)}
+.lead>p{font-size:.85rem;color:var(--muted);margin-bottom:.9rem}
+.lead form{display:grid;gap:.7rem}
+.lead .row{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.lead label{display:block;font-size:.78rem;font-weight:500;margin-bottom:.25rem}
+.lead input[type=text],.lead input[type=email],.lead input[type=tel],.lead select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:3px;padding:.5rem .65rem;font-size:.88rem}
+.lead .consent{display:flex;gap:.5rem;align-items:flex-start;font-size:.78rem;color:var(--muted)}
+.lead .consent input{margin-top:.2rem;accent-color:var(--brass)}
+.lead .err{font-size:.8rem;color:var(--bad)}
+.lead .ok{background:var(--good-bg);color:var(--ink);padding:.8rem 1rem;border-radius:3px;font-size:.88rem}
+.lead .ok b{color:var(--good)}
+@media (max-width:520px){.lead .row{grid-template-columns:minmax(0,1fr)}}
+
+/* footer */
+.cta{background:var(--band);color:var(--band-text);padding-block:2.6rem}
+.cta .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1.5rem;align-items:center}
+.cta h2{font-size:clamp(1.5rem,3vw,2.1rem);max-width:28ch;color:var(--band-text)}
+.cta p{color:var(--band-muted);font-size:.9rem;margin-top:.5rem;max-width:60ch}
+.foot{font-size:.76rem;color:var(--muted);padding-block:1.2rem}
+
+@media (max-width:900px){
+  .hero .wrap,.assess,.paths,.cash{grid-template-columns:minmax(0,1fr)}
+  .panel{position:static}
+}
+@media (max-width:520px){
+  .q{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:minmax(0,1fr)}
+  .pillars-mini div{grid-template-columns:7.5rem minmax(0,1fr) 2.4rem}
+}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+<style>img{max-width:100%}</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="brandbar"><a href="https://deuerout.com/">Deverout<b>&amp;</b>Associates</a></div>
+      <div class="eyebrow">MSME supply-chain readiness · Jamaica</div>
+      <h1>Stop leaving <em>contracts</em> on the table.</h1>
+      <p class="lede">Find government and tourism buying opportunities, learn exactly what buyers require, and prepare your business to win and fulfil the contract.</p>
+      <div class="gaps"><span>Market intelligence</span><span>Buyer requirements</span><span>Business preparation</span></div>
+    </div>
+    <blockquote class="quote">
+      <p>“Very often it’s not because we cannot provide the goods and the services. It’s because we either don’t know that the opportunities exist, don’t fully understand what is required, or have not adequately prepared our business to participate.”</p>
+      <cite>Harold Davis, Deputy CEO, Jamaica Business Development Corporation · Opportunity Evening, GEW 2026</cite>
+    </blockquote>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Tools">
+  <div class="wrap">
+    <a href="#assess" data-view="assess">1. Readiness check</a>
+    <a href="#opportunities" data-view="opportunities">2. Opportunities</a>
+    <a href="#requirements" data-view="requirements">3. Buyer requirements</a>
+    <a href="#cashflow" data-view="cashflow">4. Contract cash planner</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <!-- ASSESS -->
+  <section id="v-assess" data-v="assess">
+    <div class="view-head">
+      <div>
+        <h2>How ready is your business to supply?</h2>
+        <p>Twelve questions across the three gaps that cost Jamaican MSMEs contracts. Your scores update as you answer, and every gap becomes an action.</p>
+      </div>
+    </div>
+    <div class="assess">
+      <div id="questions"></div>
+      <aside class="panel" aria-live="polite">
+        <div class="note" id="sampleNote"><span>Showing example answers for a small agro-processor.</span><button type="button" id="resetBtn">Start my own</button></div>
+        <div class="tracks">
+          <div class="track"><div class="lbl">Government procurement</div><div class="big tab-nums" id="govScore">0%</div><div class="bar"><i id="govBar"></i></div><span class="pill" id="govPill"></span></div>
+          <div class="track"><div class="lbl">Tourism &amp; hotel supply</div><div class="big tab-nums" id="tourScore">0%</div><div class="bar"><i id="tourBar"></i></div><span class="pill" id="tourPill"></span></div>
+        </div>
+        <div class="pillars-mini" id="pillarsMini"></div>
+        <div class="plan">
+          <h4>Your priority actions</h4>
+          <div id="plan"></div>
+        </div>
+        <div class="lead" id="leadBox">
+          <div id="leadSite">
+            <h4>Get your full action plan</h4>
+            <p>Save your results to unlock every action for your business. Deverout and Associates will follow up to talk through your next steps.</p>
+            <form name="supply-ready-leads" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="leadForm" novalidate>
+              <input type="hidden" name="form-name" value="supply-ready-leads">
+              <p hidden><label>Leave blank <input name="bot-field"></label></p>
+              <input type="hidden" name="gov_score" id="fGov">
+              <input type="hidden" name="tourism_score" id="fTour">
+              <input type="hidden" name="pillar_scores" id="fPillars">
+              <input type="hidden" name="gaps" id="fGaps">
+              <input type="hidden" name="answers" id="fAnswers">
+              <div class="row">
+                <div><label for="lName">Your name</label><input id="lName" name="name" type="text" autocomplete="name" required></div>
+                <div><label for="lBiz">Business name</label><input id="lBiz" name="business" type="text" autocomplete="organization" required></div>
+              </div>
+              <div class="row">
+                <div><label for="lEmail">Email</label><input id="lEmail" name="email" type="email" autocomplete="email" required></div>
+                <div><label for="lPhone">Phone or WhatsApp (optional)</label><input id="lPhone" name="phone" type="tel" autocomplete="tel"></div>
+              </div>
+              <div class="row">
+                <div><label for="lParish">Parish</label>
+                  <select id="lParish" name="parish" required>
+                    <option value="">Choose…</option>
+                    <option>Kingston</option><option>St Andrew</option><option>St Thomas</option><option>Portland</option><option>St Mary</option><option>St Ann</option><option>Trelawny</option><option>St James</option><option>Hanover</option><option>Westmoreland</option><option>St Elizabeth</option><option>Manchester</option><option>Clarendon</option><option>St Catherine</option><option>Outside Jamaica</option>
+                  </select></div>
+                <div><label for="lTarget">Main target</label>
+                  <select id="lTarget" name="target">
+                    <option>Government contracts</option><option>Hotels and tourism</option><option>Both</option>
+                  </select></div>
+              </div>
+              <div><label for="lSupply">What do you supply?</label><input id="lSupply" name="supplies" type="text" placeholder="e.g. fresh herbs, uniforms, cleaning services"></div>
+              <label class="consent"><input id="lConsent" name="consent" type="checkbox" value="yes" required><span>Deverout and Associates may contact me about my results. My details are not shared with anyone else. See our <a href="https://deuerout.com/privacy.html" target="_blank" rel="noopener" style="color:var(--brass);text-decoration:underline">privacy notice</a>.</span></label>
+              <p class="err" id="leadErr" hidden></p>
+              <button class="btn btn-primary" type="submit" id="leadBtn">Save results and unlock my plan</button>
+            </form>
+            <div class="ok" id="leadOk" hidden><b>Saved.</b> Your full action plan is above. We will be in touch at the email you gave us.</div>
+          </div>
+          <div id="leadArtifact" hidden>
+            <h4>Get your full action plan</h4>
+            <p>Save your results and unlock every action on the full version of this tool.</p>
+            <a class="btn btn-primary" href="https://deuerout.com/supply-ready-jamaica.html" target="_blank" rel="noopener">Open on deuerout.com →</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITIES -->
+  <section id="v-opportunities" data-v="opportunities" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Where the buying happens</h2>
+        <p>Typical contracts across government and tourism, each with the buyer’s usual requirements. Coloured dots show how your readiness answers match.</p>
+      </div>
+    </div>
+    <div class="banner"><b>Illustrative examples.</b> These show the kinds of contracts on offer and what they usually demand. For live tenders, check GOJEP (gojep.gov.jm) and approach hotel purchasing departments directly.</div>
+    <div class="filters">
+      <input id="oq" type="search" placeholder="Search: produce, uniforms, toiletries…" aria-label="Search opportunities">
+      <select id="osector" aria-label="Sector"><option value="">All buyers</option><option value="gov">Government</option><option value="tour">Tourism &amp; hotels</option></select>
+      <select id="oregion" aria-label="Region"><option value="">All regions</option></select>
+    </div>
+    <div class="grid" id="oppGrid"></div>
+  </section>
+
+  <!-- REQUIREMENTS -->
+  <section id="v-requirements" data-v="requirements" hidden>
+    <div class="view-head">
+      <div>
+        <h2>What buyers actually require</h2>
+        <p>The two routes into large Jamaican supply chains work differently. Government buys through formal, documented tenders. Hotels buy on ordering cycles, quality specifications and trust built over time.</p>
+      </div>
+    </div>
+    <div class="paths">
+      <div class="path">
+        <h3>Government procurement</h3>
+        <p>Rules-based and documented. Missing paperwork is the most common reason bids fail.</p>
+        <ol class="steps">
+          <li><div><b>Watch GOJEP every week</b><span>The Government of Jamaica Electronic Procurement portal lists tenders from ministries, agencies and public bodies. Set alerts for your category.</span></div></li>
+          <li><div><b>Get your documents current</b><span>Business registration with the Companies Office of Jamaica, TRN, a valid Tax Compliance Certificate from TAJ, and NIS and other statutory compliance.</span></div></li>
+          <li><div><b>Register as a supplier where required</b><span>Many contracts require registration with the Public Procurement Commission in the right category and grade. Check the tender’s eligibility section.</span></div></li>
+          <li><div><b>Read the whole tender document</b><span>Note the specification, evaluation criteria, mandatory forms, bid validity period, and any bid security or declarations.</span></div></li>
+          <li><div><b>Ask clarifications in writing, before the deadline</b><span>Procuring entities publish answers to all bidders. Questions after the cut-off are not answered.</span></div></li>
+          <li><div><b>Price completely and submit on time</b><span>Include GCT treatment, delivery and every listed line. Late or incomplete bids are rejected, regardless of price.</span></div></li>
+          <li><div><b>Perform, document, and build a record</b><span>Delivery notes, signed receipts and on-time invoices get you paid and become references for the next bid.</span></div></li>
+        </ol>
+      </div>
+      <div class="path">
+        <h3>Tourism &amp; hotel supply</h3>
+        <p>Relationship-led and specification-driven. Consistency matters more than a low first price.</p>
+        <ol class="steps">
+          <li><div><b>Find the purchasing manager, not the front desk</b><span>Large properties have a purchasing or stores department; smaller ones buy through the executive chef or general manager.</span></div></li>
+          <li><div><b>Learn their ordering cycle</b><span>Perishables are ordered daily or several times a week, dry goods and amenities monthly, furniture and equipment on capital budgets. Fit your offer to the cycle.</span></div></li>
+          <li><div><b>Meet the quality specification</b><span>Size, grade, ripeness, packaging and labelling are specified. Food suppliers should expect food-handler permits, BSJ labelling and traceability questions.</span></div></li>
+          <li><div><b>Complete vendor approval</b><span>Expect a vendor form, TRN and TCC, insurance, and for food a site visit or sample approval. Group-owned hotels may need head-office approval.</span></div></li>
+          <li><div><b>Plan for the season</b><span>Volumes peak in the winter season (mid-December to April) and drop in late summer and autumn. Agree minimum and maximum weekly volumes.</span></div></li>
+          <li><div><b>Hit the receiving window</b><span>Deliveries are checked at the receiving dock at set times against the purchase order. Short, late or off-spec deliveries are refused.</span></div></li>
+          <li><div><b>Invoice cleanly and wait for terms</b><span>Payment commonly follows 30 to 60 days after a correct invoice. Plan working capital before you sign (see tool 4).</span></div></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="cycle">
+      <h3>Hotel ordering cycles at a glance</h3>
+      <p>Typical patterns. Each property sets its own, so confirm with the buyer.</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Category</th><th>Order frequency</th><th>What the buyer checks</th><th>MSME opening</th></tr></thead>
+          <tbody>
+            <tr><td>Fresh produce, herbs, fish</td><td>Daily to 3× weekly</td><td>Grade, freshness, weight, cold chain, traceability</td><td>Farmers’ groups pooling volume for consistent supply</td></tr>
+            <tr><td>Bakery, dairy, juices</td><td>Daily to weekly</td><td>Food safety permits, labelling, shelf life</td><td>Local agro-processors replacing imports</td></tr>
+            <tr><td>Guest amenities, linens</td><td>Monthly</td><td>Brand fit, unit cost, packaging, steady stock</td><td>Jamaican-made toiletries and textiles for boutique properties</td></tr>
+            <tr><td>Craft, gift shop, décor</td><td>Quarterly or seasonal</td><td>Authenticity, finish, consignment or wholesale terms</td><td>Artisans with catalogues and fixed wholesale prices</td></tr>
+            <tr><td>Furniture, maintenance, services</td><td>Capital budget, annual</td><td>Quotations, references, insurance, warranties</td><td>Upholstery, joinery, landscaping, pest control</td></tr>
+            <tr><td>Entertainment, tours, experiences</td><td>Weekly programme</td><td>Reliability, licensing, insurance, guest reviews</td><td>Cultural performers and community tourism operators</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="support">
+      <div><b>Jamaica Business Development Corporation</b><span>Business advisory, product development and market-access support for MSMEs.</span></div>
+      <div><b>Tourism Linkages Network</b><span>Connects local producers with hotels and the wider tourism sector.</span></div>
+      <div><b>Bureau of Standards Jamaica</b><span>Product standards, labelling requirements and certification.</span></div>
+      <div><b>Tax Administration Jamaica</b><span>TRN and Tax Compliance Certificates.</span></div>
+      <div><b>Companies Office of Jamaica</b><span>Business and company registration.</span></div>
+      <div><b>Development Bank of Jamaica</b><span>MSME financing through approved lenders, useful for contract working capital.</span></div>
+    </div>
+  </section>
+
+  <!-- CASHFLOW -->
+  <section id="v-cashflow" data-v="cashflow" hidden>
+    <div class="view-head">
+      <div>
+        <h2>Can you afford to win this contract?</h2>
+        <p>Large buyers pay on terms. You pay your costs now and get paid later. Enter a contract and see how much cash you need before the first payment arrives.</p>
+      </div>
+    </div>
+    <div class="cash">
+      <form class="form" id="cashForm" onsubmit="return false">
+        <div class="field"><label for="cMonthly">Monthly contract value (JMD)</label><input id="cMonthly" type="number" min="0" step="10000" value="850000"><small id="cMonthlyUsd" class="tab-nums"></small></div>
+        <div class="field"><label for="cCost">Your costs as % of price <output id="cCostOut">68%</output></label><input id="cCost" type="range" min="30" max="95" value="68"></div>
+        <div class="field"><label for="cTerms">Buyer payment terms</label>
+          <select id="cTerms"><option value="0">Cash on delivery</option><option value="30">30 days</option><option value="45" selected>45 days</option><option value="60">60 days</option><option value="90">90 days</option></select></div>
+        <div class="field"><label for="cMonths">Contract length <output id="cMonthsOut">6 months</output></label><input id="cMonths" type="range" min="2" max="12" value="6"></div>
+        <div class="field"><label for="cCash">Cash you can put in now (JMD)</label><input id="cCash" type="number" min="0" step="10000" value="600000"></div>
+        <div class="field"><label for="cCap">Can supply per week vs buyer needs <output id="cCapOut">90%</output></label><input id="cCap" type="range" min="20" max="150" value="90"><small>Your realistic weekly output as a share of the buyer’s weekly volume.</small></div>
+      </form>
+      <div>
+        <div class="kpis">
+          <div class="kpi"><div class="lbl">Cash needed before first payment</div><div class="big" id="kNeed">—</div><div class="sub" id="kNeedUsd"></div></div>
+          <div class="kpi"><div class="lbl">Cash turns positive</div><div class="big" id="kDip">—</div><div class="sub" id="kDipWhen"></div></div>
+          <div class="kpi"><div class="lbl">Gross margin over contract</div><div class="big" id="kMargin">—</div><div class="sub" id="kMarginUsd"></div></div>
+        </div>
+        <div class="chart">
+          <div class="eyebrow" style="margin-bottom:.4rem">Cumulative cash position, JMD</div>
+          <svg id="cashChart" viewBox="0 0 640 260" role="img" aria-label="Cumulative cash position by month"></svg>
+        </div>
+        <div class="verdict" id="verdict"></div>
+        <p class="foot" style="padding:0;margin-top:.8rem">USD figures at J$159.04 to US$1, the Bank of Jamaica closing rate on 24 November 2026. Assumes costs paid as you deliver through each month and one invoice at month end.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="cta">
+  <div class="wrap">
+    <div>
+      <h2>Ready to stop leaving money on the table?</h2>
+      <p>Deverout and Associates works with Jamaican and Caribbean businesses on market positioning, tender preparation and growth strategy. Bring your readiness score to the conversation.</p>
+    </div>
+    <a class="btn btn-primary" href="https://deuerout.com/contact" target="_blank" rel="noopener">Book a strategy conversation →</a>
+  </div>
+</section>
+<div class="wrap foot">Supply Ready Jamaica · An independent tool by Deverout and Associates, Bedford and London. Not affiliated with the JBDC or the Government of Jamaica. Requirements change; confirm with each buyer. · <a href="https://deuerout.com/privacy.html" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">Privacy notice</a></div>
+
+<script>
+(function(){
+const FX = 159.04;
+const fmtJ = n => (n<0?"−":"") + "J$" + Math.round(Math.abs(n)).toLocaleString("en-JM");
+const fmtU = n => (n<0?"−":"") + "US$" + Math.round(Math.abs(n)/FX).toLocaleString("en-US");
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(k)); }catch(e){ return null; } },
+  set(k,v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+};
+
+/* ---------- questions ---------- */
+const PILLARS = [
+  {id:"intel", name:"Market intelligence", why:"Knowing the opportunity exists, before your competitor does."},
+  {id:"req", name:"Buyer requirements", why:"Having the documents, standards and registrations buyers ask for."},
+  {id:"prep", name:"Business preparation", why:"Being able to deliver, invoice and wait to be paid."}
+];
+const QS = [
+  {id:"gojep", p:"intel", t:"I check GOJEP for new tenders at least weekly.", h:"Government of Jamaica Electronic Procurement portal", tr:["gov"],
+    act:"Create a GOJEP account and set alerts for your product categories.", where:"gojep.gov.jm"},
+  {id:"buyers", p:"intel", t:"I know which hotels in my area buy what I produce, and who does their purchasing.", tr:["tour"],
+    act:"List 10 properties within delivery range and find each purchasing manager or executive chef.", where:"Tourism Linkages Network, JHTA chapter meetings"},
+  {id:"season", p:"intel", t:"I plan around tourism seasons and public-sector budget cycles.", h:"Winter season peak; GOJ fiscal year starts 1 April", tr:["gov","tour"],
+    act:"Map your peak months against buyer demand and pre-build stock before mid-December.", where:"Your own sales records"},
+  {id:"tcc", p:"req", t:"I hold a valid Tax Compliance Certificate.", h:"Issued by Tax Administration Jamaica", tr:["gov","tour"],
+    act:"Bring statutory filings up to date and apply for a TCC.", where:"Tax Administration Jamaica"},
+  {id:"reg", p:"req", t:"My business is formally registered and has a TRN.", h:"Companies Office of Jamaica", tr:["gov","tour"],
+    act:"Register the business name or company and get a TRN for it.", where:"Companies Office of Jamaica, TAJ"},
+  {id:"ppc", p:"req", t:"I am registered as a government supplier in my category where required.", h:"Public Procurement Commission registration", tr:["gov"],
+    act:"Check whether your category needs PPC registration and apply in the right grade.", where:"Public Procurement Commission"},
+  {id:"quality", p:"req", t:"My product meets the relevant standards and labelling rules.", h:"BSJ standards, food-handler permits, food safety plan where relevant", tr:["tour","gov"],
+    act:"Get a labelling and standards review, and food-handler permits for all staff handling food.", where:"Bureau of Standards Jamaica, JBDC product development"},
+  {id:"insure", p:"req", t:"I carry public and product liability insurance.", tr:["tour"],
+    act:"Get quotes for public and product liability cover; hotels often ask for a certificate.", where:"Your broker or insurer"},
+  {id:"volume", p:"prep", t:"I can deliver consistent volume and quality every week for at least three months.", tr:["tour","gov"],
+    act:"Measure true weekly capacity; consider pooling supply with other producers.", where:"Producer groups, co-operatives"},
+  {id:"capital", p:"prep", t:"I can cover costs while waiting 30 to 60 days for payment.", tr:["gov","tour"],
+    act:"Run the contract cash planner and arrange working capital or contract financing first.", where:"Tool 4; DBJ-approved lenders"},
+  {id:"paper", p:"prep", t:"I can produce formal quotations, invoices and delivery notes quickly.", tr:["gov","tour"],
+    act:"Set up templates or simple accounting software with GCT handling.", where:"JBDC business advisory"},
+  {id:"profile", p:"prep", t:"I have a capability statement with references from past customers.", tr:["gov","tour"],
+    act:"Write a one-page capability statement: products, capacity, certifications, three references.", where:"Deverout and Associates can help"}
+];
+const SAMPLE = {gojep:0,buyers:1,season:1,tcc:2,reg:2,ppc:0,quality:1,insure:0,volume:1,capital:0,paper:1,profile:0};
+
+let saved = store.get("srj-answers");
+let answers = saved && saved.answers ? saved.answers : {...SAMPLE};
+let isSample = !(saved && saved.answers);
+const ON_SITE = /(^|\.)deuerout\.com$|\.netlify\.app$|^localhost$|^127\.0\.0\.1$/.test(location.hostname);
+let unlocked = !!store.get("srj-unlocked");
+
+const qWrap = document.getElementById("questions");
+qWrap.innerHTML = PILLARS.map(p => `
+  <div class="pillar"><h3>${p.name}</h3><p class="why">${p.why}</p>
+  ${QS.filter(q=>q.p===p.id).map(q=>`
+    <div class="q"><p>${q.t}${q.h?`<small>${q.h}</small>`:""}</p>
+      <div class="seg" role="group" aria-label="${q.t}" data-q="${q.id}">
+        <button type="button" data-v="2">Yes</button><button type="button" data-v="1">Partly</button><button type="button" data-v="0">No</button>
+      </div></div>`).join("")}
+  </div>`).join("");
+
+qWrap.addEventListener("click", e => {
+  const b = e.target.closest(".seg button"); if(!b) return;
+  const q = b.parentElement.dataset.q;
+  answers[q] = +b.dataset.v;
+  if(isSample){ isSample=false; }
+  store.set("srj-answers",{answers});
+  renderAssess(); renderOpps();
+});
+document.getElementById("resetBtn").addEventListener("click", () => {
+  answers = {}; isSample=false; store.set("srj-answers",{answers}); renderAssess(); renderOpps();
+});
+
+function pct(ids){ const n=ids.length; if(!n) return 0; return Math.round(ids.reduce((s,id)=>s+(answers[id]??0),0)/(n*2)*100); }
+function tier(p){ return p>=80?["good","Bid-ready"]:p>=50?["warn","Nearly there"]:["bad","Foundation stage"]; }
+
+function renderAssess(){
+  document.querySelectorAll(".seg").forEach(s=>{
+    const v = answers[s.dataset.q];
+    s.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", String(v!==undefined && +b.dataset.v===v)));
+  });
+  document.getElementById("sampleNote").hidden = !isSample;
+  [["gov","gov"],["tour","tour"]].forEach(([k])=>{
+    const p = pct(QS.filter(q=>q.tr.includes(k)).map(q=>q.id));
+    document.getElementById(k+"Score").textContent = p+"%";
+    document.getElementById(k+"Bar").style.width = p+"%";
+    const [cls,lbl] = tier(p); const pill=document.getElementById(k+"Pill");
+    pill.className="pill "+cls; pill.textContent=lbl;
+  });
+  document.getElementById("pillarsMini").innerHTML = PILLARS.map(p=>{
+    const v = pct(QS.filter(q=>q.p===p.id).map(q=>q.id));
+    return `<div><span>${p.name}</span><div class="bar"><i style="width:${v}%"></i></div><b class="tab-nums">${v}%</b></div>`;
+  }).join("");
+  const answered = Object.keys(answers).length;
+  const gaps = QS.filter(q=>answers[q.id]!==undefined && answers[q.id]<2)
+    .sort((a,b)=>answers[a.id]-answers[b.id] || b.tr.length-a.tr.length);
+  const limit = unlocked ? gaps.length : 3;
+  const plan = document.getElementById("plan");
+  if(answered===0) plan.innerHTML = `<p class="why" style="color:var(--muted);font-size:.88rem">Answer the questions on the left. Each “No” or “Partly” becomes a specific action with where to get help.</p>`;
+  else if(!gaps.length) plan.innerHTML = `<p class="done">No gaps in what you have answered. Go to Opportunities and start bidding.</p>`;
+  else plan.innerHTML = `<ol>${gaps.slice(0,limit).map(q=>`<li>${q.act}<span>Help: ${q.where}</span></li>`).join("")}</ol>` +
+    (gaps.length>limit ? `<p class="more">+ ${gaps.length-limit} more action${gaps.length-limit>1?"s":""} in your full plan</p>` : "");
+  fillHidden(gaps);
+}
+
+/* ---------- opportunities ---------- */
+const OPPS = [
+  {s:"gov", t:"Fresh produce for school feeding", buyer:"Public schools via education ministry agencies", region:"Islandwide", cycle:"Weekly deliveries in term time", terms:"Per contract, often 30+ days", req:["gojep","tcc","reg","quality","volume","capital"]},
+  {s:"gov", t:"Uniform tailoring for a public hospital", buyer:"Regional health authority", region:"Kingston & St Andrew", cycle:"Annual contract, staged deliveries", terms:"30–60 days", req:["gojep","tcc","reg","ppc","paper","profile"]},
+  {s:"gov", t:"Office and janitorial supplies framework", buyer:"Ministry or agency", region:"Kingston & St Andrew", cycle:"Call-off orders, monthly", terms:"30 days", req:["gojep","tcc","reg","ppc","paper","capital"]},
+  {s:"gov", t:"Grounds maintenance and landscaping", buyer:"Parish municipal corporation", region:"St Catherine", cycle:"Monthly service contract", terms:"30–45 days", req:["gojep","tcc","reg","ppc","insure","profile"]},
+  {s:"gov", t:"Catering for public-sector training events", buyer:"Government agency", region:"Islandwide", cycle:"Per event, quarterly", terms:"30 days", req:["gojep","tcc","reg","quality","paper"]},
+  {s:"tour", t:"Fresh herbs and microgreens", buyer:"All-inclusive resort kitchens", region:"Westmoreland & Hanover", cycle:"2–3 deliveries per week", terms:"30–45 days", req:["buyers","quality","volume","capital","paper","season"]},
+  {s:"tour", t:"Jamaican-made guest toiletries", buyer:"Boutique hotels and villas", region:"St Ann", cycle:"Monthly replenishment", terms:"30 days", req:["buyers","quality","insure","volume","tcc","profile"]},
+  {s:"tour", t:"Fresh fish and seafood", buyer:"Hotel purchasing departments", region:"St James", cycle:"Daily to 3× weekly", terms:"30 days", req:["buyers","quality","volume","season","tcc","capital"]},
+  {s:"tour", t:"Sauces, jams and condiments", buyer:"Resort F&B and gift shops", region:"St James", cycle:"Monthly", terms:"30–60 days", req:["buyers","quality","insure","reg","volume","paper"]},
+  {s:"tour", t:"Upholstery and furniture refurbishment", buyer:"Resort engineering departments", region:"St Ann", cycle:"Off-season capital projects", terms:"Deposit then 30 days", req:["buyers","insure","profile","paper","capital","season"]},
+  {s:"tour", t:"Craft and souvenirs on wholesale", buyer:"Hotel gift shops", region:"Westmoreland & Hanover", cycle:"Quarterly, seasonal top-ups", terms:"Wholesale 30 days or consignment", req:["buyers","season","reg","paper","profile"]},
+  {s:"tour", t:"Cultural performances and excursions", buyer:"All-inclusive entertainment teams", region:"Portland", cycle:"Weekly programme", terms:"Per performance, 30 days", req:["buyers","insure","reg","profile","season"]}
+];
+const REQ_LABEL = {gojep:"Watching GOJEP",buyers:"Buyer contact known",season:"Seasonal planning",tcc:"Tax Compliance Certificate",reg:"Registered business + TRN",ppc:"PPC supplier registration",quality:"Standards & labelling",insure:"Liability insurance",volume:"Consistent weekly volume",capital:"Working capital for terms",paper:"Quotes, invoices, delivery notes",profile:"Capability statement"};
+const regions = [...new Set(OPPS.map(o=>o.region))].sort();
+document.getElementById("oregion").insertAdjacentHTML("beforeend", regions.map(r=>`<option>${r}</option>`).join(""));
+["oq","osector","oregion"].forEach(id=>document.getElementById(id).addEventListener("input", renderOpps));
+
+function renderOpps(){
+  const q = document.getElementById("oq").value.trim().toLowerCase();
+  const s = document.getElementById("osector").value, r = document.getElementById("oregion").value;
+  const list = OPPS.filter(o=>(!s||o.s===s)&&(!r||o.region===r)&&(!q||(o.t+" "+o.buyer).toLowerCase().includes(q)));
+  const grid = document.getElementById("oppGrid");
+  if(!list.length){ grid.innerHTML = `<p class="empty">No examples match. Clear a filter to see more.</p>`; return; }
+  grid.innerHTML = list.map(o=>{
+    const met = o.req.filter(k=>answers[k]===2).length;
+    return `<article class="opp">
+      <div class="top"><h3>${o.t}</h3><span class="tag ${o.s}">${o.s==="gov"?"Government":"Tourism"}</span></div>
+      <dl class="meta"><dt>Buyer</dt><dd>${o.buyer}</dd><dt>Region</dt><dd>${o.region}</dd><dt>Ordering</dt><dd>${o.cycle}</dd><dt>Payment</dt><dd>${o.terms}</dd></dl>
+      <ul class="reqs">${o.req.map(k=>{const v=answers[k];const c=v===2?"ok":v===1?"part":v===0?"gap":"";return `<li class="${c}">${REQ_LABEL[k]}</li>`;}).join("")}</ul>
+      <div class="match">You meet <b>${met} of ${o.req.length}</b> requirements${met<o.req.length?' · <a href="#assess" style="color:var(--brass)">see your actions</a>':""}</div>
+    </article>`;
+  }).join("");
+}
+
+/* ---------- cashflow ---------- */
+const $ = id => document.getElementById(id);
+function cash(){
+  const monthly = Math.max(0, +$("cMonthly").value||0);
+  const costPct = +$("cCost").value/100, terms = +$("cTerms").value, months = +$("cMonths").value;
+  const own = Math.max(0, +$("cCash").value||0), cap = +$("cCap").value/100;
+  $("cCostOut").textContent = Math.round(costPct*100)+"%";
+  $("cMonthsOut").textContent = months+" months";
+  $("cCapOut").textContent = Math.round(cap*100)+"%";
+  $("cMonthlyUsd").textContent = "≈ "+fmtU(monthly)+" per month";
+  const cost = monthly*costPct;
+  // month index m (1..months): cost paid during month m; invoice at end of m; paid at end of m + terms/30
+  const horizon = months + Math.ceil(terms/30);
+  let pos = 0, series = [0], dip = 0, dipM = 0;
+  for(let m=1;m<=horizon;m++){
+    if(m<=months) pos -= cost;
+    const paidMonths = [];
+    for(let k=1;k<=months;k++){ const payAt = k + terms/30; if(payAt>m-1 && payAt<=m) pos += monthly; }
+    series.push(pos);
+    if(pos<dip){ dip=pos; dipM=m; }
+  }
+  const need = -dip;
+  const margin = monthly*months*(1-costPct);
+  $("kNeed").textContent = fmtJ(need); $("kNeedUsd").textContent = "≈ "+fmtU(need);
+  const back = series.findIndex((v,i)=>i>dipM && v>=0);
+  $("kDip").textContent = need<=0 ? "Always" : back>0 ? "Month "+back : "After contract";
+  $("kDipWhen").textContent = need>0 ? "lowest point at end of month "+dipM : "never goes negative";
+  $("kMargin").textContent = fmtJ(margin); $("kMarginUsd").textContent = "≈ "+fmtU(margin);
+  drawChart(series, -own);
+  const v = $("verdict");
+  const gap = need-own;
+  let cls, head, body;
+  if(cap<1){
+    cls = cap<0.75?"bad":"warn";
+    head = `You can supply ${Math.round(cap*100)}% of the weekly volume.`;
+    body = `Buyers drop suppliers who short-ship. Bid for a smaller share, pool supply with other producers, or expand capacity before signing. ` + (gap>0?`You also need about ${fmtJ(gap)} more working capital.`:`Your cash covers the payment gap.`);
+  } else if(gap>0){
+    cls = gap>own?"bad":"warn";
+    head = `You are short about ${fmtJ(gap)} (${fmtU(gap)}) of working capital.`;
+    body = `Arrange contract financing, an overdraft or a supplier credit line before you sign, or negotiate shorter payment terms or a deposit.`;
+  } else {
+    cls="good"; head="Your cash covers the payment gap."; body=`You have about ${fmtJ(own-need)} headroom at the lowest point. Keep a buffer for late payments.`;
+  }
+  v.className = "verdict "+cls; v.innerHTML = `<b>${head}</b>${body}`;
+}
+function drawChart(series, floor){
+  const svg = $("cashChart"), W=640, H=260, L=78, R=14, T=14, B=34;
+  const vals = series.concat([floor,0]);
+  let mx = Math.max(...vals), mn = Math.min(...vals);
+  const span = (mx-mn)||1; mx += span*.06; mn -= span*.06;
+  const y = v => T + (mx-v)/(mx-mn)*(H-T-B);
+  const n = series.length, bw = (W-L-R)/n;
+  const step = niceStep((mx-mn)/4);
+  let g = "";
+  for(let t=Math.ceil(mn/step)*step; t<=mx; t+=step){
+    g += `<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/>`+
+         `<text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" style="font-variant-numeric:tabular-nums">${short(t)}</text>`;
+  }
+  let bars = series.map((v,i)=>{
+    const x = L + i*bw + bw*.18, w = bw*.64, y0=y(0), y1=y(v);
+    const col = v<floor ? "var(--bad)" : v<0 ? "var(--warn)" : "var(--good)";
+    return `<rect x="${x}" y="${Math.min(y0,y1)}" width="${w}" height="${Math.max(1,Math.abs(y1-y0))}" fill="${col}" rx="1"/>`+
+      `<text x="${x+w/2}" y="${H-12}" text-anchor="middle" font-size="11" fill="var(--muted)">${i===0?"Start":"M"+i}</text>`;
+  }).join("");
+  const fl = floor<0 ? `<line x1="${L}" x2="${W-R}" y1="${y(floor)}" y2="${y(floor)}" stroke="var(--ink)" stroke-dasharray="4 4" stroke-width="1"/><text x="${W-R}" y="${y(floor)-6}" text-anchor="end" font-size="11" fill="var(--ink)">Your cash available</text>` : "";
+  svg.innerHTML = g + `<line x1="${L}" x2="${W-R}" y1="${y(0)}" y2="${y(0)}" stroke="var(--muted)"/>` + bars + fl;
+}
+function niceStep(raw){ const p=Math.pow(10,Math.floor(Math.log10(raw||1))); const f=raw/p; return (f<1.5?1:f<3?2:f<7?5:10)*p; }
+function short(v){ const a=Math.abs(v), s=v<0?"−":""; return a>=1e6? s+"J$"+(a/1e6).toFixed(a>=1e7?0:1)+"m" : a>=1e3? s+"J$"+Math.round(a/1e3)+"k" : s+"J$"+Math.round(a); }
+["cMonthly","cCost","cTerms","cMonths","cCash","cCap"].forEach(id=>$(id).addEventListener("input",cash));
+
+/* ---------- lead capture ---------- */
+document.getElementById("leadSite").hidden = !ON_SITE;
+document.getElementById("leadArtifact").hidden = ON_SITE;
+function fillHidden(gaps){
+  const sc = k => pct(QS.filter(q=>q.tr.includes(k)).map(q=>q.id));
+  document.getElementById("fGov").value = sc("gov")+"%";
+  document.getElementById("fTour").value = sc("tour")+"%";
+  document.getElementById("fPillars").value = PILLARS.map(p=>p.name+": "+pct(QS.filter(q=>q.p===p.id).map(q=>q.id))+"%").join("; ");
+  document.getElementById("fGaps").value = gaps.map(q=>(answers[q.id]===0?"[No] ":"[Partly] ")+q.t).join("\n");
+  document.getElementById("fAnswers").value = QS.map(q=>q.id+"="+(answers[q.id]===2?"yes":answers[q.id]===1?"partly":answers[q.id]===0?"no":"-")).join(", ");
+}
+function showSaved(){ document.getElementById("leadForm").hidden = true; document.getElementById("leadOk").hidden = false; }
+if(unlocked && ON_SITE) showSaved();
+document.getElementById("leadForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  const form = e.target, err = document.getElementById("leadErr"), btn = document.getElementById("leadBtn");
+  err.hidden = true;
+  if(isSample || Object.keys(answers).length < QS.length){
+    err.textContent = isSample ? "Those are example answers. Choose “Start my own” and answer for your business first." : "Answer all 12 questions first, so your plan is complete.";
+    err.hidden = false; return;
+  }
+  const bad = [...form.querySelectorAll("[required]")].find(el => el.type==="checkbox" ? !el.checked : !el.value.trim() || (el.type==="email" && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(el.value)));
+  if(bad){ err.textContent = bad.type==="checkbox" ? "Tick the box to agree to be contacted." : bad.type==="email" ? "Enter a valid email address." : "Fill in your " + (form.querySelector('label[for="'+bad.id+'"]')?.textContent.toLowerCase() || "details") + "."; err.hidden = false; bad.focus(); return; }
+  btn.disabled = true; btn.textContent = "Saving…";
+  try{
+    const res = await fetch("/", {method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:new URLSearchParams(new FormData(form)).toString()});
+    if(!res.ok) throw new Error(res.status);
+    unlocked = true; store.set("srj-unlocked", true); showSaved(); renderAssess();
+  }catch(x){
+    err.textContent = "We could not save that. Check your connection and try again."; err.hidden = false;
+  }finally{ btn.disabled = false; btn.textContent = "Save results and unlock my plan"; }
+});
+
+/* ---------- routing ---------- */
+const VIEWS = ["assess","opportunities","requirements","cashflow"];
+function route(){
+  const h = location.hash.slice(1); const v = VIEWS.includes(h)?h:"assess";
+  document.querySelectorAll("main > section").forEach(s=>s.hidden = s.dataset.v!==v);
+  document.querySelectorAll(".tabs a").forEach(a=>{ if(a.dataset.view===v) a.setAttribute("aria-current","page"); else a.removeAttribute("aria-current"); });
+}
+window.addEventListener("hashchange", ()=>{ route(); const t=document.querySelector(".tabs"); if(t.getBoundingClientRect().top<0) t.scrollIntoView(); });
+
+renderAssess(); renderOpps(); cash(); route();
+})();
+</script>
+</body>
+</html>
