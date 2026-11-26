@@ -50,7 +50,7 @@ All four are in every footer, the contact page, and the homepage schema `sameAs`
 
 ## 6. Finish before launch
 - Replace remaining `#` links: podcast, individual book volumes, position-paper pages.
-- Confirm contact email (currently deveroutandassociates@gmail.com).
+- Contact email: deverout@gmail.com (confirmed November 2026).
 - Add a favicon.
 - Add real proof points (clients/outcomes) once approved.
 
